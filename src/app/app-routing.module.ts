@@ -1,3 +1,4 @@
+import { DemoComponent } from './demo/demo.component';
 import { MediaComponent } from './media/media.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -7,6 +8,10 @@ const routes: Routes = [
   {
     path: 'media',
     component: MediaComponent
+  },
+  {
+    path: 'demo',
+    component: DemoComponent
   },
   {
     path: '',

@@ -18,6 +18,7 @@ import { HomeModule } from './home/home.module';
 
 import { AppComponent } from './app.component';
 import { MediaComponent } from './media/media.component';
+import { DemoComponent } from './demo/demo.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -25,7 +26,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, MediaComponent],
+  declarations: [AppComponent, MediaComponent, DemoComponent],
   imports: [
     BrowserModule,
     FormsModule,
