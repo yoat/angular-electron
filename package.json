@@ -90,5 +90,8 @@
   },
   "engines": {
     "node": ">=10.13.0"
+  },
+  "dependencies": {
+    "mediaelement": "4.2.14"
   }
 }
