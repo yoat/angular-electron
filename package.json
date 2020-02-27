@@ -92,6 +92,7 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
+    "@angular/youtube-player": "9.1.0",
     "mediaelement": "4.2.14"
   }
 }
