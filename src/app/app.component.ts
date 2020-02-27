@@ -1,14 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { ElectronService } from './core/services';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from '../environments/environment';
+declare var MediaElementPlayer;
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterViewInit {
+  @ViewChild('mediaPlayer') mediaPlayerElement: ElementRef;
+  public mediaPlayer;
+
   constructor(
     public electronService: ElectronService,
     private translate: TranslateService
@@ -25,4 +29,17 @@ export class AppComponent {
       console.log('Mode web');
     }
   }
+
+  ngOnInit() {
+    
+  }
+
+  ngAfterViewInit() {
+    this.loadMediaPlayer();
+  }
+
+  loadMediaPlayer() {
+    this.mediaPlayer = new MediaElementPlayer(this.mediaPlayerElement.nativeElement);
+  }
+
 }
