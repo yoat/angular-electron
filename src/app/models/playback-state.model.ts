@@ -24,4 +24,16 @@ export class PlaybackState {
     this.title = "";
     this.time = "";
   }
+
+  get symbol(): string {
+    switch(this.status) {
+      case PlaybackStatus.Playing:
+        return "▶";
+      case PlaybackStatus.Paused:
+        return "⏸";
+      case PlaybackStatus.Stopped:
+      default:
+        return "⏹"; 
+    }
+  }
 }

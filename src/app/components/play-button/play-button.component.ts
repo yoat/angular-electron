@@ -21,7 +21,7 @@ export class PlayButtonComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.pbSub = this.playback.observe().subscribe(() => {
-      
+      // toggle between play and pause?
     });
   }
 
@@ -33,7 +33,8 @@ export class PlayButtonComponent implements OnInit, AfterViewInit, OnDestroy {
       debounceTime(150),
       distinctUntilChanged(),
       tap(() => {
-        console.log(`${this.symbol} ${this.name}`);
+        // console.log(`${this.symbol} ${this.name}`);
+        this.playback.play();
       })
     ).subscribe();
 
