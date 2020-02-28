@@ -10,8 +10,8 @@ export enum PlaybackStatus {
 
 export enum PlaybackActions {
   Stop = 0,
-  Pause,
-  Play
+  Pause = 1,
+  Play = 2
 }
 
 export class PlaybackState {

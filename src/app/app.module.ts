@@ -23,6 +23,8 @@ import { PlayerComponent } from './components/player/player.component';
 import { PlayButtonComponent } from './components/play-button/play-button.component';
 import { BaseButtonComponent } from './components/base-button/base-button.component';
 import { StatusDisplayComponent } from './components/status-display/status-display.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -39,6 +41,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SharedModule,
     HomeModule,
     AppRoutingModule,
+    MatTooltipModule,
+    BrowserAnimationsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

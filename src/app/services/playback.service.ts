@@ -36,7 +36,7 @@ export class PlaybackService {
   }
 
   do(action: PlaybackActions) {
-    switch(action) {
+    switch(+action) {
       case PlaybackActions.Pause:
         this.pause();
         break;
