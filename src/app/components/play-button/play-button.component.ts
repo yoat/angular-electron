@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { Observable, merge, fromEvent, Subscription } from "rxjs";
 import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { PlaybackService } from '../../services/playback.service';
 @Component({
   selector: 'PlayButton',
   // templateUrl: './play-button.component.html',
@@ -13,15 +14,19 @@ export class PlayButtonComponent implements OnInit, AfterViewInit, OnDestroy {
   name = "Play";
   symbol = "▶";
 
-  sub: Subscription;
+  inputSub: Subscription;
+  pbSub: Subscription;
 
-  constructor() { }
+  constructor(private playback: PlaybackService) { }
 
   ngOnInit(): void {
+    this.pbSub = this.playback.observe().subscribe(() => {
+      
+    });
   }
 
   ngAfterViewInit() {
-    this.sub = merge(
+    this.inputSub = merge(
       fromEvent(this.vcButton.nativeElement, 'keyup'),
       fromEvent(this.vcButton.nativeElement, 'click'),
     ).pipe(
@@ -35,6 +40,7 @@ export class PlayButtonComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.inputSub.unsubscribe();
+    this.pbSub.unsubscribe();
   }
 }
