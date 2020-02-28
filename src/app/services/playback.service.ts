@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PlaybackState, PlaybackStatus, PlaybackActions } from '../models/playback-state.model';
+import * as moment from "moment";
 
 @Injectable({
   providedIn: 'root'
