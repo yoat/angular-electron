@@ -31,7 +31,7 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
       fromEvent(this.vcButton.nativeElement, 'keyup'),
       fromEvent(this.vcButton.nativeElement, 'click'),
     ).pipe(
-      debounceTime(150),
+      debounceTime(20),
       distinctUntilChanged(),
       tap(() => {
         console.log(`${this.symbol} ${this.name}`);
