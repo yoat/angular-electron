@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Observable, merge, fromEvent } from "rxjs";
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Observable, merge, fromEvent, Subscription } from "rxjs";
 import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
 @Component({
   selector: 'PlayButton',
@@ -7,11 +7,13 @@ import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
   template: `<span class="btn" #button>▶</span>`,
   styleUrls: ['./play-button.component.css']
 })
-export class PlayButtonComponent implements OnInit {
+export class PlayButtonComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('button', { static: true }) vcButton: ElementRef;
 
   name = "Play";
   symbol = "▶";
+
+  sub: Subscription;
 
   constructor() { }
 
@@ -19,16 +21,20 @@ export class PlayButtonComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    merge(
+    this.sub = merge(
       fromEvent(this.vcButton.nativeElement, 'keyup'),
       fromEvent(this.vcButton.nativeElement, 'click'),
     ).pipe(
-      debounceTime(100),
+      debounceTime(150),
       distinctUntilChanged(),
       tap(() => {
         console.log(`${this.symbol} ${this.name}`);
       })
     ).subscribe();
 
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }
