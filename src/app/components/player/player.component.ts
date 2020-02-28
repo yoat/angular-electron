@@ -1,3 +1,4 @@
+import { PlaybackService } from './../../services/playback.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit {
-
-  constructor() { }
+  
+  constructor(private playback: PlaybackService) { }
 
   ngOnInit(): void {
+    this.playback.load();
   }
 
 }

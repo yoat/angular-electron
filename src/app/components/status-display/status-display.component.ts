@@ -18,7 +18,7 @@ export class StatusDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub = this.playback.observe().subscribe((state: PlaybackState) => {
-      console.log(`Change detected...`);
+      // console.log(`Change detected...`);
       this.status = state.symbol;
     });
   }
