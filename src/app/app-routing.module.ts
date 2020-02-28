@@ -1,3 +1,4 @@
+import { PlayerComponent } from './components/player/player.component';
 import { DemoComponent } from './demo/demo.component';
 import { MediaComponent } from './media/media.component';
 import { NgModule } from '@angular/core';
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'demo',
     component: DemoComponent
+  },
+  {
+    path: 'player',
+    component: PlayerComponent
   },
   {
     path: '',
