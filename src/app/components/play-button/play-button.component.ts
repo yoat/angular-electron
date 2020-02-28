@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Observable, merge, fromEvent } from "rxjs";
 import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
 @Component({
-  selector: 'app-play-button',
+  selector: 'PlayButton',
   // templateUrl: './play-button.component.html',
-  template: `<button class="button" #button>▶</button>`,
+  template: `<span class="btn" #button>▶</span>`,
   styleUrls: ['./play-button.component.css']
 })
 export class PlayButtonComponent implements OnInit {
