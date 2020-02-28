@@ -63,7 +63,7 @@ export class PlaybackService {
 
   stop() {
     this.stop$.next();
-    
+
     const modified = this.playbackSource.value;
     modified.status = PlaybackStatus.Stopped;
     this.playbackSource.next(modified);
@@ -89,7 +89,7 @@ export class PlaybackService {
       // Play audio
       this.audioObj.src = url;
       this.audioObj.load();
-      this.audioObj.play();
+      // this.audioObj.play();
 
       const handler = (event: Event) => {
         observer.next(event);
