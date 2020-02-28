@@ -97,6 +97,8 @@
     "@angular/forms": "^9.0.0 || ^10.0.0-0",
     "@angular/material": "9.1.0",
     "@angular/youtube-player": "9.1.0",
+    "bootstrap": "4.4.1",
+    "jquery": "3.4.1",
     "mediaelement": "4.2.14"
   }
 }
