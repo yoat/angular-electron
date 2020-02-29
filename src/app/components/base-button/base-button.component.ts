@@ -2,7 +2,6 @@ import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { Subscription, merge, fromEvent } from 'rxjs';
 import { PlaybackService } from '../../services/playback.service';
-import { PlaybackActions, PlaybackStatus } from '../../models/playback-state.model';
 
 // [matTooltip]="name"
 @Component({
@@ -14,7 +13,7 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('button', { static: true }) vcButton: ElementRef;
   @Input() name: string;
   @Input() symbol: string;
-  @Input() action: PlaybackActions;
+  @Input() event: string;
 
   inputSub: Subscription;
   pbSub: Subscription;
@@ -37,7 +36,7 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
       tap(() => {
         console.log(`${this.symbol} ${this.name}`);
         // this.playback.play();
-        this.playback.do(this.action);
+        this.playback.do(this.event);
       })
     ).subscribe();
 

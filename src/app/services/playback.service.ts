@@ -79,7 +79,7 @@ export class PlaybackService {
     this.playbackSource.next(modified);
   }
 
-  do(action: PlaybackActions) {
+  doAction(action: PlaybackActions) {
     switch(+action) {
       case PlaybackActions.Pause:
         this.pause();
@@ -90,6 +90,22 @@ export class PlaybackService {
       case PlaybackActions.Stop:
       default:
         this.stop();
+        break;
+    }
+  }
+
+  do(event: string) {
+    switch (event.toLowerCase()) {
+      case "pause":
+        this.pause();
+        break;
+      case "play":
+        this.play();
+        break;
+      case "stop":
+        this.stop();
+        break;
+      default:
         break;
     }
   }
