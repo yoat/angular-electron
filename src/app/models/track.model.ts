@@ -7,7 +7,7 @@ export class Track {
   albumId: number;
   albumName: string;
 
-  constructor() {
-    
+  constructor(props: any = {}) {
+    Object.assign(this, props);
   }
 }

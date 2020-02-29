@@ -12,7 +12,8 @@ import StereoAnalyserNode from 'stereo-analyser-node';
 })
 export class PlaybackService {
   private audioObj = new Audio();
-  private localFile = "file:///X:/Music/AllttA%20-%20The%20Upper%20Hand/01%20-%20AllttA%20(feat.%2020syl%20&%20Mr.%20J.%20Medeiros).mp3";
+  private localFile = 'X:\\Music\\AllttA - The Upper Hand\\01 - AllttA (feat. 20syl & Mr. J. Medeiros).mp3';
+  //"file:///X:/Music/AllttA%20-%20The%20Upper%20Hand/01%20-%20AllttA%20(feat.%2020syl%20&%20Mr.%20J.%20Medeiros).mp3";
   private remoteFile = "https://transom.org/wp-content/uploads/2004/03/stereo_96kbps.mp3";
   private stop$ = new Subject();
 
@@ -61,7 +62,7 @@ export class PlaybackService {
     } else if (this.playbackSource.value.status == PlaybackStatus.Paused) {
       this.audioObj.play();
     } else {
-      this.playStream(this.remoteFile).subscribe();
+      this.playStream(this.localFile).subscribe();
       this.audioObj.play();
     }
 
