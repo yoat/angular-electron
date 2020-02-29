@@ -6,4 +6,21 @@ import { Injectable } from '@angular/core';
 export class PlaylistService {
 
   constructor() { }
+
+  shuffle(mode: string) {
+
+  }
+
+  repeat(mode: string) {
+
+  }
+
+  nextTrack() {
+
+  }
+
+  prevTrack() {
+    
+  }
+
 }

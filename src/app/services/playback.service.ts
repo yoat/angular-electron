@@ -10,11 +10,17 @@ import StereoAnalyserNode from 'stereo-analyser-node';
   providedIn: 'root'
 })
 export class PlaybackService {
-  private playbackSource = new BehaviorSubject<PlaybackState>(new PlaybackState());
   private audioObj = new Audio();
   private localFile = "file:///X:/Music/AllttA%20-%20The%20Upper%20Hand/01%20-%20AllttA%20(feat.%2020syl%20&%20Mr.%20J.%20Medeiros).mp3";
   private remoteFile = "https://transom.org/wp-content/uploads/2004/03/stereo_96kbps.mp3";
   private stop$ = new Subject();
+
+  // observable properties
+  private timeSource = new BehaviorSubject("0:00");
+  private time$ = this.timeSource.asObservable();
+  private playbackSource = new BehaviorSubject<PlaybackState>(PlaybackState.initial());
+  private playback$ = this.timeSource.asObservable();
+
   audioEvents = [
     "ended",
     "error",

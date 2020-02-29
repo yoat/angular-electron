@@ -1,3 +1,5 @@
+import { Track } from "./track.model";
+
 export enum PlaybackStatus {
   NotPlaying = 0,
   Stopped = 1,
@@ -16,13 +18,11 @@ export enum PlaybackActions {
 
 export class PlaybackState {
   status: PlaybackStatus;
-  title: string;
-  time: string;
+  track: Track;
 
-  constructor() {
-    this.status = PlaybackStatus.NotPlaying;
-    this.title = "";
-    this.time = "";
+  constructor(status: PlaybackStatus, track: Track) {
+    this.status = status;
+    this.track = track;
   }
 
   get symbol(): string {
@@ -35,5 +35,9 @@ export class PlaybackState {
       default:
         return "⏹"; 
     }
+  }
+
+  static initial(): PlaybackState {
+    return new PlaybackState(PlaybackStatus.NotPlaying, new Track())
   }
 }
