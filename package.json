@@ -100,6 +100,7 @@
     "bootstrap": "4.4.1",
     "jquery": "3.4.1",
     "mediaelement": "4.2.14",
-    "moment": "2.24.0"
+    "moment": "2.24.0",
+    "stereo-analyser-node": "1.0.0"
   }
 }

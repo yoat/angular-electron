@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { PlaybackState, PlaybackStatus, PlaybackActions } from '../models/playback-state.model';
 import * as moment from "moment";
 import { takeUntil } from 'rxjs/operators';
+import { StereoAnalyserNode } from 'stereo-analyser-node';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,15 @@ export class PlaybackService {
   
   load() {
     // this.playStream(this.remoteFile).subscribe();
+
     var audioCtx = new AudioContext();
-    var analyser = audioCtx.createAnalyser();
+    // var analyser = audioCtx.createAnalyser();
+    const analyser = new StereoAnalyserNode(audioCtx);
+    analyser.fftSize = 2048;
+    const arrayL = new Float32Array(analyser.fftSize);
+    const arrayR = new Float32Array(analyser.fftSize);
+
+    analyser.getFloatFrequencyData(arrayL, arrayR);
   }
 
   play() {
