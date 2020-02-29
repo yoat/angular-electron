@@ -1,29 +1,53 @@
-<div class="player-container">
-  <StatusDisplay></StatusDisplay>
-  <PlayButton></PlayButton>
-  <div class="slim-player">
-    <CCButton name="Play" symbol="▶" action="2"></CCButton>
-    <CCButton name="Pause" symbol="⏸" action="1"></CCButton>
-    <CCButton name="Stop" symbol="⏹" action="0"></CCButton>
+<div class="drop-container" (dragover)="$event.preventDefault(); $event.dataTransfer.dropEffect = 'move';"
+  (drop)="dropped($event)">
+  <div class="player-container">
+    <StatusDisplay></StatusDisplay>
+    <PlayButton></PlayButton>
+    <div class="slim-player">
+      <CCButton name="Play" symbol="▶" action="2"></CCButton>
+      <CCButton name="Pause" symbol="⏸" action="1"></CCButton>
+      <CCButton name="Stop" symbol="⏹" action="0"></CCButton>
+    </div>
   </div>
-</div>
 
-<div class="emoji-list">
-  🔀🔁🔂
-  ⏮⏭
-  ▶⏸⏯
-  ⏹⏏🎦
-  👂👁
-  🐱🐢🦖🦕🛸
-  🔇🔈🔉🔊
-  🎼🎵
-  🎙🎤🎚🎛🎧
-  📚📔📖📕📗📘📙📒📓
-  💸⚙
-  🚽⚠🚫☢☣
-  ✔❌
-  ©®™
-  🔴🟠🟡🟢🔵🟣🟤⚫⚪
-  🟥🟧🟨🟩🟦🟪🟫⬛⬜
-  ◼◻◾◽▪▫
+  <div class="emoji-list">
+    🔀🔁🔂
+    ⏮⏭
+    ▶⏸⏯
+    ⏹⏏🎦
+    👂👁
+    🐱🐢🦖🦕🛸
+    🔇🔈🔉🔊
+    🎼🎵
+    🎙🎤🎚🎛🎧
+    📚📔📖📕📗📘📙📒📓
+    💸⚙
+    🚽⚠🚫☢☣
+    ✔❌
+    ©®™
+    🔴🟠🟡🟢🔵🟣🟤⚫⚪
+    🟥🟧🟨🟩🟦🟪🟫⬛⬜
+    ◼◻◾◽▪▫
+  </div>
+
+  <div id="holder">
+    Drag your file here
+  </div>
+
+  <!-- <script>
+  document.addEventListener('drop', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    for (const f of e.dataTransfer.files) {
+      console.log('File(s) you dragged here: ', f.path)
+    }
+  });
+  document.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+</script> -->
+
 </div>

@@ -12,6 +12,20 @@ export class PlayerComponent implements OnInit {
 
   ngOnInit(): void {
     this.playback.load();
+
+    
   }
+
+  dropped(event: DragEvent) {
+    console.log(`dropped!`);
+    event.preventDefault();
+    // process the dropped files via accessing event.dataTransfer.items or event.dataTransfer.files.length
+    event.dataTransfer.files
+    for (let k = 0; k < event.dataTransfer.files.length; k++) {
+      const v = event.dataTransfer.files.item(k);
+      console.log('File(s) you dragged here: ', v.path);
+    }
+  }
+
 
 }
