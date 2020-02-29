@@ -36,6 +36,8 @@ export class PlaybackService {
   
   load() {
     // this.playStream(this.remoteFile).subscribe();
+    var audioCtx = new AudioContext();
+    var analyser = audioCtx.createAnalyser();
   }
 
   play() {
