@@ -1,5 +1,6 @@
 import { PlaybackService } from './../../services/playback.service';
 import { Component, OnInit } from '@angular/core';
+import { Track } from '../../models/track.model';
 
 @Component({
   selector: 'app-player',
@@ -11,7 +12,7 @@ export class PlayerComponent implements OnInit {
   constructor(private playback: PlaybackService) { }
 
   ngOnInit(): void {
-    this.playback.load();
+    this.playback.load(new Track());
 
     
   }

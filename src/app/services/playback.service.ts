@@ -1,3 +1,4 @@
+import { Track } from './../models/track.model';
 import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -17,9 +18,9 @@ export class PlaybackService {
 
   // observable properties
   private timeSource = new BehaviorSubject("0:00");
-  private time$ = this.timeSource.asObservable();
+  time$ = this.timeSource.asObservable();
   private playbackSource = new BehaviorSubject<PlaybackState>(PlaybackState.initial());
-  private playback$ = this.timeSource.asObservable();
+  playback$ = this.playbackSource.asObservable();
 
   audioEvents = [
     "ended",
@@ -41,7 +42,7 @@ export class PlaybackService {
     return this.playbackSource.asObservable();
   }
   
-  load() {
+  load(track: Track) {
     // this.playStream(this.remoteFile).subscribe();
 
     var audioCtx = new AudioContext();
