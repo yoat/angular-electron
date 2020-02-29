@@ -4,9 +4,10 @@ import { Subscription, merge, fromEvent } from 'rxjs';
 import { PlaybackService } from '../../services/playback.service';
 import { PlaybackActions, PlaybackStatus } from '../../models/playback-state.model';
 
+// [matTooltip]="name"
 @Component({
   selector: 'CCButton',
-  template: `<span class="btn" #button [matTooltip]="name">{{ symbol }}</span>`,
+  template: `<span class="btn" #button >{{ symbol }}</span>`,
   styleUrls: ['./base-button.component.css']
 })
 export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
