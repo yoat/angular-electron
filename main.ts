@@ -15,8 +15,8 @@ function createWindow(): BrowserWindow {
   win = new BrowserWindow({
     x: 0,
     y: 0,
-    width: 500, // size.width,
-    height: 400, // size.height,
+    width: 1000, // size.width,
+    height: 300, // size.height,
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false,
@@ -53,6 +53,7 @@ function createWindow(): BrowserWindow {
 }
 
 try {
+  app.allowRendererProcessReuse = true;
 
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
