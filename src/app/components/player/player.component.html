@@ -1,108 +1,91 @@
 <div class="drop-container" (dragover)="$event.preventDefault(); $event.dataTransfer.dropEffect = 'move';"
   (drop)="dropped($event)">
-  <div class="player-container">
-    <StatusDisplay></StatusDisplay>
-    <PlayButton></PlayButton>
-    <div class="slim-player">
-      <CCButton name="Play" symbol="▶" event="play"></CCButton>
-      <CCButton name="Pause" symbol="⏸" event="pause"></CCButton>
-      <CCButton name="Stop" symbol="⏹" event="stop"></CCButton>
-    </div>
-  </div>
 
-  <div class="fixeddim">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col viz">
-          VizL
+  <div class="fixeddim container-fluid">
+    <div class="row">
+      <div class="col viz">
+        VizL
+      </div>
+
+      <div class="col-auto container-fluid center-console">
+        <div class="row align-items-center justify-content-between">
+          <div class="col">
+            ⚙
+          </div>
+          <div class="col-auto">
+            ConjoinedCats WebAmp
+          </div>
+          <div class="col">
+            ⬇
+            ↕
+            ✖
+          </div>
         </div>
 
-        <div class="col-auto container-fluid center-console">
-          <div class="row align-items-center justify-content-between">
-            <div class="col-1">
-              ⚙
-            </div>
-            <div class="col-auto">
-              ConjoinedCats WebAmp
-            </div>
-            <div class="col">
-              <div class="container">
-                <div class="row justify-content-end">
-                  <div class="col">
-                    ⬇
-                  </div>
-                  <div class="col">
-                    ↕
-                  </div>
-                  <div class="col">
-                    ✖
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="row align-items-center">
+          <div class="col-auto">
+            Song Title
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col">
+            Artist
+          </div>
+          <div class="col">
+            Album
+          </div>
+          <div class="col">
+            <StatusDisplay></StatusDisplay>
+          </div>
+          <div class="col">
+            00:00
+          </div>
+        </div>
+
+
+        <div class="row align-items-center">
+
+          <div class="col">
+            -- volume --
           </div>
 
-          <div class="row align-items-center">
-            <div class="col-auto">
-              Song Title
-            </div>
-          </div>
-
-          <div class="row align-items-center">
-            <div class="col">
-              Artist
-            </div>
-            <div class="col">
-              Album
-            </div>
-            <div class="col">
-              00:00
-            </div>
-          </div>
-
-
-          <div class="row align-items-center">
-
-            <div class="col">
-              -- volume --
-            </div>
-
-            <div class="col">
-              ------- Scubber ----
-            </div>
-
-          </div>
-
-
-          <div class="row align-items-center">
-            <div class="col">⏮</div>
-            <div class="col">
-              <CCButton name="Play" symbol="▶" event="play"></CCButton>
-            </div>
-            <div class="col">
-              <CCButton name="Pause" symbol="⏸" event="pause"></CCButton>
-            </div>
-            <div class="col">
-              <CCButton name="Stop" symbol="⏹" event="stop"></CCButton>
-            </div>
-            <div class="col">⏭</div>
-
-            <div class="col">🔀</div>
-            <div class="col">🔁</div>
-            <div class="col">📚</div>
-            <div class="col">🔇</div>
+          <div class="col">
+            ------- Scubber ----
           </div>
 
         </div>
 
-        <div class="col viz">
-          VizR
+
+        <div class="row align-items-center">
+          <div class="col">⏮</div>
+          <div class="col">
+            <CCButton name="Play" symbol="▶" event="play"></CCButton>
+          </div>
+          <div class="col">
+            <CCButton name="Pause" symbol="⏸" event="pause"></CCButton>
+          </div>
+          <div class="col">
+            <CCButton name="Stop" symbol="⏹" event="stop"></CCButton>
+          </div>
+          <div class="col">⏭</div>
+
+          <div class="col">🔀</div>
+          <div class="col">🔁</div>
+          <div class="col">📚</div>
+          <div class="col">🔇</div>
         </div>
       </div>
+
+      <div class="col viz">
+        VizR
+      </div>
     </div>
+
+
   </div>
 
-  <div class="emoji-list">
+  <!-- <div class="emoji-list">
     🔀🔁🔂
     ⏮⏭
     ▶⏸⏯
@@ -125,6 +108,5 @@
 
   <div>
     <audio id="myAudio_html5" src='X:/test.mp3'></audio>
-  </div>
-
+  </div> -->
 </div>
