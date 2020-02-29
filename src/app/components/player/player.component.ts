@@ -1,3 +1,4 @@
+import { PlaylistService } from './../../services/playlist.service';
 import { PlaybackService } from './../../services/playback.service';
 import { Component, OnInit } from '@angular/core';
 import { Track } from '../../models/track.model';
@@ -9,11 +10,11 @@ import { Track } from '../../models/track.model';
 })
 export class PlayerComponent implements OnInit {
   
-  constructor(private playback: PlaybackService) { }
+  constructor(private playback: PlaybackService, private playlist: PlaylistService) { }
 
   ngOnInit(): void {
-    this.playback.load(new Track());
-
+    // this.playback.load(new Track());
+    this.playlist.nextTrack();
     
   }
 

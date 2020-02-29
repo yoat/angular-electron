@@ -44,6 +44,8 @@ export class PlaybackService {
   }
   
   load(track: Track) {
+    // setup playback
+    try {
     // this.playStream(this.remoteFile).subscribe();
 
     var audioCtx = new AudioContext();
@@ -54,6 +56,18 @@ export class PlaybackService {
     const arrayR = new Float32Array(analyser.fftSize);
 
     analyser.getFloatFrequencyData(arrayL, arrayR);
+    } catch (ex) {
+
+    }
+
+    // distribute notifications
+    try {
+      const state = new PlaybackState(PlaybackStatus.NotPlaying, track);
+      this.playbackSource.next(state);
+      this.timeSource.next("0:00");
+    } catch (ex) {
+
+    }
   }
 
   play() {
