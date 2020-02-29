@@ -5,9 +5,51 @@ import * as url from 'url';
 var iconPath = path.join(__dirname, 'imgs', 'hepticon.ico');
 
 let mainWindow: BrowserWindow = null;
+const wins = {};
 const args = process.argv.slice(1),
     serve = args.some(val => val === '--serve');
 
+function showWindow(name) {
+  if (!wins[name]) {
+    let myWin = new BrowserWindow({
+      webPreferences: {
+        experimentalFeatures: true
+      },
+      // width: 800,
+      // height: 600,
+      frame: false,
+      titleBarStyle: 'hidden',
+      icon: iconPath,
+      show: false,
+    });
+    myWin.loadURL(url.format({
+      pathname: path.join(__dirname, 'playlist.html'),
+      protocol: 'file:',
+      slashes: true
+    }));
+    myWin.on('closed', function () {
+      wins[name] = null;
+    });
+    wins[name] = myWin;
+    wins[name].on('ready-to-show', () => {
+      wins[name].show();
+    });
+  } else {
+    wins[name].show();
+  }
+};
+
+function hideWindow(name) {
+  if (wins[name]) {
+    wins[name].hide();
+  }
+};
+
+function minWindow(name) {
+  if (wins[name]) {
+    wins[name].minimize();
+  }
+};
 function createWindow(): BrowserWindow {
 
   const electronScreen = screen;
@@ -28,6 +70,7 @@ function createWindow(): BrowserWindow {
     icon: iconPath,
     // frame: false,
     // titleBarStyle: 'hidden',
+    show: false, // wait for ready-to-show
   });
 
   if (serve) {
@@ -53,6 +96,15 @@ function createWindow(): BrowserWindow {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+  });
+
+  mainWindow.on('ready-to-show', () => {
+    mainWindow.show();
+  });
+
+  ipcMain.on('webamp-loadpath', (event, arg) => {
+    console.log("main.js::" + JSON.stringify(arg)); // prints "ping"
+    // not supported, not sure what the point was // mainWindow.send('webamp-loadpath', arg);
   });
 
   return mainWindow;
@@ -87,3 +139,29 @@ try {
   // Catch Error
   // throw e;
 }
+
+// allow main window to show/hide other windows
+ipcMain.on('showWindow', (ev, arg) => {
+  let name = arg.window;
+  switch (name) {
+    case 'playlist':
+      showWindow(name);
+      break;
+    default:
+      break;
+  }
+});
+
+ipcMain.on('hideWindow', (ev, arg) => {
+  let name = arg.window;
+  switch (name) {
+    case 'playlist':
+      hideWindow(name);
+      break;
+    default:
+      break;
+  }
+});
+
+
+//el fin//
