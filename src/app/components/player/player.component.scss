@@ -14,18 +14,27 @@
 }
 
 .fixeddim {
-  height: 300px;
-  width: 400px;
+  height: 150px;
+  width: 750px;
   border: 2px solid gray;
 }
 
 .center-console {
   background: lightcoral;
+
+  .row {
+    border: 1px solid #24aa24;
+    text-align: center;
+  }
+
+  .col {
+    border: 1px solid #3434aa;
+  }
 }
 
 .viz {
-  height: 100%;
-  width: 100%;
+  height: 150px;
+  width: 150px;
   background: black;
   color: white;
 }
