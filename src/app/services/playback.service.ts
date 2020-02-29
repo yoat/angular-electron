@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { PlaybackState, PlaybackStatus, PlaybackActions } from '../models/playback-state.model';
 import * as moment from "moment";
 import { takeUntil } from 'rxjs/operators';
-import { StereoAnalyserNode } from 'stereo-analyser-node';
+import StereoAnalyserNode from 'stereo-analyser-node';
 
 @Injectable({
   providedIn: 'root'
