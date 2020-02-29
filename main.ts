@@ -23,10 +23,12 @@ function showWindow(name) {
       show: false,
     });
     myWin.loadURL(url.format({
-      pathname: path.join(__dirname, 'playlist.html'),
+      pathname: path.join(__dirname, 'src', 'playlist.html'),
       protocol: 'file:',
       slashes: true
     }));
+    // console.log(`Path: '${path.join(__dirname, 'playlist.html')}'`);
+    
     myWin.on('closed', function () {
       wins[name] = null;
     });
