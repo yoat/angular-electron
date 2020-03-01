@@ -1,3 +1,4 @@
+import { UtilService } from './../../services/util.service';
 import { PlaylistService } from './../../services/playlist.service';
 import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
@@ -19,7 +20,11 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
   inputSub: Subscription;
   pbSub: Subscription;
 
-  constructor(private playback: PlaybackService, private playlist: PlaylistService) { }
+  constructor(
+    private playback: PlaybackService, 
+    private playlist: PlaylistService,
+    private util: UtilService
+  ) { }
 
   ngOnInit(): void {
     this.pbSub = this.playback.observe().subscribe(() => {
@@ -64,6 +69,15 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
       case "prev":
         this.playlist.prevTrack();
+        break;
+      case "max":
+        this.util.maximizeWindow();
+        break;
+      case "min":
+        this.util.minimizeWindow();
+        break;
+      case "close":
+        this.util.closeWindow();
         break;
       default:
         break;
