@@ -15,7 +15,7 @@ export class PlaybackService {
   // private localFile = 'X:\\Music\\AllttA - The Upper Hand\\01 - AllttA (feat. 20syl & Mr. J. Medeiros).mp3';
   //"file:///X:/Music/AllttA%20-%20The%20Upper%20Hand/01%20-%20AllttA%20(feat.%2020syl%20&%20Mr.%20J.%20Medeiros).mp3";
   private remoteFile = "https://transom.org/wp-content/uploads/2004/03/stereo_96kbps.mp3";
-  private stop$ = new Subject();
+  // private stop$ = new Subject();
   
   private ctx: AudioContext;
   private sourceNode: MediaElementAudioSourceNode;
@@ -23,6 +23,8 @@ export class PlaybackService {
   private stereoAnal: StereoAnalyserNode;
   private stereoPan: StereoPannerNode;
 
+  private offset: number;
+  private elapsed: number;
   // observable properties
   private timeSource = new BehaviorSubject("0:00");
   time$ = this.timeSource.asObservable();
@@ -54,6 +56,14 @@ export class PlaybackService {
     this.gainNode.connect(this.ctx.destination);
 
     this.gainNode.gain.setValueAtTime(0.1, this.ctx.currentTime)
+
+    // // var analyser = this.ctx.createAnalyser();
+    // this.stereoAnal = new StereoAnalyserNode(this.ctx);
+    // this.stereoAnal.fftSize = 2048;
+    // const arrayL = new Float32Array(this.stereoAnal.fftSize);
+    // const arrayR = new Float32Array(this.stereoAnal.fftSize);
+
+    // this.stereoAnal.getFloatFrequencyData(arrayL, arrayR);
    }
 
   // public methods
@@ -65,10 +75,35 @@ export class PlaybackService {
   load(track: Track) {
     // setup playback
     try {
-      this.loadStream(track.filepath).subscribe((ev: Event) => {
-        // console.log(`playstream update... ${this.formatTime(ev.timeStamp)}`);
+      this.streamObservable(track.filepath).subscribe((ev: Event) => {
+        // console.log(` update [${ev.type}]`);
         // this.timeSource.next(this.formatTime(ev.timeStamp));
-        this.timeSource.next(this.formatTime(this.ctx.currentTime));
+        switch(ev.type) {
+          case "timeupdate":
+            this.elapsed += (ev.timeStamp - this.offset);
+            this.offset = ev.timeStamp;
+            this.timeSource.next(this.formatTime(this.elapsed));
+            break;
+          case "play":
+            
+            break;
+          case "playing":
+            this.offset = ev.timeStamp;
+            break;
+          case "pause":
+            break;
+          case "canplay":
+            this.elapsed = 0;
+            
+            break;
+          case "loadstart":
+            break;
+          case "loadedmetadata":
+            break;
+          default:
+            console.warn(`Unknown state type: ${ev.type}`);
+            break;
+        }
       });
 
       // this.ctx = new AudioContext();
@@ -123,7 +158,9 @@ export class PlaybackService {
   }
 
   stop() {
-    this.stop$.next();
+    // this.stop$.next();
+    this.audioObj.pause();
+    this.audioObj.currentTime = 0;
 
     const modified = this.playbackSource.value;
     modified.status = PlaybackStatus.Stopped;
@@ -179,16 +216,16 @@ export class PlaybackService {
     });
   }
 
-  loadStream(url): Observable<Event> {
-    return this.streamObservable(url).pipe(takeUntil(this.stop$));
-  }
+  // loadStream(url): Observable<Event> {
+  //   return this.streamObservable(url).pipe(takeUntil(this.stop$));
+  // }
 
   seekTo(seconds) {
     this.audioObj.currentTime = seconds;
   }
 
   formatTime(time: number, format: string = "HH:mm:ss") {
-    const momentTime = time * 1000;
+    const momentTime = time;
     return moment.utc(momentTime).format(format);
   }
 }
