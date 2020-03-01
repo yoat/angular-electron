@@ -43,7 +43,8 @@ export class VolumeSliderComponent implements OnInit, OnDestroy {
     } else if (input > 100) {
       return 1;
     } else {
-      return input * 0.01;
+      // return input * 0.01;
+      return input * input * 0.0001;
     }
   }
 }
