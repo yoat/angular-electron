@@ -62,7 +62,10 @@ export class PlaybackService {
   load(track: Track) {
     // setup playback
     try {
-      this.playStream(track.filepath).subscribe();
+      this.loadStream(track.filepath).subscribe((ev: Event) => {
+        // console.log(`playstream update... ${this.formatTime(ev.timeStamp)}`);
+        this.timeSource.next(this.formatTime(ev.timeStamp));
+      });
 
       // this.ctx = new AudioContext();
 
@@ -138,7 +141,7 @@ export class PlaybackService {
   //   }
   // }
 
-  private streamObservable(url): Observable<any> {
+  private streamObservable(url): Observable<Event> {
     return new Observable(observer => {
       // Play audio
       this.audioObj.src = url;
@@ -172,7 +175,7 @@ export class PlaybackService {
     });
   }
 
-  playStream(url) {
+  loadStream(url): Observable<Event> {
     return this.streamObservable(url).pipe(takeUntil(this.stop$));
   }
 
@@ -180,8 +183,8 @@ export class PlaybackService {
     this.audioObj.currentTime = seconds;
   }
 
-  formatTime(time: number, format: string = "HH:mm:ss") {
-    const momentTime = time * 1000;
+  formatTime(timeMs: number, format: string = "HH:mm:ss") {
+    const momentTime = timeMs;
     return moment.utc(momentTime).format(format);
   }
 }
