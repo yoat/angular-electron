@@ -101,7 +101,10 @@ export class PlaybackService {
             console.log(`metadata loaded.....`);
             break;
           case "ended":
-            
+            const status = this.playbackSource.value;
+            status.event = "ended";
+            status.status = PlaybackStatus.Stopped;
+            this.playbackSource.next(status);
             break;
           case "error":
             console.error(`Error: ${JSON.stringify(ev)}`)
@@ -118,7 +121,7 @@ export class PlaybackService {
 
     // distribute notifications
     try {
-      const state = new PlaybackState(PlaybackStatus.NotPlaying, track);
+      const state = new PlaybackState(PlaybackStatus.NotPlaying, "", track);
       this.playbackSource.next(state);
       this.timeSource.next("0:00");
     } catch (ex) {

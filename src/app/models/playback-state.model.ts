@@ -18,9 +18,10 @@ export enum PlaybackActions {
 
 export class PlaybackState {
   status: PlaybackStatus;
+  event: string;
   track: Track;
 
-  constructor(status: PlaybackStatus, track: Track) {
+  constructor(status: PlaybackStatus, event: string, track: Track) {
     this.status = status;
     this.track = track;
   }
@@ -38,6 +39,6 @@ export class PlaybackState {
   }
 
   static initial(): PlaybackState {
-    return new PlaybackState(PlaybackStatus.NotPlaying, Track.initial())
+    return new PlaybackState(PlaybackStatus.NotPlaying, "", Track.initial())
   }
 }
