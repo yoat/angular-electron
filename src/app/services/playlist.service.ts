@@ -31,12 +31,12 @@ export class PlaylistService {
 
   constructor(private playback: PlaybackService) {
     // only subscribe to Stopped event.
-    this.playbackSub = this.playback.playback$.pipe(
-      filter((state: PlaybackState) => state.event == "ended")
-    ).subscribe((state: PlaybackState) => {
-      console.log(`Track ended, triggering next track...`);
-      this.nextTrack();
-    });
+    // this.playbackSub = this.playback.playback$.pipe(
+    //   filter((state: PlaybackState) => state.event == "ended")
+    // ).subscribe((state: PlaybackState) => {
+    //   console.log(`Track ended, triggering next track...`);
+    //   this.nextTrack();
+    // });
     this.index = 0;
     setTimeout(() => {
       this.load();
