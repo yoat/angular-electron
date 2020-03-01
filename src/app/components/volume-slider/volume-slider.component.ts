@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-volume-slider',
+  selector: 'VolumeSlider',
+  // template: ``,
   templateUrl: './volume-slider.component.html',
   styleUrls: ['./volume-slider.component.css']
 })

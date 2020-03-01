@@ -24,6 +24,7 @@ import { PlayButtonComponent } from './components/play-button/play-button.compon
 import { BaseButtonComponent } from './components/base-button/base-button.component';
 import { StatusDisplayComponent } from './components/status-display/status-display.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlaylistButtonComponent } from './components/playlist-button/playlist-button.component';
 import { ArtistDisplayComponent } from './components/artist-display/artist-display.component';
@@ -49,6 +50,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppRoutingModule,
     MatTooltipModule,
     BrowserAnimationsModule,
+    MatSliderModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
