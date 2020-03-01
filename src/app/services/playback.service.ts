@@ -12,10 +12,6 @@ import StereoAnalyserNode from 'stereo-analyser-node';
 })
 export class PlaybackService {
   private audioObj = new Audio();
-  // private localFile = 'X:\\Music\\AllttA - The Upper Hand\\01 - AllttA (feat. 20syl & Mr. J. Medeiros).mp3';
-  //"file:///X:/Music/AllttA%20-%20The%20Upper%20Hand/01%20-%20AllttA%20(feat.%2020syl%20&%20Mr.%20J.%20Medeiros).mp3";
-  private remoteFile = "https://transom.org/wp-content/uploads/2004/03/stereo_96kbps.mp3";
-  // private stop$ = new Subject();
   
   private ctx: AudioContext;
   private sourceNode: MediaElementAudioSourceNode;
@@ -105,24 +101,7 @@ export class PlaybackService {
             break;
         }
       });
-
-      // this.ctx = new AudioContext();
-
-      // // https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaElementSource
-      // this.sourceNode = this.ctx.createMediaElementSource(this.audioObj);
-      // this.gainNode = this.ctx.createGain();
-      // this.sourceNode.connect(this.gainNode);
-      // this.gainNode.connect(this.ctx.destination);
       
-      // this.gainNode.gain.setValueAtTime(0.7, this.ctx.currentTime)
-
-      // // var analyser = this.ctx.createAnalyser();
-      // this.stereoAnal = new StereoAnalyserNode(this.ctx);
-      // this.stereoAnal.fftSize = 2048;
-      // const arrayL = new Float32Array(this.stereoAnal.fftSize);
-      // const arrayR = new Float32Array(this.stereoAnal.fftSize);
-
-      // this.stereoAnal.getFloatFrequencyData(arrayL, arrayR);
     } catch (ex) {
 
     }
@@ -158,7 +137,6 @@ export class PlaybackService {
   }
 
   stop() {
-    // this.stop$.next();
     this.audioObj.pause();
     this.audioObj.currentTime = 0;
 
@@ -166,21 +144,6 @@ export class PlaybackService {
     modified.status = PlaybackStatus.Stopped;
     this.playbackSource.next(modified);
   }
-
-  // doAction(action: PlaybackActions) {
-  //   switch(+action) {
-  //     case PlaybackActions.Pause:
-  //       this.pause();
-  //       break;
-  //     case PlaybackActions.Play:
-  //       this.play();
-  //       break;
-  //     case PlaybackActions.Stop:
-  //     default:
-  //       this.stop();
-  //       break;
-  //   }
-  // }
 
   private streamObservable(url): Observable<Event> {
     return new Observable(observer => {
@@ -215,10 +178,6 @@ export class PlaybackService {
       obj.removeEventListener(event, handler);
     });
   }
-
-  // loadStream(url): Observable<Event> {
-  //   return this.streamObservable(url).pipe(takeUntil(this.stop$));
-  // }
 
   seekTo(seconds) {
     this.audioObj.currentTime = seconds;
