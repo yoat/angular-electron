@@ -225,7 +225,6 @@ export class PlaybackService {
   }
 
   formatTime(time: number, format: string = "HH:mm:ss") {
-    const momentTime = time;
-    return moment.utc(momentTime).format(format);
+    return (isNaN(time)) ? "0:00" : moment.utc(time).format(format);
   }
 }
