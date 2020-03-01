@@ -6,6 +6,7 @@ import { PlaybackState, PlaybackStatus } from '../models/playback-state.model';
 import { Track } from '../models/track.model';
 import * as mm from 'music-metadata';
 import * as util from 'util';
+const path = require('path');
 
 @Injectable({
   providedIn: 'root'
@@ -30,12 +31,12 @@ export class PlaylistService {
 
   constructor(private playback: PlaybackService) {
     // only subscribe to Stopped event.
-    this.playbackSub = this.playback.playback$.pipe(
-      filter((state: PlaybackState) => state.status === PlaybackStatus.Stopped)
-    ).subscribe((state: PlaybackState) => {
-      console.log(`Track ended, triggering next track...`);
-      this.nextTrack();
-    });
+    // this.playbackSub = this.playback.playback$.pipe(
+    //   filter((state: PlaybackState) => state.status === PlaybackStatus.Stopped)
+    // ).subscribe((state: PlaybackState) => {
+    //   console.log(`Track ended, triggering next track...`);
+    //   this.nextTrack();
+    // });
    }
 
   shuffle(mode: string) {
@@ -47,6 +48,7 @@ export class PlaylistService {
   }
 
   nextTrack() {
+    this.playback.stop();
     // this.playback.load(this.data[0]);
     if (this.data.length > 1) {
       this.index = (this.index >= this.data.length - 1) ? 0 : this.index + 1;
@@ -54,9 +56,11 @@ export class PlaylistService {
     // consult shuffle and repeat settings, then call playback.load()
     // if the pause between tracks is unacceptable, preloading is ez
     this.playback.load(this.data[this.index]);
+    this.playback.play();
   }
 
   prevTrack() {
+    this.playback.stop();
     // this.playback.load(this.data[0]);
     if (this.data.length > 1) {
       this.index = (this.index <= 0) ? this.data.length - 1 : this.index - 1;
@@ -64,33 +68,50 @@ export class PlaylistService {
     // maintain a history of played tracks,
     // this loads previous state instead of randomiizing in reverse
     this.playback.load(new Track(this.data[this.index]));
+    this.playback.play();
   }
 
-  importFile(filepath: string) {
+  async importFile(filepath: string) {
     console.log(`import file starting.`);
     try {
-      mm.parseFile(filepath)
-        .then(metadata => {
-          console.log(`parseFile response...`);
-          // console.log(util.inspect(metadata, { showHidden: false, depth: null }));
-          const temp = new Track({
-            filepath: filepath,
-            trackId: 1,
-            trackName: metadata.common.title,
-            artistId: 1,
-            artistName: metadata.common.artist,
-            albumId: 1,
-            albumName: metadata.common.album,
-          });
-          this.data.push(temp);
-        }, err => {
-          console.log(`parseFile reject...`);
-        })
-        .catch((err) => {
-          console.error(err.message);
-        });
+      const metadata = await mm.parseFile(filepath);
+      const temp = new Track({
+        filepath: filepath,
+        trackId: 1,
+        trackName: metadata.common.title,
+        artistId: 1,
+        artistName: metadata.common.artist,
+        albumId: 1,
+        albumName: metadata.common.album,
+      });
+      this.data.push(temp);
     } catch (ex) {
-      console.log(ex);
+      console.log(`EX: ${JSON.stringify(ex)}`);
+      
     }
+    // try {
+    //   mm.parseFile(filepath)
+    //     .then(metadata => {
+    //       console.log(`parseFile response...`);
+    //       // console.log(util.inspect(metadata, { showHidden: false, depth: null }));
+    //       const temp = new Track({
+    //         filepath: filepath,
+    //         trackId: 1,
+    //         trackName: metadata.common.title,
+    //         artistId: 1,
+    //         artistName: metadata.common.artist,
+    //         albumId: 1,
+    //         albumName: metadata.common.album,
+    //       });
+    //       this.data.push(temp);
+    //     }, err => {
+    //       console.log(`parseFile reject...`);
+    //     })
+    //     .catch((err) => {
+    //       console.error(err.message);
+    //     });
+    // } catch (ex) {
+    //   console.log(ex);
+    // }
   }
 }
