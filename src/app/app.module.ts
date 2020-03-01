@@ -26,6 +26,8 @@ import { StatusDisplayComponent } from './components/status-display/status-displ
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlaylistButtonComponent } from './components/playlist-button/playlist-button.component';
+import { ArtistDisplayComponent } from './components/artist-display/artist-display.component';
+import { AlbumDisplayComponent } from './components/album-display/album-display.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -33,7 +35,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, PlayButtonComponent, BaseButtonComponent, StatusDisplayComponent, PlaylistButtonComponent],
+  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, PlayButtonComponent, BaseButtonComponent, StatusDisplayComponent, PlaylistButtonComponent, ArtistDisplayComponent, AlbumDisplayComponent],
   imports: [
     BrowserModule,
     FormsModule,
