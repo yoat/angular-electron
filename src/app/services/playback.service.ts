@@ -199,4 +199,9 @@ export class PlaybackService {
   formatTime(time: number, format: string = "HH:mm:ss") {
     return (isNaN(time)) ? "0:00" : moment.utc(time).format(format);
   }
+
+  setVolume(unit: number) {
+    // must be 0:1
+    this.gainNode.gain.setValueAtTime(Math.max(0, Math.min(1, unit)), this.ctx.currentTime);
+  }
 }
