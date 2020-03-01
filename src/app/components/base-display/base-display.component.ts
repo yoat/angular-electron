@@ -5,12 +5,13 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'CCDisplay',
-  template: '<div class="base-display">{{ text }}</div>',
+  template: '<marquee behavior="scroll" direction="left" scrollamount="5"><div class="base-display">{{ icon }}{{ text }}</div></marquee>',
   styleUrls: ['./base-display.component.css']
 })
 export class BaseDisplayComponent implements OnChanges, OnDestroy {
   text: string;
   @Input() field: string;
+  @Input() icon: string;
   sub: Subscription;
 
   constructor(private playback: PlaybackService) { }

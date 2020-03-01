@@ -1,8 +1,5 @@
-<div
-  class="drop-container"
-  (dragover)="$event.preventDefault(); $event.dataTransfer.dropEffect = 'move'"
-  (drop)="dropped($event)"
->
+<div class="drop-container" (dragover)="$event.preventDefault(); $event.dataTransfer.dropEffect = 'move'"
+  (drop)="dropped($event)">
   <div class="fixeddim container-fluid">
     <div class="row">
       <div class="col viz">VizL</div>
@@ -19,38 +16,58 @@
         </div>
 
         <div class="row align-items-center">
-          <div class="col-auto"><CCDisplay field="title"></CCDisplay></div>
+          <div class="col-auto">
+            <CCDisplay field="title" icon="🎵"></CCDisplay>
+          </div>
         </div>
 
         <div class="row align-items-center">
           <div class="col">
             <!-- <ArtistDisplay></ArtistDisplay> -->
-            <CCDisplay field="artist"></CCDisplay>
+            <CCDisplay field="artist" icon="🧑"></CCDisplay>
           </div>
           <div class="col">
             <!-- <AlbumDisplay></AlbumDisplay> -->
-            <CCDisplay field="album"></CCDisplay>
+            <CCDisplay field="album" icon="💿"></CCDisplay>
           </div>
-          <div class="col"><StatusDisplay></StatusDisplay></div>
-          <div class="col"><TimeDisplay></TimeDisplay></div>
+          <div class="col">
+            <StatusDisplay></StatusDisplay>
+          </div>
+          <div class="col">
+            <TimeDisplay></TimeDisplay>
+          </div>
         </div>
 
         <div class="row align-items-center">
-          <div class="col"><VolumeSlider></VolumeSlider></div>
+          <div class="col">
+            <VolumeSlider></VolumeSlider>
+          </div>
 
           <div class="col">------- Scubber ----</div>
         </div>
 
         <div class="row align-items-center">
-          <div class="col"><CCButton name="Prev" symbol="⏮" event="prev"></CCButton></div>
-          <div class="col"><CCButton name="Play" symbol="▶" event="play"></CCButton></div>
-          <div class="col"><CCButton name="Pause" symbol="⏸" event="pause"></CCButton></div>
-          <div class="col"><CCButton name="Stop" symbol="⏹" event="stop"></CCButton></div>
-          <div class="col"><CCButton name="Next" symbol="⏭" event="next"></CCButton></div>
+          <div class="col">
+            <CCButton name="Prev" symbol="⏮" event="prev"></CCButton>
+          </div>
+          <div class="col">
+            <CCButton name="Play" symbol="▶" event="play"></CCButton>
+          </div>
+          <div class="col">
+            <CCButton name="Pause" symbol="⏸" event="pause"></CCButton>
+          </div>
+          <div class="col">
+            <CCButton name="Stop" symbol="⏹" event="stop"></CCButton>
+          </div>
+          <div class="col">
+            <CCButton name="Next" symbol="⏭" event="next"></CCButton>
+          </div>
 
           <div class="col">🔀</div>
           <div class="col">🔁</div>
-          <div class="col"><app-playlist-button></app-playlist-button></div>
+          <div class="col">
+            <app-playlist-button></app-playlist-button>
+          </div>
           <div class="col">🔇</div>
         </div>
       </div>
