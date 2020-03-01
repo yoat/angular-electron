@@ -16,6 +16,12 @@ export class PlaybackService {
   //"file:///X:/Music/AllttA%20-%20The%20Upper%20Hand/01%20-%20AllttA%20(feat.%2020syl%20&%20Mr.%20J.%20Medeiros).mp3";
   private remoteFile = "https://transom.org/wp-content/uploads/2004/03/stereo_96kbps.mp3";
   private stop$ = new Subject();
+  
+  private ctx: AudioContext;
+  private sourceNode: MediaElementAudioSourceNode;
+  private gainNode: GainNode;
+  private stereoAnal: StereoAnalyserNode;
+  private stereoPan: StereoPannerNode;
 
   // observable properties
   private timeSource = new BehaviorSubject("0:00");
@@ -35,7 +41,17 @@ export class PlaybackService {
     "loadstart"
   ];
 
-  constructor() { }
+  constructor() {
+    this.ctx = new AudioContext();
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaElementSource
+    this.sourceNode = this.ctx.createMediaElementSource(this.audioObj);
+    this.gainNode = this.ctx.createGain();
+    this.sourceNode.connect(this.gainNode);
+    this.gainNode.connect(this.ctx.destination);
+
+    this.gainNode.gain.setValueAtTime(0.1, this.ctx.currentTime)
+   }
 
   // public methods
 
@@ -48,23 +64,23 @@ export class PlaybackService {
     try {
       this.playStream(track.filepath).subscribe();
 
-      var audioCtx = new AudioContext();
+      // this.ctx = new AudioContext();
 
-      // https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaElementSource
-      var source = audioCtx.createMediaElementSource(this.audioObj);
-      var gainNode = audioCtx.createGain();
-      source.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
+      // // https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaElementSource
+      // this.sourceNode = this.ctx.createMediaElementSource(this.audioObj);
+      // this.gainNode = this.ctx.createGain();
+      // this.sourceNode.connect(this.gainNode);
+      // this.gainNode.connect(this.ctx.destination);
       
-      gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime)
+      // this.gainNode.gain.setValueAtTime(0.7, this.ctx.currentTime)
 
-      // var analyser = audioCtx.createAnalyser();
-      const analyser = new StereoAnalyserNode(audioCtx);
-      analyser.fftSize = 2048;
-      const arrayL = new Float32Array(analyser.fftSize);
-      const arrayR = new Float32Array(analyser.fftSize);
+      // // var analyser = this.ctx.createAnalyser();
+      // this.stereoAnal = new StereoAnalyserNode(this.ctx);
+      // this.stereoAnal.fftSize = 2048;
+      // const arrayL = new Float32Array(this.stereoAnal.fftSize);
+      // const arrayR = new Float32Array(this.stereoAnal.fftSize);
 
-      analyser.getFloatFrequencyData(arrayL, arrayR);
+      // this.stereoAnal.getFloatFrequencyData(arrayL, arrayR);
     } catch (ex) {
 
     }
