@@ -64,7 +64,8 @@ export class PlaybackService {
     try {
       this.loadStream(track.filepath).subscribe((ev: Event) => {
         // console.log(`playstream update... ${this.formatTime(ev.timeStamp)}`);
-        this.timeSource.next(this.formatTime(ev.timeStamp));
+        // this.timeSource.next(this.formatTime(ev.timeStamp));
+        this.timeSource.next(this.formatTime(this.ctx.currentTime));
       });
 
       // this.ctx = new AudioContext();
@@ -183,8 +184,8 @@ export class PlaybackService {
     this.audioObj.currentTime = seconds;
   }
 
-  formatTime(timeMs: number, format: string = "HH:mm:ss") {
-    const momentTime = timeMs;
+  formatTime(time: number, format: string = "HH:mm:ss") {
+    const momentTime = time * 1000;
     return moment.utc(momentTime).format(format);
   }
 }
