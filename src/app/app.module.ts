@@ -30,6 +30,7 @@ import { ArtistDisplayComponent } from './components/artist-display/artist-displ
 import { AlbumDisplayComponent } from './components/album-display/album-display.component';
 import { BaseDisplayComponent } from './components/base-display/base-display.component';
 import { TimeDisplayComponent } from './components/time-display/time-display.component';
+import { VolumeSliderComponent } from './components/volume-slider/volume-slider.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -37,7 +38,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, PlayButtonComponent, BaseButtonComponent, StatusDisplayComponent, PlaylistButtonComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent],
+  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, PlayButtonComponent, BaseButtonComponent, StatusDisplayComponent, PlaylistButtonComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent],
   imports: [
     BrowserModule,
     FormsModule,
