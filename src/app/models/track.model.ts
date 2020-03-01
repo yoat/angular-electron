@@ -1,5 +1,5 @@
 export interface ITrack {
-  path: string;
+  filepath: string;
   trackId: number;
   trackName: string;
   artistId: number;
@@ -9,7 +9,7 @@ export interface ITrack {
 }
 
 export class Track implements ITrack {
-  path: string;
+  filepath: string;
   trackId: number;
   trackName: string;
   artistId: number;
@@ -23,7 +23,7 @@ export class Track implements ITrack {
 
   static initial(): Track {
     return new Track({
-      path: "",
+      filepath: "",
       trackId: 0,
       trackName: "",
       artistId: 0,

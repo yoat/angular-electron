@@ -46,7 +46,7 @@ export class PlaybackService {
   load(track: Track) {
     // setup playback
     try {
-      this.playStream(track.path).subscribe();
+      this.playStream(track.filepath).subscribe();
 
       var audioCtx = new AudioContext();
       // var analyser = audioCtx.createAnalyser();

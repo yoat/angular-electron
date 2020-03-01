@@ -18,7 +18,7 @@ export class PlaylistService {
 
   private data: Array<Track> = [
     new Track({
-      path: 'X:\\Music\\AllttA - The Upper Hand\\01 - AllttA (feat. 20syl & Mr. J. Medeiros).mp3',
+      filepath: 'X:\\Music\\AllttA - The Upper Hand\\01 - AllttA (feat. 20syl & Mr. J. Medeiros).mp3',
       trackId: 1,
       trackName: "AllttA (feat. 20syl & Mr. J. Medeiros)",
       artistId: 1,
@@ -66,24 +66,31 @@ export class PlaylistService {
     this.playback.load(new Track(this.data[this.index]));
   }
 
-  import(path: string) {
-    mm.parseFile(path)
-      .then(metadata => {
-        console.log(`parseFile response...`);
-        // console.log(util.inspect(metadata, { showHidden: false, depth: null }));
-        const temp = new Track({
-          path: path,
-          trackId: 1,
-          trackName: metadata.common.title,
-          artistId: 1,
-          artistName: metadata.common.artist,
-          albumId: 1,
-          albumName: metadata.common.album,
+  importFile(filepath: string) {
+    console.log(`import file starting.`);
+    try {
+      mm.parseFile(filepath)
+        .then(metadata => {
+          console.log(`parseFile response...`);
+          // console.log(util.inspect(metadata, { showHidden: false, depth: null }));
+          const temp = new Track({
+            filepath: filepath,
+            trackId: 1,
+            trackName: metadata.common.title,
+            artistId: 1,
+            artistName: metadata.common.artist,
+            albumId: 1,
+            albumName: metadata.common.album,
+          });
+          this.data.push(temp);
+        }, err => {
+          console.log(`parseFile reject...`);
+        })
+        .catch((err) => {
+          console.error(err.message);
         });
-        this.data.push(temp);
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
+    } catch (ex) {
+      console.log(ex);
+    }
   }
 }
