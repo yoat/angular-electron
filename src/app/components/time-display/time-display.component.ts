@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { PlaybackState } from './../../models/playback-state.model';
+import { PlaybackService } from './../../services/playback.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-time-display',
-  templateUrl: './time-display.component.html',
+  selector: 'TimeDisplay',
+  template: `<div class="time-display">{{ text }}</div>`,
   styleUrls: ['./time-display.component.css']
 })
-export class TimeDisplayComponent implements OnInit {
+export class TimeDisplayComponent implements OnInit, OnDestroy {
+  private sub: Subscription;
+  text: string;
 
-  constructor() { }
+  constructor(private playback: PlaybackService) { }
 
   ngOnInit(): void {
+    this.sub = this.playback.time$.subscribe((time: string) => {
+      this.text = time;
+      console.log(`time updated...`);
+    });
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 }
