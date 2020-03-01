@@ -1,3 +1,4 @@
+import { PlaylistService } from './../../services/playlist.service';
 import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { Subscription, merge, fromEvent } from 'rxjs';
@@ -18,7 +19,7 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
   inputSub: Subscription;
   pbSub: Subscription;
 
-  constructor(private playback: PlaybackService) { }
+  constructor(private playback: PlaybackService, private playlist: PlaylistService) { }
 
   ngOnInit(): void {
     this.pbSub = this.playback.observe().subscribe(() => {
@@ -36,7 +37,7 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
       tap(() => {
         console.log(`${this.symbol} ${this.name}`);
         // this.playback.play();
-        this.playback.do(this.event);
+        this.do(this.event);
       })
     ).subscribe();
 
@@ -45,5 +46,27 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.inputSub.unsubscribe();
     this.pbSub.unsubscribe();
+  }
+
+  do(event: string) {
+    switch (event.toLowerCase()) {
+      case "pause":
+        this.playback.pause();
+        break;
+      case "play":
+        this.playback.play();
+        break;
+      case "stop":
+        this.playback.stop();
+        break;
+      case "next":
+        this.playlist.nextTrack();
+        break;
+      case "prev":
+        this.playlist.prevTrack();
+        break;
+      default:
+        break;
+    }
   }
 }

@@ -98,36 +98,20 @@ export class PlaybackService {
     this.playbackSource.next(modified);
   }
 
-  doAction(action: PlaybackActions) {
-    switch(+action) {
-      case PlaybackActions.Pause:
-        this.pause();
-        break;
-      case PlaybackActions.Play:
-        this.play();
-        break;
-      case PlaybackActions.Stop:
-      default:
-        this.stop();
-        break;
-    }
-  }
-
-  do(event: string) {
-    switch (event.toLowerCase()) {
-      case "pause":
-        this.pause();
-        break;
-      case "play":
-        this.play();
-        break;
-      case "stop":
-        this.stop();
-        break;
-      default:
-        break;
-    }
-  }
+  // doAction(action: PlaybackActions) {
+  //   switch(+action) {
+  //     case PlaybackActions.Pause:
+  //       this.pause();
+  //       break;
+  //     case PlaybackActions.Play:
+  //       this.play();
+  //       break;
+  //     case PlaybackActions.Stop:
+  //     default:
+  //       this.stop();
+  //       break;
+  //   }
+  // }
 
   private streamObservable(url): Observable<any> {
     return new Observable(observer => {
