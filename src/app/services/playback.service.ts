@@ -1,5 +1,5 @@
 import { Track } from './../models/track.model';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PlaybackState, PlaybackStatus, PlaybackActions } from '../models/playback-state.model';
@@ -13,6 +13,7 @@ import StereoAnalyserNode from 'stereo-analyser-node';
 export class PlaybackService {
   private audioObj = new Audio();
   
+  private loadSub: Subscription;
   private ctx: AudioContext;
   private sourceNode: MediaElementAudioSourceNode;
   private gainNode: GainNode;
@@ -71,7 +72,8 @@ export class PlaybackService {
   load(track: Track) {
     // setup playback
     try {
-      this.streamObservable(track.filepath).subscribe((ev: Event) => {
+      this.loadSub?.unsubscribe();
+      this.loadSub = this.streamObservable(track.filepath).subscribe((ev: Event) => {
         // console.log(` update [${ev.type}]`);
         // this.timeSource.next(this.formatTime(ev.timeStamp));
         switch(ev.type) {
@@ -90,11 +92,19 @@ export class PlaybackService {
             break;
           case "canplay":
             this.elapsed = 0;
-            
+            console.log(`canplay ????`);
             break;
           case "loadstart":
+            console.log(`loadstart >>>>>`);
             break;
           case "loadedmetadata":
+            console.log(`metadata loaded.....`);
+            break;
+          case "ended":
+            
+            break;
+          case "error":
+            console.error(`Error: ${JSON.stringify(ev)}`)
             break;
           default:
             console.warn(`Unknown state type: ${ev.type}`);
