@@ -14,15 +14,16 @@ export class PlaylistService {
   private playbackSub: Subscription;
   private shuffleMode: string;
   private repeatMode: string;
+  private index: number;
 
   private data: Array<Track> = [
     new Track({
       path: 'X:\\Music\\AllttA - The Upper Hand\\01 - AllttA (feat. 20syl & Mr. J. Medeiros).mp3',
-      trackId: "1",
+      trackId: 1,
       trackName: "AllttA (feat. 20syl & Mr. J. Medeiros)",
-      artistId: "1",
+      artistId: 1,
       artistName: "AllttA",
-      albumId: "1",
+      albumId: 1,
       albumName: "The Upper Hand",
     })
   ];
@@ -46,21 +47,37 @@ export class PlaylistService {
   }
 
   nextTrack() {
+    if (this.data.length > 1) {
+      this.index = (this.index >= this.data.length - 1) ? 0 : this.index + 1;
+    }
     // consult shuffle and repeat settings, then call playback.load()
     // if the pause between tracks is unacceptable, preloading is ez
-    this.playback.load(this.data[0]);
+    this.playback.load(this.data[this.index]);
   }
 
   prevTrack() {
+    if (this.data.length > 1) {
+      this.index = (this.index <= 0) ? this.data.length - 1 : this.index - 1;
+    }
     // maintain a history of played tracks,
     // this loads previous state instead of randomiizing in reverse
-    this.playback.load(new Track(this.data[0]));
+    this.playback.load(new Track(this.data[this.index]));
   }
 
   import(path: string) {
     mm.parseFile(path)
       .then(metadata => {
         console.log(util.inspect(metadata, { showHidden: false, depth: null }));
+        const temp = new Track({
+          path: path,
+          trackId: 1,
+          trackName: metadata.common.title,
+          artistId: 1,
+          artistName: metadata.common.artist,
+          albumId: 1,
+          albumName: metadata.common.album,
+        });
+        this.data.push(temp);
       })
       .catch((err) => {
         console.error(err.message);

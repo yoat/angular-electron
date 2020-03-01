@@ -38,6 +38,6 @@ export class PlaybackState {
   }
 
   static initial(): PlaybackState {
-    return new PlaybackState(PlaybackStatus.NotPlaying, new Track())
+    return new PlaybackState(PlaybackStatus.NotPlaying, Track.initial())
   }
 }
