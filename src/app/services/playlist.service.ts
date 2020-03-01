@@ -4,6 +4,8 @@ import { PlaybackService } from './playback.service';
 import { Injectable } from '@angular/core';
 import { PlaybackState, PlaybackStatus } from '../models/playback-state.model';
 import { Track } from '../models/track.model';
+import * as mm from 'music-metadata';
+import * as util from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -55,4 +57,13 @@ export class PlaylistService {
     this.playback.load(new Track(this.data[0]));
   }
 
+  import(path: string) {
+    mm.parseFile(path)
+      .then(metadata => {
+        console.log(util.inspect(metadata, { showHidden: false, depth: null }));
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  }
 }

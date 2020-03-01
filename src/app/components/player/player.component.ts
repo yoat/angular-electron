@@ -26,6 +26,7 @@ export class PlayerComponent implements OnInit {
     for (let k = 0; k < event.dataTransfer.files.length; k++) {
       const v = event.dataTransfer.files.item(k);
       console.log('File(s) you dragged here: ', v.path);
+      this.playlist.import(v.path);
     }
   }
 
