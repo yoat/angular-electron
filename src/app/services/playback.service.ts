@@ -49,6 +49,15 @@ export class PlaybackService {
       this.playStream(track.filepath).subscribe();
 
       var audioCtx = new AudioContext();
+
+      // https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaElementSource
+      var source = audioCtx.createMediaElementSource(this.audioObj);
+      var gainNode = audioCtx.createGain();
+      source.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime)
+
       // var analyser = audioCtx.createAnalyser();
       const analyser = new StereoAnalyserNode(audioCtx);
       analyser.fftSize = 2048;
