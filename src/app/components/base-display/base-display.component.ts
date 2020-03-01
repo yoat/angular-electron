@@ -5,7 +5,8 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'CCDisplay',
-  template: '<marquee behavior="scroll" direction="left" scrollamount="5"><div class="base-display">{{ icon }}{{ text }}</div></marquee>',
+  // template: '<marquee behavior="scroll" direction="left" scrollamount="5"><div class="base-display">{{ icon }}{{ text }}</div></marquee>',
+  template: '<div class="base-display scroll-left"><p>{{ icon }}{{ text }}</p></div>',
   styleUrls: ['./base-display.component.css']
 })
 export class BaseDisplayComponent implements OnChanges, OnDestroy {
