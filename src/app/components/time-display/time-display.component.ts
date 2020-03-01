@@ -17,7 +17,7 @@ export class TimeDisplayComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub = this.playback.time$.subscribe((time: string) => {
       this.text = time;
-      console.log(`time updated...`);
+      // console.log(`time updated...`);
     });
   }
 

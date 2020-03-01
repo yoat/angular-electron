@@ -44,6 +44,9 @@ export class PlaybackService {
   constructor() {
     this.ctx = new AudioContext();
 
+    this.ctx.onstatechange = function () {
+      console.log(`State: ${this.state}`);
+    }
     // https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaElementSource
     this.sourceNode = this.ctx.createMediaElementSource(this.audioObj);
     this.gainNode = this.ctx.createGain();
