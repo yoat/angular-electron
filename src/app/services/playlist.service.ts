@@ -14,7 +14,7 @@ export class PlaylistService {
   private playbackSub: Subscription;
   private shuffleMode: string;
   private repeatMode: string;
-  private index: number;
+  private index: number = 0;
 
   private data: Array<Track> = [
     new Track({
@@ -47,6 +47,7 @@ export class PlaylistService {
   }
 
   nextTrack() {
+    // this.playback.load(this.data[0]);
     if (this.data.length > 1) {
       this.index = (this.index >= this.data.length - 1) ? 0 : this.index + 1;
     }
@@ -56,6 +57,7 @@ export class PlaylistService {
   }
 
   prevTrack() {
+    // this.playback.load(this.data[0]);
     if (this.data.length > 1) {
       this.index = (this.index <= 0) ? this.data.length - 1 : this.index - 1;
     }
@@ -67,7 +69,8 @@ export class PlaylistService {
   import(path: string) {
     mm.parseFile(path)
       .then(metadata => {
-        console.log(util.inspect(metadata, { showHidden: false, depth: null }));
+        console.log(`parseFile response...`);
+        // console.log(util.inspect(metadata, { showHidden: false, depth: null }));
         const temp = new Track({
           path: path,
           trackId: 1,
