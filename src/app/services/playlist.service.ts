@@ -49,8 +49,9 @@ export class PlaylistService {
 
   load() {
     console.log(`load...`);
-    const temp: Array<Track> = JSON.parse(localStorage.getItem(this._dataKey));
-    this.data = temp || [];
+    const temp: Array<any> = JSON.parse(localStorage.getItem(this._dataKey));
+    const processed: Array<Track> = (temp) ? temp.map(x => Object.assign(Track.initial(), x)) : [];
+    this.data = processed;
   }
 
   save() {
