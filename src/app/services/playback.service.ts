@@ -51,7 +51,9 @@ export class PlaybackService {
     // https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaElementSource
     this.sourceNode = this.ctx.createMediaElementSource(this.audioObj);
     this.gainNode = this.ctx.createGain();
-    this.sourceNode.connect(this.gainNode);
+    this.stereoPan = this.ctx.createStereoPanner();
+    this.sourceNode.connect(this.stereoPan);
+    this.stereoPan.connect(this.gainNode);
     this.gainNode.connect(this.ctx.destination);
 
     this.gainNode.gain.setValueAtTime(0.1, this.ctx.currentTime)
@@ -228,5 +230,11 @@ export class PlaybackService {
   setVolume(unit: number) {
     // must be 0:1
     this.gainNode.gain.setValueAtTime(Math.max(0, Math.min(1, unit)), this.ctx.currentTime);
+  }
+
+  setBalance(signedUnit: number) {
+    // must be 0:1
+    const unit = Math.max(-1, Math.min(1, signedUnit));
+    this.stereoPan.pan.setValueAtTime(unit, this.ctx.currentTime);
   }
 }
