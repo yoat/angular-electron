@@ -75,6 +75,9 @@ function createWindow(): BrowserWindow {
     show: false, // wait for ready-to-show
   });
 
+  // not supported on windows.
+  // mainWindow.setAspectRatio(21/9, { height: 0, width: 0 });
+
   if (serve) {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
