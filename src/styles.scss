@@ -21,4 +21,18 @@ body {
     /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
   }
+
+  .ptmono {
+    font-family: 'PT Mono', monospace;
+  }
+
+  .nunito {
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .grabber {
+    cursor: move;
+  }
+
+
 }

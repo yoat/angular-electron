@@ -1,3 +1,7 @@
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Nunito|PT+Mono&display=swap');
+
+</style>
 <div class="drop-container" (dragover)="$event.preventDefault(); $event.dataTransfer.dropEffect = 'move'"
   (drop)="dropped($event)">
   <div class="fixeddim container-fluid">
@@ -7,7 +11,7 @@
       <div class="col-auto container-fluid center-console">
         <div class="row align-items-center justify-content-between">
           <div class="col">⚙</div>
-          <div class="col-auto">ConjoinedCats WebAmp</div>
+          <div class="col-auto grabber ptmono noselect">ConjoinedCats WebAmp</div>
           <div class="col">
             <CCButton name="Minimize" symbol="⬇" event="min"></CCButton>
             <CCButton name="Maximize" symbol="↕" event="max"></CCButton>
