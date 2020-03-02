@@ -3,6 +3,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Subscription, BehaviorSubject, fromEvent } from 'rxjs';
 
+interface IVolume {
+  volume: number;
+}
+
 @Component({
   selector: 'VolumeSlider',
   // template: ``,
@@ -14,6 +18,7 @@ export class VolumeSliderComponent implements OnInit, OnDestroy {
   volValue: number;
   private sub: Subscription;
   private saver: Subscription;
+  private volumeKey = "cc-volume-v1";
 
   constructor(private playback: PlaybackService) {
     // TODO: load from centralized storage...
@@ -59,10 +64,20 @@ export class VolumeSliderComponent implements OnInit, OnDestroy {
   }
 
   private load() {
+    // deserialize
+    const obj = <IVolume>JSON.parse(localStorage.getItem(this.volumeKey));
+    // apply
+    this.volValue = obj?.volume || 70;
     console.log(`volume loaded`);
   }
 
   private save() {
+    // collect
+    const obj: IVolume = {
+      volume: this.volValue
+    };
+    // serialize
+    localStorage.setItem(this.volumeKey, JSON.stringify(obj));
     console.log(`volume saved`);
   }
 }
