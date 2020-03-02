@@ -123,6 +123,10 @@ export class PlaybackService {
             break;
           case "canplay":
             this.elapsed = 0;
+            this.timeSource.next({
+              current: 0,
+              duration: this.currentTrack.duration
+            });
             console.log(`canplay ????`);
             break;
           case "loadstart":
