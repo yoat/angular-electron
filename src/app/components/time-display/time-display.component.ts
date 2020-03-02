@@ -10,7 +10,7 @@ interface ITimeSettings {
 
 @Component({
   selector: 'TimeDisplay',
-  template: `<div class="time-display" (click)="toggle()">{{ text }}</div>`,
+  template: `<div class="time-display noselect" (click)="toggle()">{{ text }}</div>`,
   styleUrls: ['./time-display.component.css']
 })
 export class TimeDisplayComponent implements OnInit, OnDestroy {
