@@ -6,6 +6,7 @@ export interface ITrack {
   artistName: string;
   albumId: number;
   albumName: string;
+  duration: number;
 }
 
 export class Track implements ITrack {
@@ -16,6 +17,7 @@ export class Track implements ITrack {
   artistName: string;
   albumId: number;
   albumName: string;
+  duration: number;
 
   constructor(props: ITrack) {
     Object.assign(this, props);
@@ -30,6 +32,7 @@ export class Track implements ITrack {
       artistName: "",
       albumId: 0,
       albumName: "",
+      duration: 0
     });
   }
 }

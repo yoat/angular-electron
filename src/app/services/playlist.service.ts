@@ -45,6 +45,7 @@ export class PlaylistService {
       }
     },100);
     
+    this.refreshMetadata();
   }
 
   load() {
@@ -95,6 +96,24 @@ export class PlaylistService {
     }
   }
 
+  async refreshMetadata() {
+    for (let k = 0; k < this.data.length; k++) {
+      const metadata = await mm.parseFile(this.data[k].filepath);
+      const temp = new Track({
+        filepath: this.data[k].filepath,
+        trackId: 1,
+        trackName: metadata.common.title,
+        artistId: 1,
+        artistName: metadata.common.artist,
+        albumId: 1,
+        albumName: metadata.common.album,
+        duration: metadata.format.duration * 1000
+      });
+      this.data[k] = temp;
+    }
+    this.save();
+  }
+
   async importFile(filepath: string) {
     console.log(`import file starting.`);
     try {
@@ -107,6 +126,7 @@ export class PlaylistService {
         artistName: metadata.common.artist,
         albumId: 1,
         albumName: metadata.common.album,
+        duration: metadata.format.duration * 1000
       });
       this.data.push(temp);
       this.save();

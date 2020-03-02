@@ -6,6 +6,7 @@ import { PlaybackState, PlaybackStatus, PlaybackActions } from '../models/playba
 import * as moment from "moment";
 import { takeUntil } from 'rxjs/operators';
 import StereoAnalyserNode from 'stereo-analyser-node';
+import * as mm from 'music-metadata';
 
 @Injectable({
   providedIn: 'root'
@@ -69,7 +70,29 @@ export class PlaybackService {
     return this.playbackSource.asObservable();
   }
   
-  load(track: Track) {
+  async load(track: Track) {
+    try {
+      console.log(`going to parseFile...`);
+      // const metadata = await 
+      mm.parseFile(track.filepath).then((metadata) => {
+        const trackDuration = metadata.format.duration * 1000;
+        console.log(`trackDuration: ${this.formatTime(trackDuration)}`);
+      });
+      // const temp = new Track({
+      //   filepath: filepath,
+      //   trackId: 1,
+      //   trackName: metadata.common.title,
+      //   artistId: 1,
+      //   artistName: metadata.common.artist,
+      //   albumId: 1,
+      //   albumName: metadata.common.album,
+      //   duration: metadata.format.duration * 1000
+      // });
+      
+    } catch (ex) {
+      console.log(`err ${ex}`);
+    }
+
     // setup playback
     try {
       this.loadSub?.unsubscribe();
