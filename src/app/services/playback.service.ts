@@ -148,7 +148,7 @@ export class PlaybackService {
     try {
       const state = new PlaybackState(PlaybackStatus.NotPlaying, "", track);
       this.playbackSource.next(state);
-      this.timeSource.next("0:00");
+      this.timeSource.next("00:00:00");
     } catch (ex) {
 
     }
@@ -222,7 +222,7 @@ export class PlaybackService {
   }
 
   formatTime(time: number, format: string = "HH:mm:ss") {
-    return (isNaN(time)) ? "0:00" : moment.utc(time).format(format);
+    return (isNaN(time)) ? "00:00:00" : moment.utc(time).format(format);
   }
 
   setVolume(unit: number) {
