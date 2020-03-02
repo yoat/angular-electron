@@ -1,7 +1,7 @@
 import { PlaybackService } from './../../services/playback.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
-import { Subscription, BehaviorSubject, fromEvent } from 'rxjs';
+import { Subscription, fromEvent } from 'rxjs';
 
 interface IVolume {
   volume: number;
@@ -21,7 +21,6 @@ export class VolumeSliderComponent implements OnInit, OnDestroy {
   private volumeKey = "cc-volume-v1";
 
   constructor(private playback: PlaybackService) {
-    // TODO: load from centralized storage...
     this.volValue = 30;
    }
 
