@@ -45,7 +45,7 @@ export class PlaylistService {
       }
     },100);
     
-    this.refreshMetadata();
+    // this.refreshMetadata();
   }
 
   load() {

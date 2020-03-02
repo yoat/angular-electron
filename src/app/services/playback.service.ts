@@ -21,6 +21,7 @@ export class PlaybackService {
   private stereoAnal: StereoAnalyserNode;
   private stereoPan: StereoPannerNode;
 
+  private currentTrack: Track;
   private offset: number;
   private elapsed: number;
   // observable properties
@@ -71,27 +72,28 @@ export class PlaybackService {
   }
   
   async load(track: Track) {
-    try {
-      console.log(`going to parseFile...`);
-      // const metadata = await 
-      mm.parseFile(track.filepath).then((metadata) => {
-        const trackDuration = metadata.format.duration * 1000;
-        console.log(`trackDuration: ${this.formatTime(trackDuration)}`);
-      });
-      // const temp = new Track({
-      //   filepath: filepath,
-      //   trackId: 1,
-      //   trackName: metadata.common.title,
-      //   artistId: 1,
-      //   artistName: metadata.common.artist,
-      //   albumId: 1,
-      //   albumName: metadata.common.album,
-      //   duration: metadata.format.duration * 1000
-      // });
+    this.currentTrack = track;
+    // try {
+    //   console.log(`going to parseFile...`);
+    //   // const metadata = await 
+    //   mm.parseFile(track.filepath).then((metadata) => {
+    //     const trackDuration = metadata.format.duration * 1000;
+    //     console.log(`trackDuration: ${this.formatTime(trackDuration)}`);
+    //   });
+    //   // const temp = new Track({
+    //   //   filepath: filepath,
+    //   //   trackId: 1,
+    //   //   trackName: metadata.common.title,
+    //   //   artistId: 1,
+    //   //   artistName: metadata.common.artist,
+    //   //   albumId: 1,
+    //   //   albumName: metadata.common.album,
+    //   //   duration: metadata.format.duration * 1000
+    //   // });
       
-    } catch (ex) {
-      console.log(`err ${ex}`);
-    }
+    // } catch (ex) {
+    //   console.log(`err ${ex}`);
+    // }
 
     // setup playback
     try {
