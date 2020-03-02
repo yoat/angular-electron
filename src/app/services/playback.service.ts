@@ -1,3 +1,4 @@
+import { TimeUpdate, ITimeUpdate } from './../models/time-update.model';
 import { Track } from './../models/track.model';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -25,7 +26,7 @@ export class PlaybackService {
   private offset: number;
   private elapsed: number;
   // observable properties
-  private timeSource = new BehaviorSubject("0:00");
+  private timeSource = new BehaviorSubject<ITimeUpdate>(TimeUpdate.initial());
   time$ = this.timeSource.asObservable();
   private playbackSource = new BehaviorSubject<PlaybackState>(PlaybackState.initial());
   playback$ = this.playbackSource.asObservable();
@@ -56,7 +57,7 @@ export class PlaybackService {
     this.stereoPan.connect(this.gainNode);
     this.gainNode.connect(this.ctx.destination);
 
-    this.gainNode.gain.setValueAtTime(0.1, this.ctx.currentTime)
+    // this.gainNode.gain.setValueAtTime(0.1, this.ctx.currentTime)
 
     // // var analyser = this.ctx.createAnalyser();
     // this.stereoAnal = new StereoAnalyserNode(this.ctx);
@@ -107,7 +108,10 @@ export class PlaybackService {
           case "timeupdate":
             this.elapsed += (ev.timeStamp - this.offset);
             this.offset = ev.timeStamp;
-            this.timeSource.next(this.formatTime(this.elapsed));
+            this.timeSource.next({ 
+              current: this.elapsed, 
+              duration: this.currentTrack.duration
+            });
             break;
           case "play":
             
@@ -150,7 +154,7 @@ export class PlaybackService {
     try {
       const state = new PlaybackState(PlaybackStatus.NotPlaying, "", track);
       this.playbackSource.next(state);
-      this.timeSource.next("00:00:00");
+      this.timeSource.next(TimeUpdate.initial());
     } catch (ex) {
 
     }
@@ -223,9 +227,7 @@ export class PlaybackService {
     this.audioObj.currentTime = seconds;
   }
 
-  formatTime(time: number, format: string = "HH:mm:ss") {
-    return (isNaN(time)) ? "00:00:00" : moment.utc(time).format(format);
-  }
+  
 
   setVolume(unit: number) {
     // must be 0:1

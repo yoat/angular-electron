@@ -38,7 +38,11 @@ export class VolumeSliderComponent implements OnInit, OnDestroy {
         distinctUntilChanged()
       )
       .subscribe(() => this.save());
-    this.playback.setVolume(VolumeSliderComponent.convertVolVal(this.volValue));
+      // kludgey delay
+    setTimeout(() => {
+      this.playback.setVolume(VolumeSliderComponent.convertVolVal(this.volValue));
+    }, 100);
+    
   }
 
   readVolume() {

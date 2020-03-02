@@ -1,3 +1,4 @@
+import { TimeUpdate } from './../../models/time-update.model';
 import * as moment from "moment";
 import { PlaybackService } from './../../services/playback.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -15,13 +16,17 @@ export class TimeDisplayComponent implements OnInit, OnDestroy {
   constructor(private playback: PlaybackService) { }
 
   ngOnInit(): void {
-    this.sub = this.playback.time$.subscribe((time: string) => {
-      this.text = time;
+    this.sub = this.playback.time$.subscribe((time: TimeUpdate) => {
+      this.text = this.formatTime(time.current);
       // console.log(`time updated...`);
     });
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  formatTime(time: number, format: string = "HH:mm:ss") {
+    return (isNaN(time)) ? "00:00:00" : moment.utc(time).format(format);
   }
 }
