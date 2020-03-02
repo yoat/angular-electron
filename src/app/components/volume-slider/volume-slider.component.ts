@@ -13,20 +13,27 @@ export class VolumeSliderComponent implements OnInit, OnDestroy {
   @ViewChild('volume', { static: true }) vcVolume: ElementRef;
   volValue: number;
   private sub: Subscription;
+  private saver: Subscription;
 
   constructor(private playback: PlaybackService) {
     // TODO: load from centralized storage...
-    this.volValue = 70;
-    
+    this.volValue = 30;
    }
 
   ngOnInit(): void {
+    this.load();
     this.sub = fromEvent(this.vcVolume.nativeElement, 'input')
       .pipe(
         debounceTime(30),
         distinctUntilChanged()
       )
       .subscribe(() => this.readVolume());
+    fromEvent(this.vcVolume.nativeElement, 'change')
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged()
+      )
+      .subscribe(() => this.save());
     this.playback.setVolume(VolumeSliderComponent.convertVolVal(this.volValue));
   }
 
@@ -49,5 +56,13 @@ export class VolumeSliderComponent implements OnInit, OnDestroy {
       // return input * 0.01;
       return input * input * 0.0001;
     }
+  }
+
+  private load() {
+    console.log(`volume loaded`);
+  }
+
+  private save() {
+    console.log(`volume saved`);
   }
 }
