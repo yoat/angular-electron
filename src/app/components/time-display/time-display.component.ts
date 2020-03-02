@@ -10,7 +10,7 @@ interface ITimeSettings {
 
 @Component({
   selector: 'TimeDisplay',
-  template: `<div class="time-display noselect" (click)="toggle()">{{ text }}</div>`,
+  template: `<div class="time-display noselect" (click)="toggle()">{{ sign }}{{ text }}</div>`,
   styleUrls: ['./time-display.component.css']
 })
 export class TimeDisplayComponent implements OnInit, OnDestroy {
@@ -39,6 +39,10 @@ export class TimeDisplayComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  get sign(): string {
+    return this.timeRemaining ? '-' : '+';
+  }
+  
   formatTime(time: number, format: string = "HH:mm:ss") {
     return (isNaN(time)) ? "00:00:00" : moment.utc(time).format(format);
   }
