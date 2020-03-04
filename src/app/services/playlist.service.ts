@@ -1,4 +1,4 @@
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { PlaybackService } from './playback.service';
 import { Injectable } from '@angular/core';
@@ -18,6 +18,10 @@ export class PlaylistService {
   private index: number = 0;
   private _dataKey = "playlistService-data-v1";
   private data: Array<Track> = [];
+
+  private trackSource = new BehaviorSubject<Track>(Track.initial());
+  track$ = this.trackSource.asObservable();
+
   //   new Track({
   //     filepath: 'X:\\Music\\AllttA - The Upper Hand\\01 - AllttA (feat. 20syl & Mr. J. Medeiros).mp3',
   //     trackId: 1,
@@ -29,7 +33,7 @@ export class PlaylistService {
   //   })
   // ];
 
-  constructor(private playback: PlaybackService) {
+  constructor() {
     // only subscribe to Stopped event.
     // this.playbackSub = this.playback.playback$.pipe(
     //   filter((state: PlaybackState) => state.event == "ended")
@@ -40,24 +44,39 @@ export class PlaylistService {
     this.index = 0;
     setTimeout(() => {
       this.load();
-      if (this.data.length > 0) {
-        this.playback.load(this.data[this.index]);
-      }
+      // if (this.data.length > 0) {
+      //   this.playback.load(this.data[this.index]);
+      // }
+      
+      // this.publishTrack(this.index);
     },100);
     
     // this.refreshMetadata();
   }
 
-  load() {
+  private load() {
     console.log(`load...`);
     const temp: Array<any> = JSON.parse(localStorage.getItem(this._dataKey));
     const processed: Array<Track> = (temp) ? temp.map(x => Object.assign(Track.initial(), x)) : [];
     this.data = processed;
   }
 
-  save() {
+  private save() {
     console.log(`save...`);
     localStorage.setItem(this._dataKey, JSON.stringify(this.data));
+  }
+
+  private publishTrack(index: number) {
+    if (this.data.length > index) {
+      const track = this.data[index];
+      if (track instanceof Track) {
+        this.trackSource.next(track);
+      } else {
+        console.warn(`publishTrack did not load a track at index ${index}`);
+      }
+    } else {
+      console.warn(`publishTrack param out of range: ${index}`);
+    }
   }
 
   shuffle(mode: string) {
@@ -69,31 +88,43 @@ export class PlaylistService {
   }
 
   nextTrack() {
-    if (this.data.length > 0) {
-      this.playback.stop();
-      // this.playback.load(this.data[0]);
-      if (this.data.length > 1) {
-        this.index = (this.index >= this.data.length - 1) ? 0 : this.index + 1;
-      }
-      // consult shuffle and repeat settings, then call playback.load()
-      // if the pause between tracks is unacceptable, preloading is ez
-      this.playback.load(this.data[this.index]);
-      this.playback.play();
+    this.index += 1;
+    if (this.index > this.data.length - 1) {
+      this.index = 0;
     }
+    this.publishTrack(this.index);
+    // Matt: purpose has changed completely. Now we publish track info to subscribers
+    // if (this.data.length > 0) {
+    //   this.playback.stop();
+    //   // this.playback.load(this.data[0]);
+    //   if (this.data.length > 1) {
+    //     this.index = (this.index >= this.data.length - 1) ? 0 : this.index + 1;
+    //   }
+    //   // consult shuffle and repeat settings, then call playback.load()
+    //   // if the pause between tracks is unacceptable, preloading is ez
+    //   this.playback.load(this.data[this.index]);
+    //   this.playback.play();
+    // }
   }
 
   prevTrack() {
-    if (this.data.length > 0) {
-      this.playback.stop();
-      // this.playback.load(this.data[0]);
-      if (this.data.length > 1) {
-        this.index = (this.index <= 0) ? this.data.length - 1 : this.index - 1;
-      }
-      // maintain a history of played tracks,
-      // this loads previous state instead of randomiizing in reverse
-      this.playback.load(new Track(this.data[this.index]));
-      this.playback.play();
+    this.index -= 1;
+    if (this.index < 0) {
+      this.index = this.data.length - 1;
     }
+    this.publishTrack(this.index);
+    // Matt: purpose has changed completely. Now we publish track info to subscribers
+    // if (this.data.length > 0) {
+    //   this.playback.stop();
+    //   // this.playback.load(this.data[0]);
+    //   if (this.data.length > 1) {
+    //     this.index = (this.index <= 0) ? this.data.length - 1 : this.index - 1;
+    //   }
+    //   // maintain a history of played tracks,
+    //   // this loads previous state instead of randomiizing in reverse
+    //   this.playback.load(new Track(this.data[this.index]));
+    //   this.playback.play();
+    // }
   }
 
   async refreshMetadata() {
@@ -114,7 +145,7 @@ export class PlaylistService {
     this.save();
   }
 
-  async importFile(filepath: string) {
+  async importFile(filepath: string, index: number = -1) {
     console.log(`import file starting.`);
     try {
       const metadata = await mm.parseFile(filepath);
@@ -130,12 +161,13 @@ export class PlaylistService {
       });
       this.data.push(temp);
       this.save();
+
       if (this.data.length == 1) {
-        this.playback.load(this.data[this.index]);
+        //   this.playback.load(this.data[this.index]);
+        this.publishTrack(0);
       }
     } catch (ex) {
       console.log(`EX: ${JSON.stringify(ex)}`);
-      
     }
     // try {
     //   mm.parseFile(filepath)

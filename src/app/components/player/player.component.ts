@@ -14,7 +14,7 @@ export class PlayerComponent implements OnInit {
 
   ngOnInit(): void {
     // this.playback.load(new Track());
-    this.playlist.nextTrack();
+    this.playback.nextTrack();
     
   }
 
