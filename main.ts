@@ -32,9 +32,10 @@ function showWindow(name) {
       myWin.loadURL('http://localhost:4242/' + name);
     } else {
       myWin.loadURL(url.format({
-        pathname: path.join(__dirname, 'dist', 'index.html#', name),
+        pathname: path.join(__dirname, 'dist', 'index.html'),
         protocol: 'file:',
-        slashes: true
+        slashes: true,
+        hash: `/${name}`
       }));
     }
    
