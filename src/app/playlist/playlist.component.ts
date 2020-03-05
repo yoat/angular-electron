@@ -1,3 +1,5 @@
+import { IpcService } from './../services/ipc.service';
+import { IpcMessage } from './../models/ipc.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlaylistComponent implements OnInit {
 
-  constructor() { }
+  constructor(private ipc: IpcService) { }
 
   ngOnInit(): void {
   }
