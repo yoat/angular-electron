@@ -14,10 +14,10 @@ export class IpcService {
 
   constructor() { 
     ipcRenderer.on(this.channel, (event: IpcRendererEvent, args: IpcMessage) => {
-      console.log("renderer.js::" + JSON.stringify(args)); // prints "ping"
+      // console.log("renderer.js::" + JSON.stringify(args)); // prints "ping"
       this.messageSource.next(args);
     });
-    console.log(`IpcService initialized!`);
+    // console.log(`IpcService initialized!`);
   }
 
   send(source: string, target: string, event: string, data: any) {
