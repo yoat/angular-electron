@@ -1,3 +1,5 @@
+import { filter } from 'rxjs/operators';
+import { IpcMessage } from './../../models/ipc.model';
 import { IpcService } from './../../services/ipc.service';
 import { PlaylistService } from './../../services/playlist.service';
 import { PlaybackService } from './../../services/playback.service';
@@ -17,6 +19,11 @@ export class PlayerComponent implements OnInit {
     // this.playback.load(new Track());
     this.playback.nextTrack();
     
+    this.ipc.message$.pipe(
+      filter((msg: IpcMessage) => msg.target == "player")
+    ).subscribe((msg: IpcMessage) => {
+      console.log(`Player received event: ${msg.event}`);
+    });
   }
 
   dropped(event: DragEvent) {
