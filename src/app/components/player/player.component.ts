@@ -22,7 +22,8 @@ export class PlayerComponent implements OnInit {
     this.ipc.message$.pipe(
       filter((msg: IpcMessage) => msg.target == "player")
     ).subscribe((msg: IpcMessage) => {
-      console.log(`Player received event: ${msg.event}`);
+      // console.log(`Player received event: ${msg.event}`);
+      this.handleIpcEvent(msg);
     });
   }
 
@@ -38,5 +39,11 @@ export class PlayerComponent implements OnInit {
     }
   }
 
-
+  private handleIpcEvent(msg: IpcMessage) {
+    switch (msg.event) {
+      case "play":
+        this.playback.play();
+        break;
+    }
+  }
 }
