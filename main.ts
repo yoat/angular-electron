@@ -26,10 +26,12 @@ function showWindow(name) {
     });
 
     if (serve) {
-      require('electron-reload')(__dirname, {
-        electron: require(`${__dirname}/node_modules/electron`)
-      });
-      myWin.loadURL('http://localhost:4242/#' + name);
+      myWin.loadURL(url.format({
+        pathname: 'localhost:4242',
+        protocol: 'http:',
+        slashes: true,
+        hash: `/${name}`
+      }));
     } else {
       myWin.loadURL(url.format({
         pathname: path.join(__dirname, 'dist', 'index.html'),
@@ -95,7 +97,12 @@ function createWindow(): BrowserWindow {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
     });
-    mainWindow.loadURL('http://localhost:4242/#player');
+    mainWindow.loadURL(url.format({
+      pathname: 'localhost:4242',
+      protocol: 'http:',
+      slashes: true,
+      hash: `/player`
+    }));
   } else {
     mainWindow.loadURL(url.format({
       pathname: path.join(__dirname, 'dist', 'index.html'),
