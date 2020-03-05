@@ -13,17 +13,19 @@ function showWindow(name) {
   if (!wins[name]) {
     let myWin = new BrowserWindow({
       webPreferences: {
-        experimentalFeatures: true
+        experimentalFeatures: true,
+        nodeIntegration: true,
+        webSecurity: false,
       },
       // width: 800,
       // height: 600,
-      frame: false,
-      titleBarStyle: 'hidden',
+      // frame: false,
+      titleBarStyle: 'default',
       icon: iconPath,
       show: false,
     });
     myWin.loadURL(url.format({
-      pathname: path.join(__dirname, 'src', 'playlist.html'),
+      pathname: path.join(__dirname, 'dist', 'index.html'),
       protocol: 'file:',
       slashes: true
     }));
@@ -35,6 +37,7 @@ function showWindow(name) {
     wins[name] = myWin;
     wins[name].on('ready-to-show', () => {
       wins[name].show();
+      wins[name].webContents.openDevTools();
     });
   } else {
     wins[name].show();
@@ -82,10 +85,10 @@ function createWindow(): BrowserWindow {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
     });
-    mainWindow.loadURL('http://localhost:4242');
+    mainWindow.loadURL('http://localhost:4242/');
   } else {
     mainWindow.loadURL(url.format({
-      pathname: path.join(__dirname, 'dist/index.html'),
+      pathname: path.join(__dirname, 'dist', 'index.html'),
       protocol: 'file:',
       slashes: true
     }));
