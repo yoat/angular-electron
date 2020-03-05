@@ -191,8 +191,7 @@ ipcMain.on('hideWindow', (ev, arg) => {
 });
 
 const channel = 'cc-ipc-msg';
-ipcMain.on(channel, (event: IpcMainEvent, args: any) => {
-  const msg = args as IpcMessage;
+ipcMain.on(channel, (event: IpcMainEvent, msg: IpcMessage) => {
   if (msg) {
     switch(msg.target) {
       case "player":
