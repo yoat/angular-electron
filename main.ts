@@ -24,11 +24,20 @@ function showWindow(name) {
       icon: iconPath,
       show: false,
     });
-    myWin.loadURL(url.format({
-      pathname: path.join(__dirname, 'dist', 'index.html'),
-      protocol: 'file:',
-      slashes: true
-    }));
+
+    if (serve) {
+      require('electron-reload')(__dirname, {
+        electron: require(`${__dirname}/node_modules/electron`)
+      });
+      myWin.loadURL('http://localhost:4242/' + name);
+    } else {
+      myWin.loadURL(url.format({
+        pathname: path.join(__dirname, 'dist', 'index.html#', name),
+        protocol: 'file:',
+        slashes: true
+      }));
+    }
+   
     // console.log(`Path: '${path.join(__dirname, 'playlist.html')}'`);
     
     myWin.on('closed', function () {
