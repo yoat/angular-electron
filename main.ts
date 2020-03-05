@@ -1,4 +1,5 @@
-import { app, BrowserWindow, screen, ipcMain } from 'electron';
+import { IpcMessage } from './src/app/models/ipc.model';
+import { app, BrowserWindow, screen, ipcMain, IpcMainEvent } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -189,5 +190,21 @@ ipcMain.on('hideWindow', (ev, arg) => {
   }
 });
 
+const channel = 'cc-ipc-msg';
+ipcMain.on(channel, (event: IpcMainEvent, args: any) => {
+  const msg = args as IpcMessage;
+  if (msg) {
+    switch(msg.target) {
+      case "player":
+        mainWindow.webContents.send(channel, msg);
+        break;
+      default:
+        if (wins[msg.target]) {
+          wins[msg.target].webContents.send(channel, msg);
+        }
+        break;
+    }
+  }
+});
 
 //el fin//

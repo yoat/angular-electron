@@ -1,3 +1,6 @@
+import { filter } from 'rxjs/operators';
+import { IpcMessage } from './../../models/ipc.model';
+import { IpcService } from './../../services/ipc.service';
 import { PlaylistService } from './../../services/playlist.service';
 import { PlaybackService } from './../../services/playback.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,12 +13,17 @@ import { Track } from '../../models/track.model';
 })
 export class PlayerComponent implements OnInit {
   
-  constructor(private playback: PlaybackService, private playlist: PlaylistService) { }
+  constructor(private playback: PlaybackService, private playlist: PlaylistService, private ipc: IpcService) { }
 
   ngOnInit(): void {
     // this.playback.load(new Track());
     this.playback.nextTrack();
     
+    this.ipc.message$.pipe(
+      filter((msg: IpcMessage) => msg.target == "player")
+    ).subscribe((msg: IpcMessage) => {
+      console.log(`Player received event: ${msg.event}`);
+    });
   }
 
   dropped(event: DragEvent) {
