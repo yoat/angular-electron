@@ -1,3 +1,4 @@
+import { PlaylistComponent } from './playlist/playlist.component';
 import { PlayerComponent } from './components/player/player.component';
 import { DemoComponent } from './demo/demo.component';
 import { MediaComponent } from './media/media.component';
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'player',
     component: PlayerComponent
+  },
+  {
+    path: 'playlist',
+    component: PlaylistComponent
   },
   {
     path: '',

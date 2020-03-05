@@ -34,6 +34,7 @@ import { TimeDisplayComponent } from './components/time-display/time-display.com
 import { VolumeSliderComponent } from './components/volume-slider/volume-slider.component';
 import { BalanceSliderComponent } from './components/balance-slider/balance-slider.component';
 import { ProgressScrubberComponent } from './components/progress-scrubber/progress-scrubber.component';
+import { PlaylistComponent } from './playlist/playlist.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -41,7 +42,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, PlayButtonComponent, BaseButtonComponent, StatusDisplayComponent, PlaylistButtonComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent],
+  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, PlayButtonComponent, BaseButtonComponent, StatusDisplayComponent, PlaylistButtonComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, PlaylistComponent],
   imports: [
     BrowserModule,
     FormsModule,
