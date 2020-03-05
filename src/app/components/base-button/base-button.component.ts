@@ -1,5 +1,4 @@
 import { UtilService } from './../../services/util.service';
-import { PlaylistService } from './../../services/playlist.service';
 import { tap, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { Subscription, merge, fromEvent } from 'rxjs';
@@ -21,8 +20,7 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
   pbSub: Subscription;
 
   constructor(
-    private playback: PlaybackService, 
-    private playlist: PlaylistService,
+    private playback: PlaybackService,
     private util: UtilService
   ) { }
 
@@ -65,10 +63,10 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
         this.playback.stop();
         break;
       case "next":
-        this.playlist.nextTrack();
+        this.playback.nextTrack();
         break;
       case "prev":
-        this.playlist.prevTrack();
+        this.playback.prevTrack();
         break;
       case "max":
         this.util.maximizeWindow();

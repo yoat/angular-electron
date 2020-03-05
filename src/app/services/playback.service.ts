@@ -1,3 +1,4 @@
+import { PlaylistService } from './playlist.service';
 import { TimeUpdate, ITimeUpdate } from './../models/time-update.model';
 import { Track } from './../models/track.model';
 import { Observable, Subject, Subscription } from 'rxjs';
@@ -43,7 +44,7 @@ export class PlaybackService {
     "loadstart"
   ];
 
-  constructor() {
+  constructor(private playlist: PlaylistService) {
     this.ctx = new AudioContext();
 
     this.ctx.onstatechange = function () {
@@ -66,7 +67,18 @@ export class PlaybackService {
     // const arrayR = new Float32Array(this.stereoAnal.fftSize);
 
     // this.stereoAnal.getFloatFrequencyData(arrayL, arrayR);
-   }
+
+    this.playlist.track$.subscribe((track: Track) => {
+      console.log(`track$ event received by playback...`);
+      if (track.trackId <= 0) {
+        console.log(`placeholder track, do nothing`);
+      // } else if (track.trackId === this.currentTrack.trackId) {
+      //   console.log(`track already loaded, thanks Playlist!`);
+      } else {
+        this.load(track);
+      }
+    });
+  }
 
   // public methods
 
@@ -75,6 +87,7 @@ export class PlaybackService {
   }
   
   async load(track: Track) {
+    // this.stop();
     this.currentTrack = track;
     // try {
     //   console.log(`going to parseFile...`);
@@ -191,6 +204,14 @@ export class PlaybackService {
     const modified = this.playbackSource.value;
     modified.status = PlaybackStatus.Stopped;
     this.playbackSource.next(modified);
+  }
+
+  nextTrack() {
+    this.playlist.nextTrack();
+  }
+
+  prevTrack() {
+    this.playlist.nextTrack();
   }
 
   private streamObservable(url): Observable<Event> {

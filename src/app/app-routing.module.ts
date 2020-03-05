@@ -1,3 +1,4 @@
+import { PlaylistComponent } from './playlist/playlist.component';
 import { PlayerComponent } from './components/player/player.component';
 import { DemoComponent } from './demo/demo.component';
 import { MediaComponent } from './media/media.component';
@@ -19,8 +20,12 @@ const routes: Routes = [
     component: PlayerComponent
   },
   {
+    path: 'playlist',
+    component: PlaylistComponent
+  },
+  {
     path: '',
-    redirectTo: 'player',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -30,7 +35,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: true, enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

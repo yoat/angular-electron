@@ -1,6 +1,6 @@
 <div class="container">
   <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
+    ? {{ 'PAGES.HOME.TITLE' | translate }} ?
   </h1>
   <h2>
     <a [routerLink]="['/media']" preserveFragment>Media</a>
@@ -8,5 +8,10 @@
   <h2>
     <a [routerLink]="['/demo']" preserveFragment>Demo</a>
   </h2>
-
+  <h2>
+    <a [routerLink]="['/player']" preserveFragment>Player</a>
+  </h2>
+  <h2>
+    <a [routerLink]="['/playlist']" preserveFragment>Playlist</a>
+  </h2>
 </div>

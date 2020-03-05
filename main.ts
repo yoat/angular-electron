@@ -13,20 +13,34 @@ function showWindow(name) {
   if (!wins[name]) {
     let myWin = new BrowserWindow({
       webPreferences: {
-        experimentalFeatures: true
+        experimentalFeatures: true,
+        nodeIntegration: true,
+        webSecurity: false,
       },
       // width: 800,
       // height: 600,
-      frame: false,
-      titleBarStyle: 'hidden',
+      // frame: false,
+      titleBarStyle: 'default',
       icon: iconPath,
       show: false,
     });
-    myWin.loadURL(url.format({
-      pathname: path.join(__dirname, 'src', 'playlist.html'),
-      protocol: 'file:',
-      slashes: true
-    }));
+
+    if (serve) {
+      myWin.loadURL(url.format({
+        pathname: 'localhost:4242',
+        protocol: 'http:',
+        slashes: true,
+        hash: `/${name}`
+      }));
+    } else {
+      myWin.loadURL(url.format({
+        pathname: path.join(__dirname, 'dist', 'index.html'),
+        protocol: 'file:',
+        slashes: true,
+        hash: `/${name}`
+      }));
+    }
+   
     // console.log(`Path: '${path.join(__dirname, 'playlist.html')}'`);
     
     myWin.on('closed', function () {
@@ -35,6 +49,7 @@ function showWindow(name) {
     wins[name] = myWin;
     wins[name].on('ready-to-show', () => {
       wins[name].show();
+      wins[name].webContents.openDevTools();
     });
   } else {
     wins[name].show();
@@ -82,12 +97,18 @@ function createWindow(): BrowserWindow {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
     });
-    mainWindow.loadURL('http://localhost:4200');
+    mainWindow.loadURL(url.format({
+      pathname: 'localhost:4242',
+      protocol: 'http:',
+      slashes: true,
+      hash: `/player`
+    }));
   } else {
     mainWindow.loadURL(url.format({
-      pathname: path.join(__dirname, 'dist/index.html'),
+      pathname: path.join(__dirname, 'dist', 'index.html'),
       protocol: 'file:',
-      slashes: true
+      slashes: true,
+      hash: "/player"
     }));
   }
 
