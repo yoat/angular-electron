@@ -35,12 +35,15 @@ import { VolumeSliderComponent } from './components/volume-slider/volume-slider.
 import { BalanceSliderComponent } from './components/balance-slider/balance-slider.component';
 import { ProgressScrubberComponent } from './components/progress-scrubber/progress-scrubber.component';
 import { PlaylistComponent } from './playlist/playlist.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProButtonComponent } from './components/pro-button/pro-button.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons';
+import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
   declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, PlayButtonComponent, BaseButtonComponent, StatusDisplayComponent, PlaylistButtonComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, PlaylistComponent, ProButtonComponent],
@@ -67,4 +70,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private library: FaIconLibrary) {
+    library.addIcons(faSquare, faCheckSquare, farSquare, farCheckSquare, faStackOverflow, faGithub, faMedium);
+  }
+}
