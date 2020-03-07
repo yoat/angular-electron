@@ -46,4 +46,15 @@ export class PlayerComponent implements OnInit {
         break;
     }
   }
+
+  onPush(event: string) {
+    switch(event) {
+      case "mute":
+        console.log(`Toggle Mute!`);
+        break;
+      default:
+        console.log(`event ${event}`);
+        break;
+    }
+  }
 }
