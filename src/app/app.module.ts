@@ -41,10 +41,28 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faSquare, faCheckSquare, faPlay, faPause, faStop, faStepBackward, faStepForward, faWindowClose, faWindowMaximize, 
+  faWindowMinimize, faWindowRestore, faRedoAlt as faReplay, faCog as faSettings, faVolumeUp, faVolumeDown, faVolumeMute, 
+  faVolumeOff, faCat, faListAlt as faPlaylist, faPoll as faViz, faCaretSquareRight as faPlayer,
+  faRecordVinyl as faAlbum, faUsers as faArtist, faMusic as faTrack,
+  faBalanceScale, faBalanceScaleLeft, faBalanceScaleRight
+} from '@fortawesome/free-solid-svg-icons';
 import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-svg-icons';
-
+//  https://fontawesome.com/cheatsheet
+// window-maximize, window-close, window-minimize
+// hamburger (menu) skull-crossbones cat bong cannabis burn cubes hand-middle-finger
+// hand-rock hand-scissors hand-paper hand-peace
+// play/-circle, stop/-circle, pause/-circle, fast/step-/backward, fast/step-/forward
+// volume- up, mute, down, off, redo (replay), wrench (settings), cog (settings), tools
+// list, list-alt, list-ol, list-ul, th-list (playlist)
+// random, sliders-h (sliders-v?), 
+// poll (viz), wave-square (oscillo)
+// video, video-slash
+// balance-scale, balance-scale-left, balance-scale-right
+// book, book-open
+// record-vinyl (album), music (track), users, grin-stars, headphones, headphones-alt,
 @NgModule({
   declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, PlayButtonComponent, BaseButtonComponent, StatusDisplayComponent, PlaylistButtonComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, PlaylistComponent, ProButtonComponent],
   imports: [
@@ -72,6 +90,12 @@ import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-sv
 })
 export class AppModule {
   constructor(private library: FaIconLibrary) {
-    library.addIcons(faSquare, faCheckSquare, farSquare, farCheckSquare, faStackOverflow, faGithub, faMedium);
+    library.addIcons(
+      faSquare, faCheckSquare, farSquare, farCheckSquare, faStackOverflow, faGithub, faMedium, 
+      faPlay, faPause,  faStop, faStepBackward, faStepForward, faWindowClose, faWindowMaximize, 
+      faWindowMinimize, faWindowRestore, faReplay, faSettings, faVolumeUp, faVolumeDown, 
+      faVolumeMute, faVolumeOff, faCat, faPlaylist, faViz, faPlayer, faAlbum, faArtist, faTrack,
+      faBalanceScale, faBalanceScaleLeft, faBalanceScaleRight
+    );
   }
 }
