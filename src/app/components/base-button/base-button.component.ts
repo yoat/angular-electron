@@ -7,8 +7,9 @@ import { PlaybackService } from '../../services/playback.service';
 // [matTooltip]="name"
 @Component({
   selector: 'CCButton',
-  template: `<span class="btn" #button >{{ symbol }}</span>`,
-  styleUrls: ['./base-button.component.css']
+  // template: `<span class="btn" #button >{{ symbol }}</span>`,
+  templateUrl: "./base-button.component.html",
+  styleUrls: ['./base-button.component.scss']
 })
 export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('button', { static: true }) vcButton: ElementRef;
