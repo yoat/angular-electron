@@ -35,7 +35,8 @@ import { VolumeSliderComponent } from './components/volume-slider/volume-slider.
 import { BalanceSliderComponent } from './components/balance-slider/balance-slider.component';
 import { ProgressScrubberComponent } from './components/progress-scrubber/progress-scrubber.component';
 import { PlaylistComponent } from './playlist/playlist.component';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ProButtonComponent } from './components/pro-button/pro-button.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -60,7 +61,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
