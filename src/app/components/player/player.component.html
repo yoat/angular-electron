@@ -13,9 +13,9 @@
           <div class="col">⚙</div>
           <div class="col-auto grabber ptmono noselect">ConjoinedCats WebAmp</div>
           <div class="col">
-            <CCButton name="Minimize" symbol="⬇" event="min"></CCButton>
-            <CCButton name="Maximize" symbol="↕" event="max"></CCButton>
-            <CCButton name="Close" symbol="✖" event="close"></CCButton>
+            <ProButton name="min" (push)="onPush($event)">⬇</ProButton>
+            <ProButton name="max" (push)="onPush($event)">↕</ProButton>
+            <ProButton name="close" (push)="onPush($event)">✖</ProButton>
           </div>
         </div>
 
@@ -59,19 +59,19 @@
 
         <div class="row align-items-center">
           <div class="col">
-            <CCButton name="Prev" symbol="⏮" event="prev"></CCButton>
+            <ProButton name="prev" (push)="onPush($event)">⏮</ProButton>
           </div>
           <div class="col">
-            <CCButton name="Play" symbol="▶" event="play"></CCButton>
+            <ProButton name="play" (push)="onPush($event)">▶</ProButton>
           </div>
           <div class="col">
-            <CCButton name="Pause" symbol="⏸" event="pause"></CCButton>
+            <ProButton name="pause" (push)="onPush($event)">⏸</ProButton>
           </div>
           <div class="col">
-            <CCButton name="Stop" symbol="⏹" event="stop"></CCButton>
+            <ProButton name="stop" (push)="onPush($event)">⏹</ProButton>
           </div>
           <div class="col">
-            <CCButton name="Next" symbol="⏭" event="next"></CCButton>
+            <ProButton name="next" (push)="onPush($event)">⏭</ProButton>
           </div>
 
           <div class="col">🔀</div>

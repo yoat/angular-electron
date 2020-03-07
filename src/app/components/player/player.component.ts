@@ -1,3 +1,4 @@
+import { UtilService } from './../../services/util.service';
 import { filter } from 'rxjs/operators';
 import { IpcMessage } from './../../models/ipc.model';
 import { IpcService } from './../../services/ipc.service';
@@ -13,7 +14,7 @@ import { Track } from '../../models/track.model';
 })
 export class PlayerComponent implements OnInit {
   
-  constructor(private playback: PlaybackService, private playlist: PlaylistService, private ipc: IpcService) { }
+  constructor(private util: UtilService, private playback: PlaybackService, private playlist: PlaylistService, private ipc: IpcService) { }
 
   ngOnInit(): void {
     // this.playback.load(new Track());
@@ -48,7 +49,31 @@ export class PlayerComponent implements OnInit {
   }
 
   onPush(event: string) {
-    switch(event) {
+    switch (event.toLowerCase()) {
+      case "pause":
+        this.playback.pause();
+        break;
+      case "play":
+        this.playback.play();
+        break;
+      case "stop":
+        this.playback.stop();
+        break;
+      case "next":
+        this.playback.nextTrack();
+        break;
+      case "prev":
+        this.playback.prevTrack();
+        break;
+      case "max":
+        this.util.maximizeWindow();
+        break;
+      case "min":
+        this.util.minimizeWindow();
+        break;
+      case "close":
+        this.util.closeWindow();
+        break;
       case "mute":
         console.log(`Toggle Mute!`);
         break;
