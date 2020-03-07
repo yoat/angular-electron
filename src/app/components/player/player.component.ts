@@ -5,7 +5,6 @@ import { IpcService } from './../../services/ipc.service';
 import { PlaylistService } from './../../services/playlist.service';
 import { PlaybackService } from './../../services/playback.service';
 import { Component, OnInit } from '@angular/core';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-player',
@@ -13,8 +12,6 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit {
-  faCoffee = faCoffee;
-  
   constructor(private util: UtilService, private playback: PlaybackService, private playlist: PlaylistService, private ipc: IpcService) { }
 
   ngOnInit(): void {
