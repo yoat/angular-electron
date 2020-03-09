@@ -46,7 +46,7 @@ import {
   faWindowMinimize, faWindowRestore, faRedoAlt as faReplay, faCog as faSettings, faVolumeUp, faVolumeDown, faVolumeMute, 
   faVolumeOff, faCat, faListAlt as faPlaylist, faPoll as faViz, faCaretSquareRight as faPlayer,
   faRecordVinyl as faAlbum, faUsers as faArtist, faMusic as faTrack,
-  faBalanceScale, faBalanceScaleLeft, faBalanceScaleRight
+  faBalanceScale, faBalanceScaleLeft, faBalanceScaleRight, faRandom
 } from '@fortawesome/free-solid-svg-icons';
 import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-svg-icons';

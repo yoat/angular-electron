@@ -102,7 +102,9 @@
             <fa-icon [icon]="['fas', 'redo-alt']"></fa-icon>
           </div>
           <div class="col">
-            <app-playlist-button></app-playlist-button>
+            <ProButton name="playlist" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'list-alt']"></fa-icon>
+            </ProButton>
           </div>
           <div class="col">
             <ProButton name="mute" (push)="onPush($event)">

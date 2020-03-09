@@ -5,6 +5,7 @@ import { IpcService } from './../../services/ipc.service';
 import { PlaylistService } from './../../services/playlist.service';
 import { PlaybackService } from './../../services/playback.service';
 import { Component, OnInit } from '@angular/core';
+import { ipcRenderer } from 'electron';
 
 @Component({
   selector: 'app-player',
@@ -12,6 +13,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./player.component.scss']
 })
 export class PlayerComponent implements OnInit {
+  playlistShown: boolean;
   constructor(private util: UtilService, private playback: PlaybackService, private playlist: PlaylistService, private ipc: IpcService) { }
 
   ngOnInit(): void {
@@ -48,6 +50,9 @@ export class PlayerComponent implements OnInit {
 
   onPush(event: string) {
     switch (event.toLowerCase()) {
+      case "playlist":
+        this.togglePlaylist();
+        break;
       case "pause":
         this.playback.pause();
         break;
@@ -79,5 +84,26 @@ export class PlayerComponent implements OnInit {
         console.log(`event ${event}`);
         break;
     }
+  }
+
+  togglePlaylist() {
+    if (this.playlistShown) {
+      this.hidePl();
+    } else {
+      this.showPl();
+    }
+    this.playlistShown = !this.playlistShown;
+  }
+
+  showPl() {
+    ipcRenderer.send('showWindow', {
+      window: "playlist"
+    });
+  }
+
+  hidePl() {
+    ipcRenderer.send('hideWindow', {
+      window: "playlist"
+    });
   }
 }
