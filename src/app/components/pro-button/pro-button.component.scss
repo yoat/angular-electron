@@ -1,11 +1,11 @@
 .baabox {
-  margin: 10px;
-  height: 50px;
-  min-width: 50px;
-  border-radius: 25px;
+  margin: 0;
+  padding: 0;
+  height: 10vmin;
+  min-width: 10vmin;
+  border-radius: 5vmin;
   text-align: center;
   vertical-align: baseline;
-  padding: 0px;
   position: relative;
   display: inline-block;
   user-select: none;
@@ -17,7 +17,7 @@
     -4px -4px 4px 4px rgba(255, 255, 255, 0.12),
     -8px -8px 8px 8px rgba(255, 255, 255, 0.12);
   content: "";
-  border-radius: 25px;
+  border-radius: 5vmin;
   position: absolute;
   z-index: 1;
   top: 0;
@@ -35,7 +35,7 @@
     4px 4px 4px 4px rgba(0, 0, 0, 0.12),
     8px 8px 8px 8px rgba(0, 0, 0, 0.12);
   content: "";
-  border-radius: 25px;
+  border-radius: 5vmin;
   position: absolute;
   z-index: 2;
   top: 0;
@@ -48,10 +48,12 @@
 
 .baabox-content {
   font-family: monospace;
-  padding: 10px;
+  margin: 0;
+  padding: 0;
   text-align: center;
-  font-size: 24px;
+  font-size: 4vmin;
   user-select: none;
+  color: white;
 }
 
 .baabox-content::before {
@@ -66,8 +68,7 @@
   inset 4px 4px 4px 4px rgba(0, 0, 0, 0.12),
   inset 8px 8px 8px 8px rgba(0, 0, 0, 0.12);
   content: "";
-  color: rgba(0, 0, 0, 0);
-  border-radius: 25px;
+  border-radius: 5vmin;
   position: absolute;
   z-index: 3;
   top: 0;
@@ -85,7 +86,7 @@
     inset -4px -4px 4px 4px rgba(255, 255, 255, 0.12),
     inset -8px -8px 8px 8px rgba(255, 255, 255, 0.12);
   content: "";
-  border-radius: 25px;
+  border-radius: 5vmin;
   position: absolute;
   z-index: 3;
   top: 0;
