@@ -20,7 +20,6 @@ import { AppComponent } from './app.component';
 import { MediaComponent } from './media/media.component';
 import { DemoComponent } from './demo/demo.component';
 import { PlayerComponent } from './components/player/player.component';
-import { PlayButtonComponent } from './components/play-button/play-button.component';
 import { BaseButtonComponent } from './components/base-button/base-button.component';
 import { StatusDisplayComponent } from './components/status-display/status-display.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -63,7 +62,7 @@ import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-sv
 // book, book-open
 // record-vinyl (album), music (track), users, grin-stars, headphones, headphones-alt,
 @NgModule({
-  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, PlayButtonComponent, BaseButtonComponent, StatusDisplayComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, PlaylistComponent, ProButtonComponent],
+  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, BaseButtonComponent, StatusDisplayComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, PlaylistComponent, ProButtonComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -94,7 +93,7 @@ export class AppModule {
       faPlay, faPause,  faStop, faStepBackward, faStepForward, faWindowClose, faWindowMaximize, 
       faWindowMinimize, faWindowRestore, faReplay, faSettings, faVolumeUp, faVolumeDown, 
       faVolumeMute, faVolumeOff, faCat, faPlaylist, faViz, faPlayer, faAlbum, faArtist, faTrack,
-      faBalanceScale, faBalanceScaleLeft, faBalanceScaleRight
+      faBalanceScale, faBalanceScaleLeft, faBalanceScaleRight, faRandom
     );
   }
 }
