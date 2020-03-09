@@ -10,7 +10,11 @@
 
       <div class="col-auto container-fluid center-console">
         <div class="row align-items-center justify-content-between">
-          <div class="col">⚙</div>
+          <div class="col">
+            <ProButton name="settings" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'cog']"></fa-icon>
+            </ProButton>
+          </div>
           <div class="col-auto grabber ptmono noselect">
             ConjoinedCats
             <fa-icon [icon]="['fas', 'cat']"></fa-icon>
@@ -96,10 +100,14 @@
           </div>
 
           <div class="col">
-            <fa-icon [icon]="['fas', 'random']"></fa-icon>
+            <ProButton name="shuffle" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'random']"></fa-icon>
+            </ProButton>
           </div>
           <div class="col">
-            <fa-icon [icon]="['fas', 'redo-alt']"></fa-icon>
+            <ProButton name="repeat" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'redo-alt']"></fa-icon>
+            </ProButton>
           </div>
           <div class="col">
             <ProButton name="playlist" (push)="onPush($event)">
