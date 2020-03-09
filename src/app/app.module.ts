@@ -26,7 +26,6 @@ import { StatusDisplayComponent } from './components/status-display/status-displ
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PlaylistButtonComponent } from './components/playlist-button/playlist-button.component';
 import { ArtistDisplayComponent } from './components/artist-display/artist-display.component';
 import { AlbumDisplayComponent } from './components/album-display/album-display.component';
 import { BaseDisplayComponent } from './components/base-display/base-display.component';
@@ -64,7 +63,7 @@ import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-sv
 // book, book-open
 // record-vinyl (album), music (track), users, grin-stars, headphones, headphones-alt,
 @NgModule({
-  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, PlayButtonComponent, BaseButtonComponent, StatusDisplayComponent, PlaylistButtonComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, PlaylistComponent, ProButtonComponent],
+  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, PlayButtonComponent, BaseButtonComponent, StatusDisplayComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, PlaylistComponent, ProButtonComponent],
   imports: [
     BrowserModule,
     FormsModule,
