@@ -1,12 +1,5 @@
-@mixin simple-fade($size, $color) {
-  box-shadow:
-    -1*$size -1*$size $size $size $color,
-    -2*$size -2*$size 2*$size 2*$size $color,
-    -4*$size -4*$size 4*$size 4*$size $color,
-    -8*$size -8*$size 8*$size 8*$size $color;
-}
-
-@mixin adjust-fade($size, $color, $hu, $vu) {
+// @include box-fade(1px, rgba(255, 255, 255, 0.12), -1, +1);
+@mixin box-fade($size, $color, $hu:1, $vu:1) {
   box-shadow:
     1*$hu*$size 1*$vu*$size 1*$size 1*$size $color,
     2*$hu*$size 2*$vu*$size 2*$size 2*$size $color,
@@ -14,8 +7,76 @@
     8*$hu*$size 8*$vu*$size 8*$size 8*$size $color;
 }
 
+// @include opac-trans(0.5s);
+@mixin opac-trans($duration) {
+  opacity: 1;
+  transition: all $duration cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+$radius: 15px;
+$cheight: 2*$radius;
+$blacka: rgba(0, 0, 0, 0.12);
+$whitea: rgba(255, 255, 255, 0.12);
+
+.box {
+  margin: 0;
+  padding: 0;
+  height: $cheight;
+  width: $cheight;
+  border-radius: $radius;
+  position: relative;
+  user-select: none;
+  display: inline-block;
+
+  &:outer {
+    // color: orange;
+
+    &::before {
+      // color: red;
+    }
+
+    &::after {
+      // color: green;
+    }
+
+    &:hover::after {
+      @include opac-trans(0.5s);
+    }
+
+    &:hover::before {
+      @include opac-trans(0.5s);
+    }
+  }
+
+  &:inner {
+    color: white;
+    font-family: monospace;
+    font-size: 20px;
+    // line-height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::before {
+      // color: red;
+    }
+
+    &::after {
+      // color: green;
+    }
+
+    &:active::after {
+      @include opac-trans(0.5s);
+    }
+
+    &:active::before {
+      @include opac-trans(0.5s);
+    }
+  }
+}
+
 .box.outer {
-  @include adjust-fade(1px, rgba(255, 255, 255, 0.12), -1, +1);
+  @include box-fade(1px, rgba(255, 255, 255, 0.12), -1, +1);
 }
 
 // .fa,
