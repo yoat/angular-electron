@@ -1,3 +1,6 @@
+@import "../../shared/styles/flexy.style.scss";
+@import "../../shared/styles/player.theme.scss";
+
 .drop-container {
   position: absolute;
   left: 0;
@@ -14,12 +17,6 @@
   color: #dcdde1;
 }
 
-.fixeddim {
-  min-height: 150px;
-  width: 950px;
-  border: 2px solid #718093;
-}
-
 .center-console {
   background: #40739e;
 
@@ -31,12 +28,4 @@
   .col {
     // border: 1px solid #3434aa;
   }
-}
-
-.viz {
-  min-height: 150px;
-  height: 100%;
-  width: 150px;
-  background: #2f3640;
-  color: #dcdde1;
 }

@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'AlbumDisplay',
-  template: `<div class="title-display">{{ text }}</div>`
+  template: `<div class="cc-display title-display">{{ text }}</div>`
 })
 export class AlbumDisplayComponent implements OnInit, OnDestroy {
   private sub: Subscription;

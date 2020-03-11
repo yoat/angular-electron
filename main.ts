@@ -77,8 +77,8 @@ function createWindow(): BrowserWindow {
   mainWindow = new BrowserWindow({
     x: 0,
     y: 0,
-    width: 1000, // size.width,
-    height: 300, // size.height,
+    width: 520, // size.width,
+    height: 205, // size.height,
     webPreferences: {
       experimentalFeatures: true,
       nodeIntegration: true,
