@@ -1,0 +1,130 @@
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Nunito|PT+Mono&display=swap');
+
+</style>
+<div class="drop-container" (dragover)="$event.preventDefault(); $event.dataTransfer.dropEffect = 'move'"
+  (drop)="dropped($event)">
+  <div class="fixeddim container-fluid">
+    <div class="row">
+      <div class="col viz">VizL</div>
+
+      <div class="col-auto container-fluid center-console">
+        <div class="row align-items-center justify-content-between">
+          <div class="col">
+            <ProButton name="settings" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'cog']"></fa-icon>
+            </ProButton>
+          </div>
+          <div class="col-auto grabber ptmono noselect">
+            ConjoinedCats
+            <fa-icon [icon]="['fas', 'volume-down']" rotate="45"></fa-icon>
+            &nbsp;
+            <fa-icon [icon]="['fas', 'cat']" flip="horizontal"></fa-icon>
+            WebAmp
+          </div>
+          <div class="col">
+            <ProButton name="min" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'window-minimize']"></fa-icon>
+            </ProButton>
+            <ProButton name="max" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'window-maximize']"></fa-icon>
+            </ProButton>
+            <ProButton name="close" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'window-close']"></fa-icon>
+            </ProButton>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col">
+            <CCDisplay field="title" icon="🎵"></CCDisplay>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col">
+            <!-- <ArtistDisplay></ArtistDisplay> -->
+            <!-- <fa-icon [icon]="['fas', 'users']"></fa-icon> -->
+            <CCDisplay field="artist" icon="🧑"></CCDisplay>
+          </div>
+          <div class="col">
+            <!-- <AlbumDisplay></AlbumDisplay> -->
+            <CCDisplay field="album" icon="💿"></CCDisplay>
+          </div>
+          <div class="col-auto">
+            <StatusDisplay></StatusDisplay>
+          </div>
+          <div class="col">
+            <TimeDisplay></TimeDisplay>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col">
+            <VolumeSlider></VolumeSlider>
+          </div>
+
+          <div class="col">
+            <BalanceSlider></BalanceSlider>
+          </div>
+          <!-- </div>
+        <div class="row align-items-center"> -->
+          <div class="col">
+            <ProgressScrubber></ProgressScrubber>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <div class="col">
+            <ProButton name="prev" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'step-backward']"></fa-icon>
+            </ProButton>
+          </div>
+          <div class="col">
+            <ProButton name="play" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'play']"></fa-icon>
+            </ProButton>
+          </div>
+          <div class="col">
+            <ProButton name="pause" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'pause']"></fa-icon>
+            </ProButton>
+          </div>
+          <div class="col">
+            <ProButton name="stop" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'stop']"></fa-icon>
+            </ProButton>
+          </div>
+          <div class="col">
+            <ProButton name="next" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'step-forward']"></fa-icon>
+            </ProButton>
+          </div>
+
+          <div class="col">
+            <ProButton name="shuffle" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'random']"></fa-icon>
+            </ProButton>
+          </div>
+          <div class="col">
+            <ProButton name="repeat" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'redo-alt']"></fa-icon>
+            </ProButton>
+          </div>
+          <div class="col">
+            <ProButton name="playlist" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'list-alt']"></fa-icon>
+            </ProButton>
+          </div>
+          <div class="col">
+            <ProButton name="mute" (push)="onPush($event)">
+              <fa-icon [icon]="['fas', 'volume-mute']"></fa-icon>
+            </ProButton>
+          </div>
+        </div>
+      </div>
+
+      <div class="col viz">VizR</div>
+    </div>
+  </div>
+</div>
