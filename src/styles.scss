@@ -32,6 +32,7 @@ body {
 
   .grabber {
     cursor: move;
+    -webkit-app-region: drag;
   }
 
 

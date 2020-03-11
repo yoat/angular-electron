@@ -29,3 +29,8 @@
     // border: 1px solid #3434aa;
   }
 }
+
+.grabber {
+  cursor: grab;
+  -webkit-app-region: drag;
+}

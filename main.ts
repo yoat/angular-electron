@@ -86,8 +86,8 @@ function createWindow(): BrowserWindow {
       // allowRunningInsecureContent: (serve) ? true : false,
     },
     icon: iconPath,
-    // frame: false,
-    // titleBarStyle: 'hidden',
+    frame: false,
+    titleBarStyle: 'hidden',
     show: false, // wait for ready-to-show
   });
 
