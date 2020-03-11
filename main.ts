@@ -102,14 +102,14 @@ function createWindow(): BrowserWindow {
       pathname: 'localhost:4242',
       protocol: 'http:',
       slashes: true,
-      hash: `/player`
+      hash: `/flex`
     }));
   } else {
     mainWindow.loadURL(url.format({
       pathname: path.join(__dirname, 'dist', 'index.html'),
       protocol: 'file:',
       slashes: true,
-      hash: "/player"
+      hash: "/flex"
     }));
   }
 

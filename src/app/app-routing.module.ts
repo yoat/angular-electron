@@ -1,3 +1,4 @@
+import { FlexPlayerComponent } from './components/flex-player/flex-player.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { PlayerComponent } from './components/player/player.component';
 import { DemoComponent } from './demo/demo.component';
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'player',
     component: PlayerComponent
+  },
+  {
+    path: 'flex',
+    component: FlexPlayerComponent
   },
   {
     path: 'playlist',

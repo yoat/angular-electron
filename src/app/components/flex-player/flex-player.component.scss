@@ -1,0 +1,42 @@
+.drop-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.player-container {
+  font-size: 28pt;
+  color: #dcdde1;
+}
+
+.fixeddim {
+  min-height: 150px;
+  width: 950px;
+  border: 2px solid #718093;
+}
+
+.center-console {
+  background: #40739e;
+
+  .row {
+    // border: 1px solid #24aa24;
+    text-align: center;
+  }
+
+  .col {
+    // border: 1px solid #3434aa;
+  }
+}
+
+.viz {
+  min-height: 150px;
+  height: 100%;
+  width: 150px;
+  background: black;
+  color: white;
+}
