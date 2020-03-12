@@ -11,12 +11,15 @@ import butterchurnPresets from 'butterchurn-presets';
 })
 export class VizPanelComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() side: "left" | "right" | "";
+  @Input() height: number;
+  @Input() width: number;
   @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
   display: string;
   count = 0;
   private ctx: CanvasRenderingContext2D;
   private visualizer;
-
+  
+  
   constructor(private playback: PlaybackService) { }
 
   ngOnInit(): void {
@@ -25,12 +28,13 @@ export class VizPanelComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.playback.viz$.subscribe((sad: StereoAudioData) => {
     //   console.log(`audio data! ${this.display} ${this.count++}`); // ${sad.left.length} + ${sad.right.length}`);
     // });
+    
   }
 
   ngAfterViewInit() {
     this.visualizer = butterchurn.createVisualizer(this.playback.context, this.canvas.nativeElement, {
-      width: 100,
-      height: 100
+      width: +this.width || 400,
+      height: +this.height || 300
     });
 
     this.visualizer.connectAudio(this.playback.source);
@@ -42,7 +46,7 @@ export class VizPanelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // resize visualizer
 
-    this.visualizer.setRendererSize(100, 100);
+    this.visualizer.setRendererSize(this.width, this.height);
 
     // render a frame
 
