@@ -20,7 +20,7 @@ export class PlaybackService {
   private ctx: AudioContext;
   private sourceNode: MediaElementAudioSourceNode;
   private gainNode: GainNode;
-  private stereoAnal: StereoAnalyserNode;
+  private analNode: StereoAnalyserNode;
   private stereoPan: StereoPannerNode;
 
   private currentTrack: Track;
@@ -54,10 +54,12 @@ export class PlaybackService {
     this.sourceNode = this.ctx.createMediaElementSource(this.audioObj);
     this.gainNode = this.ctx.createGain();
     this.stereoPan = this.ctx.createStereoPanner();
+    this.analNode = new StereoAnalyserNode(this.ctx);
     this.sourceNode.connect(this.stereoPan);
     this.stereoPan.connect(this.gainNode);
-    this.gainNode.connect(this.ctx.destination);
-
+    // this.gainNode.connect(this.ctx.destination);
+    this.gainNode.connect(this.analNode);
+    this.analNode.connect(this.ctx.destination);
     // this.gainNode.gain.setValueAtTime(0.1, this.ctx.currentTime)
 
     // // var analyser = this.ctx.createAnalyser();
@@ -255,6 +257,7 @@ export class PlaybackService {
   
 
   setVolume(unit: number) {
+    console.log(`setVolume(${unit})`);
     // must be 0:1
     this.gainNode.gain.setValueAtTime(Math.max(0, Math.min(1, unit)), this.ctx.currentTime);
   }
