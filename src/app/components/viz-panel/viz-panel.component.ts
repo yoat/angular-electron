@@ -18,8 +18,11 @@ export class VizPanelComponent implements OnInit, AfterViewInit, OnDestroy {
   count = 0;
   private ctx: CanvasRenderingContext2D;
   private visualizer;
-  
-  
+  private presets = {};
+  private presetName = "";
+  private presetIdx = 0;
+  private presetCount = 0;
+
   constructor(private playback: PlaybackService) { }
 
   ngOnInit(): void {
@@ -28,7 +31,8 @@ export class VizPanelComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.playback.viz$.subscribe((sad: StereoAudioData) => {
     //   console.log(`audio data! ${this.display} ${this.count++}`); // ${sad.left.length} + ${sad.right.length}`);
     // });
-    
+    this.presets = butterchurnPresets.getPresets();
+    this.presetCount = Object.keys(this.presets).length;
   }
 
   ngAfterViewInit() {
@@ -39,17 +43,14 @@ export class VizPanelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.visualizer.connectAudio(this.playback.source);
     // this.ctx = this.canvas.nativeElement.getContext('2d');
-    const presets = butterchurnPresets.getPresets();
-    const preset = presets['Flexi, martin + geiss - dedicated to the sherwin maxawow'];
-
-    this.visualizer.loadPreset(preset, 0.0); // 2nd argument is the number of seconds to blend presets
-
+  
+    this.loadPreset(0);
+    // const preset = this.presets['Flexi, martin + geiss - dedicated to the sherwin maxawow'];
+    // this.visualizer.loadPreset(preset, 0.0); // 2nd argument is the number of seconds to blend presets
     // resize visualizer
-
     this.visualizer.setRendererSize(this.width, this.height);
 
     // render a frame
-
     this.render();
   }
 
@@ -57,8 +58,26 @@ export class VizPanelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.visualizer.render();
     window.requestAnimationFrame(this.render.bind(this));
   }
+
   ngOnDestroy() {
 
+  }
+
+  loadPreset(idx: number, transition: number = 0) {
+    this.presetIdx = idx;
+    this.presetName = Object.keys(this.presets)[this.presetIdx];
+    const preset = this.presets[this.presetName];
+    this.visualizer.loadPreset(preset, transition);
+  }
+
+  nextPreset(transition: number = 0) {
+    const idx = (this.presetIdx + 1 >= this.presetCount) ? 0 : this.presetIdx + 1;
+    this.loadPreset(idx, transition);
+  }
+
+  prevPreset(transition: number = 0) {
+    const idx = (this.presetIdx - 1 < 0) ? this.presetCount - 1 : this.presetIdx - 1;
+    this.loadPreset(idx, transition);
   }
 
 }
