@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlaylistButtonComponent } from './playlist-button.component';
+import { FlexPlayerComponent } from './flex-player.component';
 
-describe('PlaylistButtonComponent', () => {
-  let component: PlaylistButtonComponent;
-  let fixture: ComponentFixture<PlaylistButtonComponent>;
+describe('FlexPlayerComponent', () => {
+  let component: FlexPlayerComponent;
+  let fixture: ComponentFixture<FlexPlayerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlaylistButtonComponent ]
+      declarations: [ FlexPlayerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlaylistButtonComponent);
+    fixture = TestBed.createComponent(FlexPlayerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

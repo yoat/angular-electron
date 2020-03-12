@@ -77,8 +77,8 @@ function createWindow(): BrowserWindow {
   mainWindow = new BrowserWindow({
     x: 0,
     y: 0,
-    width: 1000, // size.width,
-    height: 300, // size.height,
+    width: 520, // size.width,
+    height: 205, // size.height,
     webPreferences: {
       experimentalFeatures: true,
       nodeIntegration: true,
@@ -86,8 +86,8 @@ function createWindow(): BrowserWindow {
       // allowRunningInsecureContent: (serve) ? true : false,
     },
     icon: iconPath,
-    // frame: false,
-    // titleBarStyle: 'hidden',
+    frame: false,
+    titleBarStyle: 'hidden',
     show: false, // wait for ready-to-show
   });
 
@@ -102,14 +102,14 @@ function createWindow(): BrowserWindow {
       pathname: 'localhost:4242',
       protocol: 'http:',
       slashes: true,
-      hash: `/player`
+      hash: `/flex`
     }));
   } else {
     mainWindow.loadURL(url.format({
       pathname: path.join(__dirname, 'dist', 'index.html'),
       protocol: 'file:',
       slashes: true,
-      hash: "/player"
+      hash: "/flex"
     }));
   }
 

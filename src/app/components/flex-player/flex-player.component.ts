@@ -8,18 +8,18 @@ import { Component, OnInit } from '@angular/core';
 import { ipcRenderer } from 'electron';
 
 @Component({
-  selector: 'app-player',
-  templateUrl: './player.component.html',
-  styleUrls: ['./player.component.scss']
+  selector: 'app-flex-player',
+  templateUrl: './flex-player.component.html',
+  styleUrls: ['./flex-player.component.scss']
 })
-export class PlayerComponent implements OnInit {
+export class FlexPlayerComponent implements OnInit {
   playlistShown: boolean;
   constructor(private util: UtilService, private playback: PlaybackService, private playlist: PlaylistService, private ipc: IpcService) { }
 
   ngOnInit(): void {
     // this.playback.load(new Track());
     this.playback.nextTrack();
-    
+
     this.ipc.message$.pipe(
       filter((msg: IpcMessage) => msg.target == "player")
     ).subscribe((msg: IpcMessage) => {

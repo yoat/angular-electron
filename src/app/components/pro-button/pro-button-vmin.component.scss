@@ -1,0 +1,141 @@
+// .fa,
+// .fa-icon,
+// .fa-2x {
+//   vertical-align: middle;
+// }
+
+// i.fa {
+//   vertical-align: middle;
+// }
+
+.baabox {
+  margin: 2vmin 5vmin;
+  padding: 0;
+  height: 10vmin;
+  width: 10vmin;
+  border-radius: 5vmin;
+  // border: 1vmin inset orange;
+  position: relative;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  user-select: none;
+}
+
+.baabox::before {
+  box-shadow: -0.5vmin -0.5vmin 0.5vmin 0.5vmin rgba(255, 255, 255, 0.12),
+    -1vmin -1vmin 1vmin 1vmin rgba(255, 255, 255, 0.12),
+    -2vmin -2vmin 2vmin 2vmin rgba(255, 255, 255, 0.12),
+    -4vmin -4vmin 4vmin 4vmin rgba(255, 255, 255, 0.12);
+  // -8vmin -8vmin 8vmin 8vmin rgba(255, 255, 255, 0.12);
+  content: "";
+  border-radius: 5vmin;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all 2.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+
+.baabox::after {
+  box-shadow: 0.5vmin 0.5vmin 0.5vmin 0.5vmin rgba(0, 0, 0, 0.12),
+    1vmin 1vmin 1vmin 1vmin rgba(0, 0, 0, 0.12),
+    2vmin 2vmin 2vmin 2vmin rgba(0, 0, 0, 0.12),
+    4vmin 4vmin 4vmin 4vmin rgba(0, 0, 0, 0.12);
+  // 8vmin 8vmin 8vmin 8vmin rgba(0, 0, 0, 0.12);
+  content: "";
+  border-radius: 5vmin;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all 2.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.baabox-content {
+  font-family: monospace;
+  margin: 0;
+  padding: 0;
+  height: 10vmin;
+  width: 10vmin;
+  padding-top: 1vmin;
+  font-size: 4vmin;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  color: white;
+}
+
+.baabox-content::before {
+  margin: 0;
+
+  * {
+    margin: 0;
+  }
+
+  box-shadow: inset 0.5vmin 0.5vmin 0.5vmin 0.5vmin rgba(0, 0, 0, 0.12),
+  inset 1vmin 1vmin 1vmin 1vmin rgba(0, 0, 0, 0.12),
+  inset 2vmin 2vmin 2vmin 2vmin rgba(0, 0, 0, 0.12),
+  inset 4vmin 4vmin 4vmin 4vmin rgba(0, 0, 0, 0.12);
+  // inset 8vmin 8vmin 8vmin 8vmin rgba(0, 0, 0, 0.12);
+  content: "";
+  border-radius: 5vmin;
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all 3.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+
+.baabox-content::after {
+  box-shadow: inset -0.5vmin -0.5vmin 0.5vmin 0.5vmin rgba(255, 255, 255, 0.12),
+    inset -1vmin -1vmin 1vmin 1vmin rgba(255, 255, 255, 0.12),
+    inset -2vmin -2vmin 2vmin 2vmin rgba(255, 255, 255, 0.12),
+    inset -4vmin -4vmin 4vmin 4vmin rgba(255, 255, 255, 0.12);
+  // inset -8vmin -8vmin 8vmin 8vmin rgba(255, 255, 255, 0.12);
+  content: "";
+  border-radius: 5vmin;
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all 3.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.baabox:hover {}
+
+.baabox:hover::after {
+  opacity: 1;
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.baabox:hover::before {
+  opacity: 1;
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.baabox-content:active::after {
+  opacity: 1;
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.baabox-content:active::before {
+  opacity: 1;
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}

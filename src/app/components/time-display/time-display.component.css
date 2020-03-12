@@ -1,7 +1,8 @@
 .time-display {
   height: 100%;
+  max-height: 30px;
   width: 100%;
-  background: black;
-  color: green;
+  background: #2f3640;
+  color: #44bd32;
   cursor: pointer;
 }

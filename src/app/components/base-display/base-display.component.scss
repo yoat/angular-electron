@@ -1,3 +1,14 @@
+.base-marquee {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.base-display {
+  // min-width: 50px;
+  width: 150px;
+  // background-color: rgba(0, 0, 0, 0.1);
+  color: #dcdde1;
+}
+
 .scroll-left {
   height: 50px;
   overflow: hidden;

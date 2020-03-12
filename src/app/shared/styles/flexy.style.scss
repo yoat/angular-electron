@@ -1,0 +1,15 @@
+.flexy-container {
+  display: inline-flex;
+  flex-direction: row; // | row-reverse | column | column-reverse;
+  flex-wrap: wrap; // nowrap | wrap | wrap-reverse;
+  justify-content: flex-start safe; // flex-start | flex-end | center | space-between | space-around | space-evenly | start | end | left | right ...+safe | unsafe
+  align-items: flex-start safe; // stretch | flex-start | flex-end | center | baseline | first baseline | last baseline | start | end | self-start | self-end+... safe | unsafe;
+  align-content: flex-start safe; // flex-start | flex-end | center | space-between | space-around | space-evenly | stretch | start | end | baseline | first baseline | last baseline+... safe | unsafe;
+
+  padding: 10px;
+
+  &>* {
+    margin: 5px;
+  }
+
+}
