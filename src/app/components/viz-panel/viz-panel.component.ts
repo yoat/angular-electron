@@ -1,6 +1,8 @@
 import { StereoAudioData } from './../../models/audio-data.model';
 import { PlaybackService } from './../../services/playback.service';
 import { Component, OnInit, Input } from '@angular/core';
+import butterchurn from 'butterchurn';
+import butterchurnPresets from 'butterchurn-presets';
 
 @Component({
   selector: 'VizPanel',
