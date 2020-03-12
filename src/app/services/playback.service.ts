@@ -1,9 +1,9 @@
+import { StereoAudioData } from './../models/audio-data.model';
 import { PlaylistService } from './playlist.service';
 import { TimeUpdate, ITimeUpdate } from './../models/time-update.model';
 import { Track } from './../models/track.model';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { PlaybackState, PlaybackStatus, PlaybackActions } from '../models/playback-state.model';
 import * as moment from "moment";
 import { takeUntil } from 'rxjs/operators';
@@ -31,7 +31,11 @@ export class PlaybackService {
   time$ = this.timeSource.asObservable();
   private playbackSource = new BehaviorSubject<PlaybackState>(PlaybackState.initial());
   playback$ = this.playbackSource.asObservable();
-  // vizR$: Observable<>;
+
+  // viz
+  private sampleSize = 1024;
+  private vizSource = new BehaviorSubject<StereoAudioData>({ left: new Float32Array(), right: new Float32Array()})
+  viz$ = this.vizSource.asObservable();
 
   audioEvents = [
     "ended",
@@ -275,5 +279,7 @@ export class PlaybackService {
     const arrayR = new Float32Array(1024);
 
     this.analNode.getFloatFrequencyData(arrayL, arrayR);
+
+    this.vizSource.next({left: arrayL, right: arrayR});
   }
 }
