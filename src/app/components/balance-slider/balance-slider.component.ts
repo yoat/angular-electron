@@ -49,7 +49,9 @@ export class BalanceSliderComponent implements OnInit {
       return 1;
     } else {
       // return input * 0.01;
-      return Math.abs(input) * input * 0.0001;
+      // return Math.abs(input) * input * 0.0001;
+      const conv = input * 0.01;
+      return (Math.abs(conv) <= 0.05) ? 0 : conv;
     }
   }
 }
