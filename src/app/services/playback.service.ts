@@ -89,6 +89,10 @@ export class PlaybackService {
 
   // public methods
 
+  get context(): AudioContext {
+    return this.ctx;
+  }
+
   observe(): Observable<PlaybackState> {
     return this.playbackSource.asObservable();
   }
