@@ -184,11 +184,16 @@ export class PlaybackService {
     }
   }
 
+  get isPlaying(): boolean {
+    return this.playbackSource.value.status == PlaybackStatus.Playing;
+  }
+
   play() {
-    if (this.playbackSource.value.status == PlaybackStatus.Playing) {
+    if (this.isPlaying) {
       return;
     } else {
       this.audioObj.play();
+      window.requestAnimationFrame(this.render);
     }
 
     const modified = this.playbackSource.value;
@@ -274,12 +279,18 @@ export class PlaybackService {
   }
 
   render() {
-    console.log(`render...`);
+    // console.log(`render...`);
     const arrayL = new Float32Array(1024);
     const arrayR = new Float32Array(1024);
 
-    this.analNode.getFloatFrequencyData(arrayL, arrayR);
+    if (this) {
+      this.analNode.getFloatFrequencyData(arrayL, arrayR);
 
-    this.vizSource.next({left: arrayL, right: arrayR});
+      this.vizSource.next({left: arrayL, right: arrayR});
+      if (this.isPlaying) {
+        window.requestAnimationFrame(this.render.bind(this));
+      }
+    }
+    
   }
 }

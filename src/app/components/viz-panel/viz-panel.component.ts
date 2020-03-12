@@ -10,6 +10,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class VizPanelComponent implements OnInit {
   @Input() side: "left" | "right" | "";
   display: string;
+  count = 0;
 
   constructor(private playback: PlaybackService) { }
 
@@ -17,7 +18,7 @@ export class VizPanelComponent implements OnInit {
     this.display = this.side.toLowerCase() == "left" ? "L" : "R";
 
     this.playback.viz$.subscribe((sad: StereoAudioData) => {
-      console.log(`audio data! ${this.display}`); // ${sad.left.length} + ${sad.right.length}`);
+      console.log(`audio data! ${this.display} ${this.count++}`); // ${sad.left.length} + ${sad.right.length}`);
     });
   }
 
