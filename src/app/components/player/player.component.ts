@@ -80,6 +80,8 @@ export class PlayerComponent implements OnInit {
       case "mute":
         console.log(`Toggle Mute!`);
         break;
+      case "render":
+        this.playback.render();
       default:
         console.log(`event ${event}`);
         break;
