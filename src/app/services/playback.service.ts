@@ -31,6 +31,7 @@ export class PlaybackService {
   time$ = this.timeSource.asObservable();
   private playbackSource = new BehaviorSubject<PlaybackState>(PlaybackState.initial());
   playback$ = this.playbackSource.asObservable();
+  // vizR$: Observable<>;
 
   audioEvents = [
     "ended",
@@ -266,5 +267,13 @@ export class PlaybackService {
     // must be 0:1
     const unit = Math.max(-1, Math.min(1, signedUnit));
     this.stereoPan.pan.setValueAtTime(unit, this.ctx.currentTime);
+  }
+
+  render() {
+    console.log(`render...`);
+    const arrayL = new Float32Array(1024);
+    const arrayR = new Float32Array(1024);
+
+    this.analNode.getFloatFrequencyData(arrayL, arrayR);
   }
 }
