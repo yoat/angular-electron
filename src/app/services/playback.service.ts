@@ -93,6 +93,10 @@ export class PlaybackService {
     return this.ctx;
   }
 
+  get source(): MediaElementAudioSourceNode {
+    return this.sourceNode;
+  }
+
   observe(): Observable<PlaybackState> {
     return this.playbackSource.asObservable();
   }
