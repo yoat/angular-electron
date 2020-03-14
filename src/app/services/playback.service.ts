@@ -1,9 +1,9 @@
+import { StereoAudioData } from './../models/audio-data.model';
 import { PlaylistService } from './playlist.service';
 import { TimeUpdate, ITimeUpdate } from './../models/time-update.model';
 import { Track } from './../models/track.model';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { PlaybackState, PlaybackStatus, PlaybackActions } from '../models/playback-state.model';
 import * as moment from "moment";
 import { takeUntil } from 'rxjs/operators';
@@ -20,7 +20,7 @@ export class PlaybackService {
   private ctx: AudioContext;
   private sourceNode: MediaElementAudioSourceNode;
   private gainNode: GainNode;
-  private stereoAnal: StereoAnalyserNode;
+  private analNode: StereoAnalyserNode;
   private stereoPan: StereoPannerNode;
 
   private currentTrack: Track;
@@ -31,6 +31,11 @@ export class PlaybackService {
   time$ = this.timeSource.asObservable();
   private playbackSource = new BehaviorSubject<PlaybackState>(PlaybackState.initial());
   playback$ = this.playbackSource.asObservable();
+
+  // viz
+  private sampleSize = 1024;
+  private vizSource = new BehaviorSubject<StereoAudioData>({ left: new Float32Array(), right: new Float32Array()})
+  viz$ = this.vizSource.asObservable();
 
   audioEvents = [
     "ended",
@@ -54,10 +59,12 @@ export class PlaybackService {
     this.sourceNode = this.ctx.createMediaElementSource(this.audioObj);
     this.gainNode = this.ctx.createGain();
     this.stereoPan = this.ctx.createStereoPanner();
+    this.analNode = new StereoAnalyserNode(this.ctx);
     this.sourceNode.connect(this.stereoPan);
     this.stereoPan.connect(this.gainNode);
-    this.gainNode.connect(this.ctx.destination);
-
+    // this.gainNode.connect(this.ctx.destination);
+    this.gainNode.connect(this.analNode);
+    this.analNode.connect(this.ctx.destination);
     // this.gainNode.gain.setValueAtTime(0.1, this.ctx.currentTime)
 
     // // var analyser = this.ctx.createAnalyser();
@@ -81,6 +88,14 @@ export class PlaybackService {
   }
 
   // public methods
+
+  get context(): AudioContext {
+    return this.ctx;
+  }
+
+  get source(): MediaElementAudioSourceNode {
+    return this.sourceNode;
+  }
 
   observe(): Observable<PlaybackState> {
     return this.playbackSource.asObservable();
@@ -177,11 +192,16 @@ export class PlaybackService {
     }
   }
 
+  get isPlaying(): boolean {
+    return this.playbackSource.value.status == PlaybackStatus.Playing;
+  }
+
   play() {
-    if (this.playbackSource.value.status == PlaybackStatus.Playing) {
+    if (this.isPlaying) {
       return;
     } else {
       this.audioObj.play();
+      window.requestAnimationFrame(this.render);
     }
 
     const modified = this.playbackSource.value;
@@ -255,6 +275,7 @@ export class PlaybackService {
   
 
   setVolume(unit: number) {
+    console.log(`setVolume(${unit})`);
     // must be 0:1
     this.gainNode.gain.setValueAtTime(Math.max(0, Math.min(1, unit)), this.ctx.currentTime);
   }
@@ -263,5 +284,21 @@ export class PlaybackService {
     // must be 0:1
     const unit = Math.max(-1, Math.min(1, signedUnit));
     this.stereoPan.pan.setValueAtTime(unit, this.ctx.currentTime);
+  }
+
+  render() {
+    // console.log(`render...`);
+    const arrayL = new Float32Array(1024);
+    const arrayR = new Float32Array(1024);
+
+    if (this) {
+      this.analNode.getFloatFrequencyData(arrayL, arrayR);
+
+      this.vizSource.next({left: arrayL, right: arrayR});
+      if (this.isPlaying) {
+        window.requestAnimationFrame(this.render.bind(this));
+      }
+    }
+    
   }
 }

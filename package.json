@@ -103,6 +103,8 @@
     "@fortawesome/free-regular-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "bootstrap": "4.4.1",
+    "butterchurn": "2.6.7",
+    "butterchurn-presets": "2.4.7",
     "jquery": "3.4.1",
     "mediaelement": "4.2.14",
     "moment": "2.24.0",

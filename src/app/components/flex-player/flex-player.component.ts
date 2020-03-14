@@ -79,6 +79,8 @@ export class FlexPlayerComponent implements OnInit {
         break;
       case "mute":
         console.log(`Toggle Mute!`);
+      case "render":
+        this.playback.render();
         break;
       default:
         console.log(`event ${event}`);

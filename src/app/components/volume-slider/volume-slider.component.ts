@@ -2,6 +2,7 @@ import { PlaybackService } from './../../services/playback.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Subscription, fromEvent } from 'rxjs';
+import { ConstantPool } from '@angular/compiler';
 
 interface IVolume {
   volume: number;
@@ -25,6 +26,7 @@ export class VolumeSliderComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
+    console.log(`${VolumeSliderComponent.sigmoid(6)} ${ VolumeSliderComponent.sigmoid(-6) }`);
     this.load();
     this.sub = fromEvent(this.vcVolume.nativeElement, 'input')
       .pipe(
@@ -55,6 +57,10 @@ export class VolumeSliderComponent implements OnInit, OnDestroy {
     this.sub?.unsubscribe();
   }
 
+  static sigmoid(t: number): number {
+    return 1 / (1 + Math.pow(Math.E, -t));
+  }
+
   static convertVolVal(input: number): number {
     if (input < 0) {
       return 0;
@@ -62,7 +68,11 @@ export class VolumeSliderComponent implements OnInit, OnDestroy {
       return 1;
     } else {
       // return input * 0.01;
-      return input * input * 0.0001;
+      const halfpi = Math.PI * 0.5;
+      const conv = (input * 0.01);
+      // return Math.sin(halfpi * conv);
+      // return this.sigmoid((conv * 12 ) - 6);
+      return (conv > 0.99) ? 1 : ((conv < 0.01) ? 0 : conv);
     }
   }
 

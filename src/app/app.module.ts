@@ -49,6 +49,7 @@ import {
 import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-svg-icons';
 import { FlexPlayerComponent } from './components/flex-player/flex-player.component';
+import { VizPanelComponent } from './components/viz-panel/viz-panel.component';
 //  https://fontawesome.com/cheatsheet
 // window-maximize, window-close, window-minimize
 // hamburger (menu) skull-crossbones cat bong cannabis burn cubes hand-middle-finger
@@ -63,7 +64,7 @@ import { FlexPlayerComponent } from './components/flex-player/flex-player.compon
 // book, book-open
 // record-vinyl (album), music (track), users, grin-stars, headphones, headphones-alt,
 @NgModule({
-  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, BaseButtonComponent, StatusDisplayComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, PlaylistComponent, ProButtonComponent, FlexPlayerComponent],
+  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, BaseButtonComponent, StatusDisplayComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, PlaylistComponent, ProButtonComponent, FlexPlayerComponent, VizPanelComponent],
   imports: [
     BrowserModule,
     FormsModule,
