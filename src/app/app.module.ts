@@ -1,3 +1,4 @@
+import { PlaylistModule } from './playlist/playlist.module';
 import 'reflect-metadata';
 import '../polyfills';
 
@@ -32,7 +33,7 @@ import { TimeDisplayComponent } from './components/time-display/time-display.com
 import { VolumeSliderComponent } from './components/volume-slider/volume-slider.component';
 import { BalanceSliderComponent } from './components/balance-slider/balance-slider.component';
 import { ProgressScrubberComponent } from './components/progress-scrubber/progress-scrubber.component';
-import { PlaylistComponent } from './playlist/playlist.component';
+// import { PlaylistComponent } from './playlist/playlist.component';
 import { ProButtonComponent } from './components/pro-button/pro-button.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -64,7 +65,9 @@ import { VizPanelComponent } from './components/viz-panel/viz-panel.component';
 // book, book-open
 // record-vinyl (album), music (track), users, grin-stars, headphones, headphones-alt,
 @NgModule({
-  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, BaseButtonComponent, StatusDisplayComponent, ArtistDisplayComponent, AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, PlaylistComponent, ProButtonComponent, FlexPlayerComponent, VizPanelComponent],
+  declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, BaseButtonComponent, StatusDisplayComponent, ArtistDisplayComponent, 
+    AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, 
+    ProButtonComponent, FlexPlayerComponent, VizPanelComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -72,6 +75,7 @@ import { VizPanelComponent } from './components/viz-panel/viz-panel.component';
     CoreModule,
     SharedModule,
     HomeModule,
+    PlaylistModule,
     AppRoutingModule,
     MatTooltipModule,
     BrowserAnimationsModule,
