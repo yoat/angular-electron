@@ -14,13 +14,15 @@ import * as mm from 'music-metadata';
   providedIn: 'root'
 })
 export class PlaybackService {
+  
   private audioObj = new Audio();
   
   private loadSub: Subscription;
   private ctx: AudioContext;
   private sourceNode: MediaElementAudioSourceNode;
   private gainNode: GainNode;
-  private analNode: StereoAnalyserNode;
+  private analMono: AnalyserNode;
+  // private analNode: StereoAnalyserNode;
   private stereoPan: StereoPannerNode;
 
   private currentTrack: Track;
@@ -50,6 +52,7 @@ export class PlaybackService {
   ];
 
   constructor(private playlist: PlaylistService) {
+    console.log(`PLAYBACK SERVICE is go!`);
     this.ctx = new AudioContext();
 
     this.ctx.onstatechange = function () {
@@ -59,12 +62,13 @@ export class PlaybackService {
     this.sourceNode = this.ctx.createMediaElementSource(this.audioObj);
     this.gainNode = this.ctx.createGain();
     this.stereoPan = this.ctx.createStereoPanner();
-    this.analNode = new StereoAnalyserNode(this.ctx);
+    //this.analNode = new StereoAnalyserNode(this.ctx);
+    this.analMono = this.ctx.createAnalyser();
     this.sourceNode.connect(this.stereoPan);
     this.stereoPan.connect(this.gainNode);
     // this.gainNode.connect(this.ctx.destination);
-    this.gainNode.connect(this.analNode);
-    this.analNode.connect(this.ctx.destination);
+    this.gainNode.connect(this.analMono);
+    this.analMono.connect(this.ctx.destination);
     // this.gainNode.gain.setValueAtTime(0.1, this.ctx.currentTime)
 
     // // var analyser = this.ctx.createAnalyser();
@@ -287,18 +291,34 @@ export class PlaybackService {
   }
 
   render() {
-    // console.log(`render...`);
-    const arrayL = new Float32Array(1024);
+    console.log(`renderMono...`);
+    const arrayM = new Float32Array(1024);
     const arrayR = new Float32Array(1024);
 
     if (this) {
-      this.analNode.getFloatFrequencyData(arrayL, arrayR);
+      this.analMono.getFloatFrequencyData(arrayM);
 
-      this.vizSource.next({left: arrayL, right: arrayR});
+      // this.vizSource.next({ left: arrayL, right: arrayR });
       if (this.isPlaying) {
         window.requestAnimationFrame(this.render.bind(this));
       }
     }
-    
+
   }
+
+  // renderStereo() {
+  //   // console.log(`render...`);
+  //   const arrayL = new Float32Array(1024);
+  //   const arrayR = new Float32Array(1024);
+
+  //   if (this) {
+  //     this.analNode.getFloatFrequencyData(arrayL, arrayR);
+
+  //     this.vizSource.next({left: arrayL, right: arrayR});
+  //     if (this.isPlaying) {
+  //       window.requestAnimationFrame(this.render.bind(this));
+  //     }
+  //   }
+    
+  // }
 }
