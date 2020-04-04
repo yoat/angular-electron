@@ -172,6 +172,7 @@ ipcMain.on('showWindow', (ev, arg) => {
   let name = arg.window;
   switch (name) {
     case 'playlist':
+    case 'viz':
       showWindow(name);
       break;
     default:
@@ -183,6 +184,7 @@ ipcMain.on('hideWindow', (ev, arg) => {
   let name = arg.window;
   switch (name) {
     case 'playlist':
+    case 'viz':
       hideWindow(name);
       break;
     default:

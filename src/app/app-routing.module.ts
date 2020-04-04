@@ -1,3 +1,4 @@
+import { VizComponent } from './viz/viz.component';
 import { FlexPlayerComponent } from './components/flex-player/flex-player.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { PlayerComponent } from './components/player/player.component';
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'flex',
     component: FlexPlayerComponent
+  },
+  {
+    path: 'viz',
+    component: VizComponent
   },
   {
     path: 'playlist',

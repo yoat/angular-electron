@@ -14,6 +14,7 @@ import { ipcRenderer } from 'electron';
 })
 export class FlexPlayerComponent implements OnInit {
   playlistShown: boolean;
+  vizShown: boolean;
   constructor(private util: UtilService, private playback: PlaybackService, private playlist: PlaylistService, private ipc: IpcService) { }
 
   ngOnInit(): void {
@@ -52,6 +53,9 @@ export class FlexPlayerComponent implements OnInit {
     switch (event.toLowerCase()) {
       case "playlist":
         this.togglePlaylist();
+        break;
+      case "viz":
+        this.toggleViz();
         break;
       case "pause":
         this.playback.pause();
@@ -97,6 +101,15 @@ export class FlexPlayerComponent implements OnInit {
     this.playlistShown = !this.playlistShown;
   }
 
+  toggleViz() {
+    if (this.vizShown) {
+      this.hideViz();
+    } else {
+      this.showViz();
+    }
+    this.vizShown = !this.vizShown;
+  }
+
   showPl() {
     ipcRenderer.send('showWindow', {
       window: "playlist"
@@ -106,6 +119,18 @@ export class FlexPlayerComponent implements OnInit {
   hidePl() {
     ipcRenderer.send('hideWindow', {
       window: "playlist"
+    });
+  }
+
+  showViz() {
+    ipcRenderer.send('showWindow', {
+      window: "viz"
+    });
+  }
+
+  hideViz() {
+    ipcRenderer.send('hideWindow', {
+      window: "viz"
     });
   }
 }

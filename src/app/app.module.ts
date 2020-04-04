@@ -1,3 +1,4 @@
+import { VizModule } from './viz/viz.module';
 import { PlaylistModule } from './playlist/playlist.module';
 import 'reflect-metadata';
 import '../polyfills';
@@ -45,7 +46,7 @@ import {
   faWindowMinimize, faWindowRestore, faRedoAlt as faReplay, faCog as faSettings, faVolumeUp, faVolumeDown, faVolumeMute, 
   faVolumeOff, faCat, faListAlt as faPlaylist, faPoll as faViz, faCaretSquareRight as faPlayer,
   faRecordVinyl as faAlbum, faUsers as faArtist, faMusic as faTrack,
-  faBalanceScale, faBalanceScaleLeft, faBalanceScaleRight, faRandom
+  faBalanceScale, faBalanceScaleLeft, faBalanceScaleRight, faRandom, faEye
 } from '@fortawesome/free-solid-svg-icons';
 import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-svg-icons';
@@ -76,6 +77,7 @@ import { VizPanelComponent } from './components/viz-panel/viz-panel.component';
     SharedModule,
     HomeModule,
     PlaylistModule,
+    VizModule,
     AppRoutingModule,
     MatTooltipModule,
     BrowserAnimationsModule,
@@ -99,7 +101,7 @@ export class AppModule {
       faPlay, faPause,  faStop, faStepBackward, faStepForward, faWindowClose, faWindowMaximize, 
       faWindowMinimize, faWindowRestore, faReplay, faSettings, faVolumeUp, faVolumeDown, 
       faVolumeMute, faVolumeOff, faCat, faPlaylist, faViz, faPlayer, faAlbum, faArtist, faTrack,
-      faBalanceScale, faBalanceScaleLeft, faBalanceScaleRight, faRandom
+      faBalanceScale, faBalanceScaleLeft, faBalanceScaleRight, faRandom, faEye
     );
   }
 }
