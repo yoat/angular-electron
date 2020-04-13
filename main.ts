@@ -192,6 +192,13 @@ ipcMain.on('hideWindow', (ev, arg) => {
   }
 });
 
+ipcMain.on('vizData', (ev, arg) => {
+  //const buffer = arg.buffer;
+  if (wins['viz']) {
+    wins['viz'].webContents.send('vizData', arg);
+  }
+});
+
 const channel = 'cc-ipc-msg';
 ipcMain.on(channel, (event: IpcMainEvent, msg: IpcMessage) => {
   if (msg) {

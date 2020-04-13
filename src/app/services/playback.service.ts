@@ -9,6 +9,7 @@ import * as moment from "moment";
 import { takeUntil } from 'rxjs/operators';
 import StereoAnalyserNode from 'stereo-analyser-node';
 import * as mm from 'music-metadata';
+import { ipcRenderer } from 'electron';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,9 @@ export class PlaybackService {
   playback$ = this.playbackSource.asObservable();
 
   // viz
-  private sampleSize = 1024;
+  private bufferLength = 1024;
+  private bBuffer: Uint8Array;
+  private fBuffer: Float32Array;
   private vizSource = new BehaviorSubject<StereoAudioData>({ left: new Float32Array(), right: new Float32Array()})
   viz$ = this.vizSource.asObservable();
 
@@ -64,6 +67,10 @@ export class PlaybackService {
     this.stereoPan = this.ctx.createStereoPanner();
     //this.analNode = new StereoAnalyserNode(this.ctx);
     this.analMono = this.ctx.createAnalyser();
+    this.analMono.fftSize = 2048;
+    this.bufferLength = this.analMono.frequencyBinCount;
+    this.bBuffer = new Uint8Array(this.bufferLength);
+    this.fBuffer = new Float32Array(this.analMono.fftSize);
     this.sourceNode.connect(this.stereoPan);
     this.stereoPan.connect(this.gainNode);
     // this.gainNode.connect(this.ctx.destination);
@@ -292,11 +299,9 @@ export class PlaybackService {
 
   render() {
     console.log(`renderMono...`);
-    const arrayM = new Float32Array(1024);
-    const arrayR = new Float32Array(1024);
-
     if (this) {
-      this.analMono.getFloatFrequencyData(arrayM);
+      this.analMono.getFloatFrequencyData(this.fBuffer);
+      this.publish(this.fBuffer);
 
       // this.vizSource.next({ left: arrayL, right: arrayR });
       if (this.isPlaying) {
@@ -306,6 +311,17 @@ export class PlaybackService {
 
   }
 
+  private publish(buffer: Float32Array) {
+    // console.log(`publishing buffer.`);
+    // ipcRenderer.send('vizData', {
+    //   buffer
+    // });
+    ipcRenderer.sendToHost('viz-data', { buffer });
+  }
+
+  sampleSend() {
+    ipcRenderer.sendToHost('viz-data', "pong");
+  }
   // renderStereo() {
   //   // console.log(`render...`);
   //   const arrayL = new Float32Array(1024);
