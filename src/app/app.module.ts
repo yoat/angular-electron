@@ -52,6 +52,8 @@ import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawe
 import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-svg-icons';
 import { FlexPlayerComponent } from './components/flex-player/flex-player.component';
 import { VizPanelComponent } from './components/viz-panel/viz-panel.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 //  https://fontawesome.com/cheatsheet
 // window-maximize, window-close, window-minimize
 // hamburger (menu) skull-crossbones cat bong cannabis burn cubes hand-middle-finger
@@ -89,7 +91,9 @@ import { VizPanelComponent } from './components/viz-panel/viz-panel.component';
         deps: [HttpClient]
       }
     }),
-    FontAwesomeModule
+    FontAwesomeModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent]
