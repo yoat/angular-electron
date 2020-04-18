@@ -54,6 +54,9 @@ import { FlexPlayerComponent } from './components/flex-player/flex-player.compon
 import { VizPanelComponent } from './components/viz-panel/viz-panel.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { reducers, metaReducers } from './store/reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 //  https://fontawesome.com/cheatsheet
 // window-maximize, window-close, window-minimize
 // hamburger (menu) skull-crossbones cat bong cannabis burn cubes hand-middle-finger
@@ -93,7 +96,15 @@ import { EffectsModule } from '@ngrx/effects';
     }),
     FontAwesomeModule,
     StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    StoreModule.forRoot(reducers, {
+      metaReducers, 
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      }
+    }),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [],
   bootstrap: [AppComponent]
