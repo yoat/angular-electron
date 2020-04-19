@@ -96,6 +96,10 @@ export class PlaybackService {
         this.load(track);
       }
     });
+
+
+    ipcRenderer.send('create-window', { name: 'viz', debug: true, show: false });
+    ipcRenderer.send('create-window', { name: 'playlist', debug: true, show: false });
   }
 
   // public methods

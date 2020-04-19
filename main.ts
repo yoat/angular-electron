@@ -158,8 +158,8 @@ function createMainWindow(): BrowserWindow {
     mainWindow.show();
 
     // init others
-    createWindow({ name: 'viz', debug: true, show: false });
-    createWindow({ name: 'playlist', debug: true, show: false });
+    // createWindow({ name: 'viz', debug: true, show: false });
+    // createWindow({ name: 'playlist', debug: true, show: false });
   });
 
   ipcMain.on('webamp-loadpath', (event, arg) => {
@@ -202,12 +202,8 @@ try {
   // throw e;
 }
 
-ipcMain.on('create-window', () => {
-  console.log(`close-all-windows in main`);
-  for (const kk in wins) {
-    wins[kk].close();
-  }
-  mainWindow.close();
+ipcMain.on('create-window', (ev: IpcMainEvent, args: ICreateWindow) => {
+  createWindow(args);
 });
 
 ipcMain.on('close-all-windows', () => {
