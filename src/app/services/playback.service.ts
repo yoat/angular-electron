@@ -98,8 +98,8 @@ export class PlaybackService {
     });
 
 
-    ipcRenderer.send('create-window', { name: 'viz', debug: true, show: false });
-    ipcRenderer.send('create-window', { name: 'playlist', debug: true, show: false });
+    ipcRenderer.send('create-window', { name: 'viz', debug: false, show: false });
+    ipcRenderer.send('create-window', { name: 'playlist', debug: false, show: false });
   }
 
   // public methods
@@ -216,7 +216,8 @@ export class PlaybackService {
       return;
     } else {
       this.audioObj.play();
-      window.requestAnimationFrame(this.render);
+      // window.requestAnimationFrame(this.render);
+      window.requestAnimationFrame(this.render.bind(this));
     }
 
     const modified = this.playbackSource.value;
@@ -302,7 +303,7 @@ export class PlaybackService {
   }
 
   render() {
-    console.log(`renderMono...`);
+    // console.log(`renderMono...`);
     if (this) {
       this.analMono.getFloatFrequencyData(this.fBuffer);
       this.publish(this.fBuffer);
@@ -311,16 +312,19 @@ export class PlaybackService {
       if (this.isPlaying) {
         window.requestAnimationFrame(this.render.bind(this));
       }
+    } else {
+      console.warn(`NOT THIS!`);
     }
 
   }
 
+  private count = 0;
   private publish(buffer: Float32Array) {
-    // console.log(`publishing buffer.`);
+    console.log(`publishing buffer. ${this.count++}`);
     // ipcRenderer.send('vizData', {
     //   buffer
     // });
-    ipcRenderer.sendToHost('viz-data', { buffer });
+    // ipcRenderer.sendToHost('viz-data', { buffer });
   }
 
   sampleSend() {
