@@ -42,9 +42,15 @@ function createWindowPromise(args: ICreateWindow): Promise<BrowserWindow> {
     try {
       const name = args.name;
       if (!name) {
-        console.warn('invalid name supplied to createWindow');
+        reject('invalid name supplied to createWindow');
         return;
       }
+
+      if (wins[name]) {
+        resolve(wins[name]);
+        return;
+      }
+
       // initial configuration
       const options: Electron.BrowserWindowConstructorOptions = {
         webPreferences: {

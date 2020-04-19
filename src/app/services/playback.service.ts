@@ -347,7 +347,7 @@ export class PlaybackService {
     const vizId = this.winIds['viz'];
     ipcRenderer.sendTo(vizId, "viz-data", [5, 4, 3, 2, 1]);
   }
-  
+
   // renderStereo() {
   //   // console.log(`render...`);
   //   const arrayL = new Float32Array(1024);
@@ -361,6 +361,5 @@ export class PlaybackService {
   //       window.requestAnimationFrame(this.render.bind(this));
   //     }
   //   }
-    
   // }
 }
