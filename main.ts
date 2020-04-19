@@ -215,4 +215,11 @@ ipcMain.on(channel, (event: IpcMainEvent, msg: IpcMessage) => {
   }
 });
 
+ipcMain.handle('get-id', async (event, payload) => {
+  // const result = await doSomeWork(someArgument);
+  console.log('get-id triggered...');
+  return wins[payload.name].webContents.id;
+  // return result;
+});
+
 //el fin//

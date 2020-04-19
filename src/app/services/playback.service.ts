@@ -320,7 +320,12 @@ export class PlaybackService {
   }
 
   sampleSend() {
-    ipcRenderer.sendToHost('viz-data', "pong");
+    ipcRenderer.invoke("get-id", { name: 'viz' }).then(vizId => {
+      console.log(`resp ${JSON.stringify(vizId)}`);
+      ipcRenderer.sendTo(vizId, "viz-data", [1, 2, 3, 4]);
+    }, err => {
+        console.log(`error ${JSON.stringify(err)}`);
+    });
   }
   // renderStereo() {
   //   // console.log(`render...`);
