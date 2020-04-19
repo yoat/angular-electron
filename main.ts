@@ -240,7 +240,7 @@ ipcMain.on('close-all-windows', () => {
 function closeOtherWindows() {
   for (const kk in wins) {
     wins[kk]?.webContents?.closeDevTools();
-    wins[kk].close();
+    wins[kk]?.close();
     wins[kk] = null;
   }
 }
