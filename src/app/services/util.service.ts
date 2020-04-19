@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { remote } from 'electron';
+import { remote, ipcRenderer } from 'electron';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +7,10 @@ import { remote } from 'electron';
 export class UtilService {
 
   constructor() { }
+
+  quitApp() {
+    ipcRenderer.send('close-all-windows');
+  }
 
   closeWindow() {
     var window = remote.getCurrentWindow();
@@ -17,7 +21,7 @@ export class UtilService {
     var window = remote.getCurrentWindow();
     window.minimize();
     console.log('minimize');
-  }
+  }  
 
   maximizeWindow() {
     var window = remote.getCurrentWindow();

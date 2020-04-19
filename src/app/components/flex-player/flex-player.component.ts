@@ -79,7 +79,8 @@ export class FlexPlayerComponent implements OnInit {
         this.util.minimizeWindow();
         break;
       case "close":
-        this.util.closeWindow();
+        // this.util.closeWindow();
+        this.util.quitApp();
         break;
       case "mute":
         console.log(`Toggle Mute!`);

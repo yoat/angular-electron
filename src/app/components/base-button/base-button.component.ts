@@ -76,7 +76,8 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
         this.util.minimizeWindow();
         break;
       case "close":
-        this.util.closeWindow();
+        // this.util.closeWindow();
+        this.util.quitApp();
         break;
       case "send":
         this.playback.sampleSend();

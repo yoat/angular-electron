@@ -147,6 +147,7 @@ try {
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
+    console.log(`window-all-closed in main`);
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
@@ -166,6 +167,14 @@ try {
   // Catch Error
   // throw e;
 }
+
+ipcMain.on('close-all-windows', () => {
+  console.log(`close-all-windows in main`);
+  for (const kk in wins) {
+    wins[kk].close();
+  }
+  mainWindow.close();
+});
 
 // allow main window to show/hide other windows
 ipcMain.on('showWindow', (ev, arg) => {
