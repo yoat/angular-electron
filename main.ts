@@ -1,3 +1,4 @@
+import { ICreateWindow } from './src/app/shared/interfaces/ipc.interface';
 import { IpcMessage } from './src/app/models/ipc.model';
 import { app, BrowserWindow, screen, ipcMain, IpcMainEvent } from 'electron';
 import * as path from 'path';
@@ -5,8 +6,12 @@ import * as url from 'url';
 
 var iconPath = path.join(__dirname, 'imgs', 'hepticon.ico');
 
+interface WinDict {
+  [key: string]: BrowserWindow;
+}
+
 let mainWindow: BrowserWindow = null;
-const wins = {};
+const wins: WinDict = {};
 const args = process.argv.slice(1),
     serve = args.some(val => val === '--serve');
 
@@ -68,7 +73,73 @@ function minWindow(name) {
     wins[name].minimize();
   }
 };
-function createWindow(): BrowserWindow {
+
+function createWindow(args: ICreateWindow) {
+  // initial configuration
+  const options: Electron.BrowserWindowConstructorOptions = {
+    webPreferences: {
+      experimentalFeatures: true,
+      nodeIntegration: true,
+      webSecurity: false,
+    },
+    // frame: false,
+    titleBarStyle: 'default',
+    icon: iconPath,
+    show: false,
+  };
+  if (args.position) {
+    options.x = args.position.x;
+    options.y = args.position.y;
+  }
+  if (args.size) {
+    options.width = args.size.x;
+    options.height = args.size.y;
+  }
+
+  // init
+  const myWin = new BrowserWindow(options);
+
+  // debug vs prod
+  if (serve) {
+    myWin.loadURL(url.format({
+      pathname: 'localhost:4242',
+      protocol: 'http:',
+      slashes: true,
+      hash: `/${name}`
+    }));
+  } else {
+    myWin.loadURL(url.format({
+      pathname: path.join(__dirname, 'dist', 'index.html'),
+      protocol: 'file:',
+      slashes: true,
+      hash: `/${name}`
+    }));
+  }
+
+  // callbacks
+  myWin.on('closed', function () {
+    wins[name] = null;
+  });
+  
+  myWin.on('ready-to-show', () => {
+    if (args.debug) {
+      myWin.webContents.openDevTools();
+    }
+
+    if (args.foreground) {
+      myWin.show();
+    } else if (args.show) {
+      myWin.showInactive();
+    } else {
+      myWin.hide();
+    }
+  });
+
+  // storage
+  wins[name] = myWin;
+}
+
+function createMainWindow(): BrowserWindow {
 
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
@@ -143,7 +214,7 @@ try {
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
-  app.on('ready', createWindow);
+  app.on('ready', createMainWindow);
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
@@ -156,10 +227,11 @@ try {
   });
 
   app.on('activate', () => {
+    console.log(`activate!!`);
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
-      createWindow();
+      createMainWindow();
     }
   });
 
@@ -167,6 +239,14 @@ try {
   // Catch Error
   // throw e;
 }
+
+ipcMain.on('create-window', () => {
+  console.log(`close-all-windows in main`);
+  for (const kk in wins) {
+    wins[kk].close();
+  }
+  mainWindow.close();
+});
 
 ipcMain.on('close-all-windows', () => {
   console.log(`close-all-windows in main`);
