@@ -37,76 +37,6 @@ function minWindow(name) {
   }
 };
 
-function createWindow(args: ICreateWindow) {
-  const name = args.name;
-  if (!name) {
-    console.warn('invalid name supplied to createWindow');
-    return;
-  }
-  // initial configuration
-  const options: Electron.BrowserWindowConstructorOptions = {
-    webPreferences: {
-      experimentalFeatures: true,
-      nodeIntegration: true,
-      webSecurity: false,
-    },
-    // frame: false,
-    titleBarStyle: 'default',
-    show: false,
-    icon: iconPath,
-  };
-  if (args.position) {
-    options.x = args.position.x;
-    options.y = args.position.y;
-  }
-  if (args.size) {
-    options.width = args.size.x;
-    options.height = args.size.y;
-  }
-
-  // init
-  const myWin = new BrowserWindow(options);
-
-  // debug vs prod
-  if (serve) {
-    myWin.loadURL(url.format({
-      pathname: 'localhost:4242',
-      protocol: 'http:',
-      slashes: true,
-      hash: `/${name}`
-    }));
-  } else {
-    myWin.loadURL(url.format({
-      pathname: path.join(__dirname, 'dist', 'index.html'),
-      protocol: 'file:',
-      slashes: true,
-      hash: `/${name}`
-    }));
-  }
-
-  // callbacks
-  myWin.on('closed', function () {
-    wins[name] = null;
-  });
-
-  myWin.on('ready-to-show', () => {
-    if (args.debug) {
-      myWin.webContents.openDevTools();
-    }
-
-    if (args.foreground) {
-      myWin.show();
-    } else if (args.show) {
-      myWin.showInactive();
-    } else {
-      myWin.hide();
-    }
-  });
-
-  // storage
-  wins[name] = myWin;
-}
-
 function createWindowPromise(args: ICreateWindow): Promise<BrowserWindow> {
   return new Promise((resolve, reject) => {
     try {
@@ -244,10 +174,6 @@ function createMainWindow(): BrowserWindow {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();
-
-    // init others
-    // createWindow({ name: 'viz', debug: true, show: false });
-    // createWindow({ name: 'playlist', debug: true, show: false });
   });
 
   ipcMain.on('webamp-loadpath', (event, arg) => {
@@ -289,14 +215,6 @@ try {
   // Catch Error
   // throw e;
 }
-
-// ipcMain.on('create-window', (ev: IpcMainEvent, args: ICreateWindow) => {
-//   createWindow(args);
-// });
-ipcMain.handle('create-window', async (ev: IpcMainEvent, args: ICreateWindow) => {
-  const bw = await createWindowPromise(args);
-  return bw.webContents.id;
-});
 
 ipcMain.on('close-all-windows', () => {
   console.log(`close-all-windows in main`);
@@ -372,6 +290,11 @@ ipcMain.handle('get-id', async (event, payload) => {
   } else {
     return -1;
   }
+});
+
+ipcMain.handle('create-window', async (ev: IpcMainEvent, args: ICreateWindow) => {
+  const bw = await createWindowPromise(args);
+  return bw.webContents.id;
 });
 
 //el fin//
