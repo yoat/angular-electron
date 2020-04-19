@@ -109,6 +109,11 @@ function createWindowPromise(args: ICreateWindow): Promise<BrowserWindow> {
 
         resolve(myWin);
       });
+
+      myWin.on('close', (e) => {
+        myWin.webContents.closeDevTools();
+        // e.returnValue = false; // cancels close
+      });
     } catch (ex) {
       reject(ex);
     }
@@ -176,6 +181,10 @@ function createMainWindow(): BrowserWindow {
     mainWindow.show();
   });
 
+  mainWindow.on('close', () => {
+    closeOtherWindows();
+  });
+
   ipcMain.on('webamp-loadpath', (event, arg) => {
     console.log("main.js::" + JSON.stringify(arg)); // prints "ping"
     // not supported, not sure what the point was // mainWindow.send('webamp-loadpath', arg);
@@ -218,12 +227,17 @@ try {
 
 ipcMain.on('close-all-windows', () => {
   console.log(`close-all-windows in main`);
+  closeOtherWindows();
+  mainWindow.close();
+});
+
+function closeOtherWindows() {
   for (const kk in wins) {
     wins[kk]?.webContents?.closeDevTools();
     wins[kk].close();
+    wins[kk] = null;
   }
-  mainWindow.close();
-});
+}
 
 // allow main window to show/hide other windows
 ipcMain.on('showWindow', (ev, arg) => {

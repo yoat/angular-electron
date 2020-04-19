@@ -346,13 +346,8 @@ export class PlaybackService {
   sampleSend() {
     const vizId = this.winIds['viz'];
     ipcRenderer.sendTo(vizId, "viz-data", [5, 4, 3, 2, 1]);
-    // ipcRenderer.invoke("get-id", { name: 'viz' }).then(vizId => {
-    //   console.log(`resp ${JSON.stringify(vizId)}`);
-    //   ipcRenderer.sendTo(vizId, "viz-data", [1, 2, 3, 4]);
-    // }, err => {
-    //     console.log(`error ${JSON.stringify(err)}`);
-    // });
   }
+  
   // renderStereo() {
   //   // console.log(`render...`);
   //   const arrayL = new Float32Array(1024);
