@@ -11,6 +11,14 @@ import StereoAnalyserNode from 'stereo-analyser-node';
 import * as mm from 'music-metadata';
 import { ipcRenderer } from 'electron';
 
+interface IDictionary<T> {
+  [key: string]: T;
+}
+
+interface NumMap {
+  [key: string]: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,6 +49,8 @@ export class PlaybackService {
   private fBuffer: Float32Array;
   private vizSource = new BehaviorSubject<StereoAudioData>({ left: new Float32Array(), right: new Float32Array()})
   viz$ = this.vizSource.asObservable();
+
+  private winIds: NumMap = {};
 
   audioEvents = [
     "ended",
@@ -98,8 +108,14 @@ export class PlaybackService {
     });
 
 
-    ipcRenderer.send('create-window', { name: 'viz', debug: false, show: false });
-    ipcRenderer.send('create-window', { name: 'playlist', debug: false, show: false });
+    this.preloadWindows();
+  }
+
+  private preloadWindows() {
+    const winNames = ['viz', 'playlist'];
+    winNames.map(async (name: string) => {
+      this.winIds[name] = await ipcRenderer.invoke('create-window', { name, debug: true, show: false });
+    });
   }
 
   // public methods
@@ -328,12 +344,14 @@ export class PlaybackService {
   }
 
   sampleSend() {
-    ipcRenderer.invoke("get-id", { name: 'viz' }).then(vizId => {
-      console.log(`resp ${JSON.stringify(vizId)}`);
-      ipcRenderer.sendTo(vizId, "viz-data", [1, 2, 3, 4]);
-    }, err => {
-        console.log(`error ${JSON.stringify(err)}`);
-    });
+    const vizId = this.winIds['viz'];
+    ipcRenderer.sendTo(vizId, "viz-data", [5, 4, 3, 2, 1]);
+    // ipcRenderer.invoke("get-id", { name: 'viz' }).then(vizId => {
+    //   console.log(`resp ${JSON.stringify(vizId)}`);
+    //   ipcRenderer.sendTo(vizId, "viz-data", [1, 2, 3, 4]);
+    // }, err => {
+    //     console.log(`error ${JSON.stringify(err)}`);
+    // });
   }
   // renderStereo() {
   //   // console.log(`render...`);

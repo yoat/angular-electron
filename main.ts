@@ -1,6 +1,16 @@
-import { ICreateWindow } from './src/app/shared/interfaces/ipc.interface';
-import { IpcMessage } from './src/app/models/ipc.model';
-import { app, BrowserWindow, screen, ipcMain, IpcMainEvent } from 'electron';
+import {
+  ICreateWindow
+} from './src/app/shared/interfaces/ipc.interface';
+import {
+  IpcMessage
+} from './src/app/models/ipc.model';
+import {
+  app,
+  BrowserWindow,
+  screen,
+  ipcMain,
+  IpcMainEvent
+} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -13,7 +23,7 @@ interface WinDict {
 let mainWindow: BrowserWindow = null;
 const wins: WinDict = {};
 const args = process.argv.slice(1),
-    serve = args.some(val => val === '--serve');
+  serve = args.some(val => val === '--serve');
 
 function hideWindow(name) {
   if (wins[name]) {
@@ -78,7 +88,7 @@ function createWindow(args: ICreateWindow) {
   myWin.on('closed', function () {
     wins[name] = null;
   });
-  
+
   myWin.on('ready-to-show', () => {
     if (args.debug) {
       myWin.webContents.openDevTools();
@@ -95,6 +105,84 @@ function createWindow(args: ICreateWindow) {
 
   // storage
   wins[name] = myWin;
+}
+
+function createWindowPromise(args: ICreateWindow): Promise<BrowserWindow> {
+  return new Promise((resolve, reject) => {
+    try {
+      const name = args.name;
+      if (!name) {
+        console.warn('invalid name supplied to createWindow');
+        return;
+      }
+      // initial configuration
+      const options: Electron.BrowserWindowConstructorOptions = {
+        webPreferences: {
+          experimentalFeatures: true,
+          nodeIntegration: true,
+          webSecurity: false,
+        },
+        // frame: false,
+        titleBarStyle: 'default',
+        show: false,
+        icon: iconPath,
+      };
+      if (args.position) {
+        options.x = args.position.x;
+        options.y = args.position.y;
+      }
+      if (args.size) {
+        options.width = args.size.x;
+        options.height = args.size.y;
+      }
+
+      // init
+      const myWin = new BrowserWindow(options);
+
+      // debug vs prod
+      if (serve) {
+        myWin.loadURL(url.format({
+          pathname: 'localhost:4242',
+          protocol: 'http:',
+          slashes: true,
+          hash: `/${name}`
+        }));
+      } else {
+        myWin.loadURL(url.format({
+          pathname: path.join(__dirname, 'dist', 'index.html'),
+          protocol: 'file:',
+          slashes: true,
+          hash: `/${name}`
+        }));
+      }
+
+      // callbacks
+      myWin.on('closed', function () {
+        wins[name] = null;
+      });
+
+      myWin.on('ready-to-show', () => {
+        // storage
+        wins[name] = myWin;
+
+        if (args.debug) {
+          myWin.webContents.openDevTools();
+        }
+
+        if (args.foreground) {
+          myWin.show();
+        } else if (args.show) {
+          myWin.showInactive();
+        } else {
+          myWin.hide();
+        }
+
+        resolve(myWin);
+      });
+    } catch (ex) {
+      reject(ex);
+    }
+  });
 }
 
 function createMainWindow(): BrowserWindow {
@@ -202,13 +290,18 @@ try {
   // throw e;
 }
 
-ipcMain.on('create-window', (ev: IpcMainEvent, args: ICreateWindow) => {
-  createWindow(args);
+// ipcMain.on('create-window', (ev: IpcMainEvent, args: ICreateWindow) => {
+//   createWindow(args);
+// });
+ipcMain.handle('create-window', async (ev: IpcMainEvent, args: ICreateWindow) => {
+  const bw = await createWindowPromise(args);
+  return bw.webContents.id;
 });
 
 ipcMain.on('close-all-windows', () => {
   console.log(`close-all-windows in main`);
   for (const kk in wins) {
+    wins[kk]?.webContents?.closeDevTools();
     wins[kk].close();
   }
   mainWindow.close();
@@ -249,7 +342,7 @@ ipcMain.on('vizData', (ev, arg) => {
 const channel = 'cc-ipc-msg';
 ipcMain.on(channel, (event: IpcMainEvent, msg: IpcMessage) => {
   if (msg) {
-    switch(msg.target) {
+    switch (msg.target) {
       case "player":
         mainWindow.webContents.send(channel, msg);
         break;
@@ -270,7 +363,7 @@ ipcMain.handle('get-id', async (event, payload) => {
   // console.log('get-id triggered...');
   if (!payload || !payload.name) {
     return 0;
-  } 
+  }
   const name = payload.name.toLowerCase();
   if (name == "main") {
     return mainWindow.webContents.id;
