@@ -215,11 +215,23 @@ ipcMain.on(channel, (event: IpcMainEvent, msg: IpcMessage) => {
   }
 });
 
+// get-id takes an object with string param 'name'
+// returns a number
+// 0 indicates no named input provided
+// -1 indicates name not found
 ipcMain.handle('get-id', async (event, payload) => {
-  // const result = await doSomeWork(someArgument);
-  console.log('get-id triggered...');
-  return wins[payload.name].webContents.id;
-  // return result;
+  // console.log('get-id triggered...');
+  if (!payload || !payload.name) {
+    return 0;
+  } 
+  const name = payload.name.toLowerCase();
+  if (name == "main") {
+    return mainWindow.webContents.id;
+  } else if (Object.keys(wins).includes(name)) {
+    return wins[name].webContents.id;
+  } else {
+    return -1;
+  }
 });
 
 //el fin//
