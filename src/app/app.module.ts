@@ -58,6 +58,7 @@ import { reducers, metaReducers } from './store/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AppEffects } from './store/effects/app.effects';
+import { OscilloscopeComponent } from './components/viz/oscilloscope/oscilloscope.component';
 //  https://fontawesome.com/cheatsheet
 // window-maximize, window-close, window-minimize
 // hamburger (menu) skull-crossbones cat bong cannabis burn cubes hand-middle-finger
@@ -74,7 +75,7 @@ import { AppEffects } from './store/effects/app.effects';
 @NgModule({
   declarations: [AppComponent, MediaComponent, DemoComponent, PlayerComponent, BaseButtonComponent, StatusDisplayComponent, ArtistDisplayComponent, 
     AlbumDisplayComponent, BaseDisplayComponent, TimeDisplayComponent, VolumeSliderComponent, BalanceSliderComponent, ProgressScrubberComponent, 
-    ProButtonComponent, FlexPlayerComponent, VizPanelComponent],
+    ProButtonComponent, FlexPlayerComponent, VizPanelComponent, OscilloscopeComponent],
   imports: [
     BrowserModule,
     FormsModule,
