@@ -128,6 +128,10 @@ export class PlaybackService {
     return this.sourceNode;
   }
 
+  get analyser(): AnalyserNode {
+    return this.analMono;
+  }
+
   observe(): Observable<PlaybackState> {
     return this.playbackSource.asObservable();
   }
@@ -233,7 +237,7 @@ export class PlaybackService {
     } else {
       this.audioObj.play();
       // window.requestAnimationFrame(this.render);
-      window.requestAnimationFrame(this.render.bind(this));
+      // window.requestAnimationFrame(this.render.bind(this));
     }
 
     const modified = this.playbackSource.value;
@@ -318,30 +322,35 @@ export class PlaybackService {
     this.stereoPan.pan.setValueAtTime(unit, this.ctx.currentTime);
   }
 
-  render() {
-    // console.log(`renderMono...`);
-    if (this) {
-      this.analMono.getFloatFrequencyData(this.fBuffer);
-      this.publish(this.fBuffer);
+  // render() {
+  //   // console.log(`renderMono...`);
+  //   if (this) {
+  //     this.analMono.getFloatFrequencyData(this.fBuffer);
+  //     this.publish(this.fBuffer);
 
-      // this.vizSource.next({ left: arrayL, right: arrayR });
-      if (this.isPlaying) {
-        window.requestAnimationFrame(this.render.bind(this));
-      }
-    } else {
-      console.warn(`NOT THIS!`);
-    }
+  //     // this.vizSource.next({ left: arrayL, right: arrayR });
+  //     if (this.isPlaying) {
+  //       window.requestAnimationFrame(this.render.bind(this));
+  //     }
+  //   } else {
+  //     console.warn(`NOT THIS!`);
+  //   }
 
-  }
+  // }
 
-  private count = 0;
-  private publish(buffer: Float32Array) {
-    console.log(`publishing buffer. ${this.count++}`);
-    // ipcRenderer.send('vizData', {
-    //   buffer
-    // });
-    // ipcRenderer.sendToHost('viz-data', { buffer });
-  }
+  // private count = 0;
+  // private publish(buffer: Float32Array) {
+  //   console.log(`publishing buffer. ${this.count++}`);
+  //   // ipcRenderer.send('vizData', {
+  //   //   buffer
+  //   // });
+  //   // ipcRenderer.sendToHost('viz-data', { buffer });
+  // }
+
+  // private pub2(buffer: Uint8Array) {
+  //   var bufferLength = this.analMono.frequencyBinCount;
+  //   var dataArray = new Uint8Array(bufferLength);
+  // }
 
   sampleSend() {
     const vizId = this.winIds['viz'];
