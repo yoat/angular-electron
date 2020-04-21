@@ -21,7 +21,7 @@ export class BasicBarsComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private playback: PlaybackService) { }
 
   ngOnInit(): void {
-    this.a.fftSize = this.fftSize;
+    // this.a.fftSize = this.fftSize;
     this.bufferLength = this.a.frequencyBinCount;
     this.buffer = new Uint8Array(this.bufferLength);
   }
@@ -59,10 +59,10 @@ export class BasicBarsComponent implements OnInit, AfterViewInit, OnDestroy {
     var x = 0;
 
     for (var i = 0; i < this.bufferLength; i++) {
-      barHeight = this.buffer[i] / 2;
+      barHeight = this.buffer[i] * 2;
 
       this.ctx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
-      this.ctx.fillRect(x, this.height - barHeight / 2, barWidth, barHeight);
+      this.ctx.fillRect(x, this.height - (barHeight / 2), barWidth, barHeight);
 
       x += barWidth + 1;
     }
