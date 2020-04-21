@@ -48,7 +48,7 @@ export class OscilloscopeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private render() {
-    console.log(`oscilloscope render ${this.count++}`);
+    // console.log(`oscilloscope render ${this.count++}`);
     this.a.getByteTimeDomainData(this.buffer);
 
     this.ctx.fillStyle = 'rgb(200, 200, 200)';
