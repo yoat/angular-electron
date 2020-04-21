@@ -16,7 +16,7 @@ export class OscilloscopeComponent implements OnInit, AfterViewInit, OnDestroy {
   private active = true;
   private bufferLength: number;
   private buffer: Uint8Array;
-  private count = 0;
+  private _node: AnalyserNode;
 
   constructor(private playback: PlaybackService) { }
 
@@ -36,7 +36,10 @@ export class OscilloscopeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get a() {
-    return this.playback.analyser;
+    if (!this._node) {
+      this._node = this.playback.getConnectedAnalyser();
+    }
+    return this._node;
   }
 
   get canvas(): HTMLCanvasElement {

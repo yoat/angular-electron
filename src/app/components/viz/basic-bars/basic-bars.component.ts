@@ -17,11 +17,12 @@ export class BasicBarsComponent implements OnInit, AfterViewInit, OnDestroy {
   private fftSize = 256;
   private bufferLength: number;
   private buffer: Uint8Array;
+  private _node: AnalyserNode;
 
   constructor(private playback: PlaybackService) { }
 
   ngOnInit(): void {
-    // this.a.fftSize = this.fftSize;
+    this.a.fftSize = this.fftSize;
     this.bufferLength = this.a.frequencyBinCount;
     this.buffer = new Uint8Array(this.bufferLength);
   }
@@ -37,7 +38,10 @@ export class BasicBarsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get a() {
-    return this.playback.analyser;
+    if (!this._node) {
+      this._node = this.playback.getConnectedAnalyser();
+    }
+    return this._node;
   }
 
   get canvas(): HTMLCanvasElement {

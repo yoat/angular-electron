@@ -129,8 +129,13 @@ export class PlaybackService {
     return this.sourceNode;
   }
 
-  get analyser(): AnalyserNode {
-    return this.analMono;
+  // get analyser(): AnalyserNode {
+  //   return this.analMono;
+  // }
+  getConnectedAnalyser(): AnalyserNode {
+    const ana = this.context.createAnalyser();
+    this.sourceNode.connect(ana)
+    return ana;
   }
 
   observe(): Observable<PlaybackState> {
