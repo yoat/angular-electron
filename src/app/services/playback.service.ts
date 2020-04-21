@@ -82,10 +82,11 @@ export class PlaybackService {
     this.bBuffer = new Uint8Array(this.bufferLength);
     this.fBuffer = new Float32Array(this.analMono.fftSize);
     this.sourceNode.connect(this.stereoPan);
+    this.sourceNode.connect(this.analMono);
     this.stereoPan.connect(this.gainNode);
-    // this.gainNode.connect(this.ctx.destination);
-    this.gainNode.connect(this.analMono);
-    this.analMono.connect(this.ctx.destination);
+    this.gainNode.connect(this.ctx.destination);
+    // this.gainNode.connect(this.analMono);
+    // this.analMono.connect(this.ctx.destination);
     // this.gainNode.gain.setValueAtTime(0.1, this.ctx.currentTime)
 
     // // var analyser = this.ctx.createAnalyser();
