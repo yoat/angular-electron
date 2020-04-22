@@ -14,7 +14,7 @@ export class BasicBarsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvas', { static: true }) canvasRef: ElementRef<HTMLCanvasElement>;
 
   private active = true;
-  private fftSize = 256;
+  private fftSize = 1024;
   private bufferLength: number;
   private buffer: Uint8Array;
   private _node: AnalyserNode;
@@ -43,7 +43,8 @@ export class BasicBarsComponent implements OnInit, AfterViewInit, OnDestroy {
       //this._node = this.playback.getConnectedAnalyser();
       this._osc = this.playback.context.createOscillator();
       this._osc.type = 'sine';
-      this._osc.frequency.setValueAtTime(440, this.playback.context.currentTime); // value in hertz
+      // this._osc.frequency.setValueAtTime(400, this.playback.context.currentTime); // value in hertz
+      this.updateFreq();
       this._osc.start();
 
       this._node = this.playback.context.createAnalyser();
@@ -79,6 +80,23 @@ export class BasicBarsComponent implements OnInit, AfterViewInit, OnDestroy {
       x += barWidth + 1;
     }
 
+    this.updateFreq();
+
     window.requestAnimationFrame(this.render.bind(this));
+  }
+
+  freq = 440;
+  minFreq = 10;
+  maxFreq = 8000;
+  change = 10;
+  private updateFreq() {
+    this.freq += this.change;
+
+    if (this.freq > this.maxFreq || this.freq < this.minFreq) {
+      this.change *= -1;
+    }
+
+    this._osc.frequency.setValueAtTime(this.freq, this.playback.context.currentTime); // value in hertz
+
   }
 }
