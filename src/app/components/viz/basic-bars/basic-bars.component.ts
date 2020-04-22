@@ -18,6 +18,7 @@ export class BasicBarsComponent implements OnInit, AfterViewInit, OnDestroy {
   private bufferLength: number;
   private buffer: Uint8Array;
   private _node: AnalyserNode;
+  private _osc: OscillatorNode;
 
   constructor(private playback: PlaybackService) { }
 
@@ -39,7 +40,14 @@ export class BasicBarsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get a() {
     if (!this._node) {
-      this._node = this.playback.getConnectedAnalyser();
+      //this._node = this.playback.getConnectedAnalyser();
+      this._osc = this.playback.context.createOscillator();
+      this._osc.type = 'sine';
+      this._osc.frequency.setValueAtTime(440, this.playback.context.currentTime); // value in hertz
+      this._osc.start();
+
+      this._node = this.playback.context.createAnalyser();
+      this._osc.connect(this._node);
     }
     return this._node;
   }
