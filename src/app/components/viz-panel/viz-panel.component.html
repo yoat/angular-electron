@@ -1,4 +1,10 @@
 <div class="viz-panel">
   <!-- <span class="overlay">{{ display }}</span> -->
   <canvas #canvas [height]="height" [width]="width"></canvas>
+  <div>
+    <button (click)="prevButton()">Prev</button>
+
+    <button (click)="randomButton()">Rand</button>
+    <button (click)="nextButton()">Next</button>
+  </div>
 </div>

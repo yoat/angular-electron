@@ -43,7 +43,7 @@ export class VizPanelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.visualizer.connectAudio(this.playback.source);
     // this.ctx = this.canvas.nativeElement.getContext('2d');
-  
+
     this.loadPreset(0);
     // const preset = this.presets['Flexi, martin + geiss - dedicated to the sherwin maxawow'];
     // this.visualizer.loadPreset(preset, 0.0); // 2nd argument is the number of seconds to blend presets
@@ -63,6 +63,10 @@ export class VizPanelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
+  get duration(): number {
+    return 0.5;
+  }
+
   loadPreset(idx: number, transition: number = 0) {
     this.presetIdx = idx;
     this.presetName = Object.keys(this.presets)[this.presetIdx];
@@ -80,4 +84,15 @@ export class VizPanelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loadPreset(idx, transition);
   }
 
+  nextButton() {
+    this.nextPreset(this.duration);
+  }
+
+  prevButton() {
+    this.prevPreset(this.duration);
+  }
+
+  randomButton() {
+    this.loadPreset(Math.floor(this.presetCount * Math.random()), this.duration);
+  }
 }
