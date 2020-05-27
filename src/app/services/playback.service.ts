@@ -11,6 +11,10 @@ import StereoAnalyserNode from 'stereo-analyser-node';
 import * as mm from 'music-metadata';
 import { ipcRenderer } from 'electron';
 
+const fs = require("fs");
+const WavDecoder = require("wav-decoder");
+const Pitchfinder = require("pitchfinder");
+
 interface IDictionary<T> {
   [key: string]: T;
 }
@@ -377,4 +381,19 @@ export class PlaybackService {
   //     }
   //   }
   // }
+
+  samplePitch(): string {
+    const myPath = 'files/uncork.wav';
+    
+
+    // see below for optional constructor parameters.
+    const detectPitch = new Pitchfinder.YIN();
+
+    const buffer = fs.readFileSync(myPath);
+    const decoded = WavDecoder.decode.sync(buffer); // get audio data from file using `wav-decoder`
+    const float32Array = decoded.channelData[0]; // get a single channel of sound
+    const pitch = detectPitch(float32Array); // null if pitch cannot be identified
+    console.log(JSON.stringify(pitch));
+    return ""; //pitch.toString();
+  }
 }

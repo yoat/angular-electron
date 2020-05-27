@@ -1,10 +1,11 @@
 <style>
-  @import url('https://fonts.googleapis.com/css?family=Nunito|PT+Mono&display=swap');
-
+  @import url("https://fonts.googleapis.com/css?family=Nunito|PT+Mono&display=swap");
 </style>
-<div class="drop-container flexy-container"
-  (dragover)="$event.preventDefault(); $event.dataTransfer.dropEffect = 'move'" (drop)="dropped($event)">
-
+<div
+  class="drop-container flexy-container"
+  (dragover)="$event.preventDefault(); $event.dataTransfer.dropEffect = 'move'"
+  (drop)="dropped($event)"
+>
   <ProButton name="settings" (push)="onPush($event)">
     <fa-icon [icon]="['fas', 'cog']"></fa-icon>
   </ProButton>
@@ -69,6 +70,9 @@
     <fa-icon [icon]="['fas', 'cat']"></fa-icon>
   </ProButton>
   <ProButton name="send" (push)="onPush($event)">
+    <fa-icon [icon]="['fas', 'cat']"></fa-icon>
+  </ProButton>
+  <ProButton name="pitch" (push)="onPush($event)">
     <fa-icon [icon]="['fas', 'cat']"></fa-icon>
   </ProButton>
   <VizPanel side="left" width="400" height="300"></VizPanel>

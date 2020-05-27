@@ -81,6 +81,7 @@ export class BaseButtonComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
       case "send":
         this.playback.sampleSend();
+        break;
       default:
         break;
     }

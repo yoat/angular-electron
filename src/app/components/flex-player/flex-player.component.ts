@@ -90,6 +90,8 @@ export class FlexPlayerComponent implements OnInit {
       case "send":
         this.playback.sampleSend();
         break;
+      case "pitch":
+        this.playback.samplePitch();
       default:
         console.log(`event ${event}`);
         break;
