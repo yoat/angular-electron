@@ -15,6 +15,8 @@ const fs = require("fs");
 const WavDecoder = require("wav-decoder");
 const Pitchfinder = require("pitchfinder");
 
+import { Synth, Sampler } from "tone";
+
 interface IDictionary<T> {
   [key: string]: T;
 }
@@ -55,6 +57,8 @@ export class PlaybackService {
   viz$ = this.vizSource.asObservable();
 
   private winIds: NumMap = {};
+
+  private sampler: Sampler;
 
   audioEvents = [
     "ended",
@@ -112,6 +116,15 @@ export class PlaybackService {
       }
     });
 
+    this.sampler = new Sampler(
+      {
+        B3: "C:/Users/Matt/Music/fx/uncork.wav"//"files/uncork.wav",
+      },
+      function () {
+        //sampler will repitch the closest sample
+        this.sampler.triggerAttack("B3");
+      }
+    );
 
     this.preloadWindows();
   }
@@ -395,5 +408,10 @@ export class PlaybackService {
     const pitch = detectPitch(float32Array); // null if pitch cannot be identified
     console.log(JSON.stringify(pitch));
     return ""; //pitch.toString();
+  }
+
+  playNote(note = "C3") {
+    console.log(`Playing ${note}`);
+    this.sampler.triggerAttack(note);
   }
 }
